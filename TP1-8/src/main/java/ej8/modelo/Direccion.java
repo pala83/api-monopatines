@@ -1,0 +1,29 @@
+package ej8.modelo;
+
+import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.Data;
+
+@Entity
+@Table(name = "direccion")
+@Data
+public class Direccion {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    private String ciudad;
+    private String calle;
+    private Integer numero;
+    private Integer codigoPostal;
+
+    @OneToMany(mappedBy = "direccion")
+    private List<Persona> personas;
+
+}
