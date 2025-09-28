@@ -1,4 +1,4 @@
-package ej1.repository;
+package ej2.repository;
 
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -6,9 +6,9 @@ import java.util.List;
 
 import com.opencsv.CSVReader;
 
-import ej1.dto.DireccionDTO;
-import ej1.factory.JPAUtil;
-import ej1.model.Direccion;
+import ej2.dto.DireccionDTO;
+import ej2.factory.JPAUtil;
+import ej2.model.Direccion;
 import jakarta.persistence.EntityManager;
 
 public class DireccionRepositoryImpl implements DireccionRepository {
@@ -41,7 +41,7 @@ public class DireccionRepositoryImpl implements DireccionRepository {
         List<DireccionDTO> direcciones = new ArrayList<>();
         try {
             direcciones = em.createQuery(
-                "SELECT new ej1.dto.DireccionDTO(d.ciudad, d.calle, d.numero, d.codigoPostal) " +
+                "SELECT new ej2.dto.DireccionDTO(d.ciudad, d.calle, d.numero, d.codigoPostal) " +
                     "FROM Direccion d JOIN d.personas p " +
                     "WHERE p.nombre = :nombre",
                  DireccionDTO.class)

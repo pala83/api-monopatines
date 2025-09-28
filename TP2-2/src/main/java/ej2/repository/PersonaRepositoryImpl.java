@@ -1,4 +1,4 @@
-package ej1.repository;
+package ej2.repository;
 
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -6,10 +6,10 @@ import java.util.List;
 
 import com.opencsv.CSVReader;
 
-import ej1.dto.PersonaDTO;
-import ej1.factory.JPAUtil;
-import ej1.model.Direccion;
-import ej1.model.Persona;
+import ej2.dto.PersonaDTO;
+import ej2.factory.JPAUtil;
+import ej2.model.Direccion;
+import ej2.model.Persona;
 import jakarta.persistence.EntityManager;
 
 public class PersonaRepositoryImpl implements PersonaRepository {
@@ -53,7 +53,7 @@ public class PersonaRepositoryImpl implements PersonaRepository {
         List<PersonaDTO> personas = new ArrayList<>();
         try {
             personas = em.createQuery(
-                "SELECT new ej1.dto.PersonaDTO(p.nombre, p.edad, d.ciudad, d.calle) " +
+                "SELECT new ej2.dto.PersonaDTO(p.nombre, p.edad, d.ciudad, d.calle) " +
                     "FROM Persona p JOIN p.direccion d " + 
                     "WHERE d.ciudad = :ciudad",
                 PersonaDTO.class)

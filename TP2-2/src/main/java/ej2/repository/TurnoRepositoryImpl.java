@@ -1,4 +1,4 @@
-package ej1.repository;
+package ej2.repository;
 
 import java.io.FileReader;
 import java.sql.Timestamp;
@@ -7,12 +7,12 @@ import java.util.List;
 
 import com.opencsv.CSVReader;
 
-import ej1.dto.PersonaDTO;
-import ej1.dto.TurnoDTO;
-import ej1.dto.PersonaSocioDTO;
-import ej1.factory.JPAUtil;
-import ej1.model.Persona;
-import ej1.model.Turno;
+import ej2.dto.PersonaDTO;
+import ej2.dto.PersonaSocioDTO;
+import ej2.dto.TurnoDTO;
+import ej2.factory.JPAUtil;
+import ej2.model.Persona;
+import ej2.model.Turno;
 import jakarta.persistence.EntityManager;
 
 public class TurnoRepositoryImpl implements TurnoRepository {
@@ -63,7 +63,7 @@ public class TurnoRepositoryImpl implements TurnoRepository {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             personas = em.createQuery(
-                "SELECT new ej1.dto.PersonaDTO(p.nombre, p.edad, p.direccion.ciudad, p.direccion.calle) " +
+                "SELECT new ej2.dto.PersonaDTO(p.nombre, p.edad, p.direccion.ciudad, p.direccion.calle) " +
                     "FROM Turno t JOIN t.jugadores p " + 
                     "WHERE t.id = :id",
                  PersonaDTO.class)
@@ -81,7 +81,7 @@ public class TurnoRepositoryImpl implements TurnoRepository {
         List<PersonaSocioDTO> personas = new ArrayList<>();
         try {
             personas = em.createQuery(
-                "SELECT new ej1.dto.PersonaSocioDTO(p.nombre, p.edad, p.direccion.ciudad, p.direccion.calle, (s.id IS NOT NULL)) " +
+                "SELECT new ej2.dto.PersonaSocioDTO(p.nombre, p.edad, p.direccion.ciudad, p.direccion.calle, (s.id IS NOT NULL)) " +
                 "FROM Turno t JOIN t.jugadores p " +
                 "LEFT JOIN Socio s ON s.persona = p " +
                 "WHERE t.id = :id",
@@ -99,7 +99,7 @@ public class TurnoRepositoryImpl implements TurnoRepository {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             return em.createQuery(
-                "SELECT new ej1.dto.TurnoDTO(t.fecha, t.jugadores) " + 
+                "SELECT new ej2.dto.TurnoDTO(t.fecha, t.jugadores) " + 
                     "FROM Turno t " + 
                     "ORDER BY t.fecha",
                 TurnoDTO.class)
@@ -114,7 +114,7 @@ public class TurnoRepositoryImpl implements TurnoRepository {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             return em.createQuery(
-                "SELECT new ej1.dto.TurnoDTO(t.fecha, t.jugadores) " +
+                "SELECT new ej2.dto.TurnoDTO(t.fecha, t.jugadores) " +
                     "FROM Turno t WHERE t.id = :id",
                 TurnoDTO.class)
                 .setParameter("id", id)

@@ -6,10 +6,10 @@
 
     <persistence-unit name="TP2-1" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-    <class>ej1.model.Persona</class>
-    <class>ej1.model.Direccion</class>
-    <class>ej1.model.Socio</class>
-    <class>ej1.model.Turno</class>
+    <class>ej2.model.Persona</class>
+    <class>ej2.model.Direccion</class>
+    <class>ej2.model.Socio</class>
+    <class>ej2.model.Turno</class>
         <properties>
             <!-- Propiedades de configuracion de JPA para Derby -->
             <!-- 
