@@ -24,7 +24,6 @@ public class PersonaRepositoryImpl implements PersonaRepository {
                 Persona persona = new Persona();
                 persona.setNombre(linea[1]);
                 persona.setEdad(Integer.parseInt(linea[2]));
-                persona.setEmail(linea[3]);
 
                 Direccion direccion = em.find(Direccion.class, Integer.parseInt(linea[4]));
                 persona.setDireccion(direccion);
@@ -62,7 +61,7 @@ public class PersonaRepositoryImpl implements PersonaRepository {
         EntityManager em = JPAUtil.getEntityManager();
 
         List<PersonaDTO> personasDTO = em.createQuery(
-                        "SELECT new ej8.dto.PersonaDTO(p.nombre, p.edad, d.ciudad, d.calle, d.numero) " +
+                        "SELECT new ej1.dto.PersonaDTO(p.nombre, p.edad, d.ciudad, d.calle, d.numero) " +
                                 "FROM Persona p JOIN p.direccion d " +
                                 "WHERE d.ciudad = :ciudad",
                         PersonaDTO.class

@@ -1,29 +1,29 @@
 package ej1.model;
 
+import java.sql.Timestamp;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "direccion")
+@Table(name = "turno")
 @Data
-public class Direccion {
+public class Turno {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String ciudad;
-    private String calle;
-    private Integer numero;
-    private Integer codigoPostal;
+    @Column(name = "fecha", nullable = false)
+    private Timestamp fecha;
 
-    @OneToMany(mappedBy = "direccion")
-    private List<Persona> personas;
-
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Persona> jugadores;
 }

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ej1</groupId>
-    <artifactId>TP2-1</artifactId>
+    <artifactId>TP2-1-pro</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -31,8 +31,8 @@
             <artifactId>hibernate-community-dialects</artifactId>
             <version>7.0.2.Final</version>
         </dependency>
-        
-        <!-- Driver JDBC para conectar con la base de datos -->
+
+        <!-- Driver JDBC para conectar con la base de datos Derby -->
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derbytools</artifactId>
@@ -42,6 +42,12 @@
             <groupId>org.apache.derby</groupId>
             <artifactId>derby</artifactId>
             <version>10.17.1.0</version>
+        </dependency>
+        <!-- Driver JDBC para conectar con la base de datos MySQL -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
         </dependency>
 
         <!-- Utilidades -->

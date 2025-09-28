@@ -25,8 +25,6 @@ public class DireccionRepositoryImpl implements DireccionRepository {
                 Direccion direccion = new Direccion();
                 direccion.setCiudad(linea[1]);
                 direccion.setCalle(linea[2]);
-                direccion.setNumero(Integer.parseInt(linea[3]));
-                direccion.setCodigoPostal(Integer.parseInt(linea[4]));
                 em.persist(direccion);
             }
             em.getTransaction().commit();
@@ -43,7 +41,7 @@ public class DireccionRepositoryImpl implements DireccionRepository {
         List<DireccionDTO> direcciones = new ArrayList<>();
         try {
             direcciones = em.createQuery(
-                "SELECT new ej8.dto.DireccionDTO(d.ciudad, d.calle, d.numero, d.codigoPostal) " +
+                "SELECT new ej1.dto.DireccionDTO(d.ciudad, d.calle, d.numero, d.codigoPostal) " +
                     "FROM Direccion d JOIN d.personas p " +
                     "WHERE p.nombre = :nombre",
                  DireccionDTO.class)
