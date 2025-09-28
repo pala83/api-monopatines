@@ -1,6 +1,7 @@
 package ej1.repository;
 
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.opencsv.CSVReader;
@@ -45,32 +46,23 @@ public class PersonaRepositoryImpl implements PersonaRepository {
         return personas;
     }
 
+
     @Override
-    public List<Persona> buscarPorCiudad(String ciudad) {
+    public List<PersonaDTO> personasPorCiudadDTO(String ciudad) {
         EntityManager em = JPAUtil.getEntityManager();
-        List<Persona> personas = em.createQuery(
-                        "SELECT p FROM Persona p JOIN p.direccion d WHERE d.ciudad = :ciudad", Persona.class)
-                .setParameter("ciudad", ciudad)
-                .getResultList();
-        em.close();
+        List<PersonaDTO> personas = new ArrayList<>();
+        try {
+            personas = em.createQuery(
+                "SELECT new ej1.dto.PersonaDTO(p.nombre, p.edad, d.ciudad, d.calle) " +
+                    "FROM Persona p JOIN p.direccion d " + 
+                    "WHERE d.ciudad = :ciudad",
+                PersonaDTO.class)
+            .setParameter("ciudad", ciudad)
+            .getResultList();
+        } finally {
+            em.close();
+        }
         return personas;
-    }
-
-    @Override
-    public List<PersonaDTO> buscarPorCiudad2(String ciudad) {
-        EntityManager em = JPAUtil.getEntityManager();
-
-        List<PersonaDTO> personasDTO = em.createQuery(
-                        "SELECT new ej1.dto.PersonaDTO(p.nombre, p.edad, d.ciudad, d.calle, d.numero) " +
-                                "FROM Persona p JOIN p.direccion d " +
-                                "WHERE d.ciudad = :ciudad",
-                        PersonaDTO.class
-                )
-                .setParameter("ciudad", ciudad)
-                .getResultList();
-
-        em.close();
-        return personasDTO;
     }
 
 }

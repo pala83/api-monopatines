@@ -9,10 +9,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class PersonaDTO {
+public class PersonaSocioDTO {
     private String nombre;
     private Integer edad;
     private String ciudad;
     private String calle;
-    private Integer numero;
+    private boolean socio;
 }

@@ -8,6 +8,5 @@ import ej1.model.Persona;
 public interface PersonaRepository {
     void insertarDesdeCSV(String pathCSV);
     List<Persona> buscarTodos();
-    List<Persona> buscarPorCiudad(String ciudad);
-    List<PersonaDTO> buscarPorCiudad2(String ciudad);
+    List<PersonaDTO> personasPorCiudadDTO(String ciudad);
 }
