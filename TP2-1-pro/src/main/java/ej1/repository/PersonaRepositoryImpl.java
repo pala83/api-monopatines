@@ -25,7 +25,7 @@ public class PersonaRepositoryImpl implements PersonaRepository {
                 persona.setNombre(linea[1]);
                 persona.setEdad(Integer.parseInt(linea[2]));
 
-                Direccion direccion = em.find(Direccion.class, Integer.parseInt(linea[4]));
+                Direccion direccion = em.find(Direccion.class, Integer.parseInt(linea[3]));
                 persona.setDireccion(direccion);
                 em.persist(persona);
             }
