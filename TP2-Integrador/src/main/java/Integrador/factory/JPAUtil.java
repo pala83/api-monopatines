@@ -7,7 +7,7 @@ import jakarta.persistence.Persistence;
 public class JPAUtil {
     private static final EntityManagerFactory emf;
     static {
-        emf = Persistence.createEntityManagerFactory("TP2-1");
+        emf = Persistence.createEntityManagerFactory("TP2-Integrador");
     }
     public static EntityManager getEntityManager() {
         return emf.createEntityManager();
