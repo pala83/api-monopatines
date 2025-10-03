@@ -1,23 +1,29 @@
 package Integrador.model;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "estudiante")
+@Table(name = "ESTUDIANTE")
 @Data
 public class Estudiante {
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
-    private int dni;
+    @Column(name = "dni")
+    private Integer dni;
+    
+    @Column(name = "lu", nullable = false, unique = true)
+    private Integer lu;
 
     @Column(name = "nombre", nullable = false)
     private String nombre;
+    
     @Column(name = "apellido", nullable = false)
     private String apellido;
 
@@ -25,13 +31,11 @@ public class Estudiante {
     private String genero;
 
     @Column(name = "edad")
-    private int edad;
+    private Integer edad;
 
     @Column(name = "ciudad")
     private String ciudad;
 
-    @Column(name = "nLibretaU")
-    private int nLibretaU;
-
-
+    @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL)
+    private List<Inscripcion> inscripciones;
 }

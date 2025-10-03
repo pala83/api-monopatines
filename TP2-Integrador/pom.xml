@@ -13,6 +13,7 @@
         <maven.compiler.target>21</maven.compiler.target>
     </properties>
     <dependencies>
+
         <!-- API JPA Jakarta -->
         <dependency>
             <groupId>jakarta.persistence</groupId>
@@ -47,11 +48,10 @@
             <version>1.18.38</version>
         </dependency>
         <!-- Libreria para manejo de archivos CSV -->
-
         <dependency>
-            <groupId>com.opencsv</groupId>
-            <artifactId>opencsv</artifactId>
-            <version>5.10</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.14.1</version>
         </dependency>
 
     </dependencies>
