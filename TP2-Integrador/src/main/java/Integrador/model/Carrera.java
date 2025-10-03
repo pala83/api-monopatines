@@ -1,17 +1,25 @@
 package Integrador.model;
 
-import jakarta.persistence.*;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "carrera")
+@Table(name = "CARRERA")
 @Data
 public class Carrera {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "duracion")
-    private int duracion;
+    private Integer duracion;
+    @OneToMany(mappedBy = "carrera", cascade = CascadeType.ALL)
+    private List<Inscripcion> inscripciones;
 }
