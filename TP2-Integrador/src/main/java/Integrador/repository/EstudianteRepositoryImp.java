@@ -9,6 +9,7 @@ import jakarta.persistence.EntityManager;
 
 public class EstudianteRepositoryImp implements EstudianteRepository {
 
+    // Ejercicio 2.a)
     @Override
     public void insert(Estudiante estudiante) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -38,9 +39,63 @@ public class EstudianteRepositoryImp implements EstudianteRepository {
     }
 
     @Override
+    public EstudianteDTO getByLu(Integer lu) {
+        EntityManager em = JPAUtil.getEntityManager();
+        EstudianteDTO estudianteDTO = null;
+        try {
+            String queryStr = "SELECT new Integrador.dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.edad, e.genero, e.ciudad, e.lu) " +
+                              "FROM Estudiante e " +
+                              "WHERE e.lu = :lu";
+            estudianteDTO = em.createQuery(queryStr, EstudianteDTO.class)
+                              .setParameter("lu", lu)
+                              .getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return estudianteDTO;
+    }
+
+    @Override
     public List<EstudianteDTO> getEstudiantes() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getEstudiantes'");
     }
-    
+
+    @Override
+    public List<EstudianteDTO> getEstudiantesConOrden(String atributo, String orden) {
+        EntityManager em = JPAUtil.getEntityManager();
+        List<EstudianteDTO> estudiantes = null;
+        try {
+            String queryStr = "SELECT new Integrador.dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.edad, e.genero, e.ciudad, e.lu) " +
+                              "FROM Estudiante e " +
+                              "ORDER BY e." + atributo + " " + orden;
+            estudiantes = em.createQuery(queryStr, EstudianteDTO.class).getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return estudiantes;
+    }
+
+    @Override
+    public List<EstudianteDTO> getEstudiantesPorGenero(String genero) {
+        EntityManager em = JPAUtil.getEntityManager();
+        List<EstudianteDTO> estudiantes = null;
+        try {
+            String queryStr = "SELECT new Integrador.dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.edad, e.genero, e.ciudad, e.lu) " +
+                              "FROM Estudiante e " +
+                              "WHERE e.genero = :genero";
+            estudiantes = em.createQuery(queryStr, EstudianteDTO.class)
+                            .setParameter("genero", genero)
+                            .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return estudiantes;
+    }
 }
