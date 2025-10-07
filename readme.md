@@ -1,70 +1,102 @@
-# Docker + MySQL + phpMyAdmin — instalación rápida
+# TP Integrador - Documentacion
 
-Resumen: Añadi `docker-compose.yml` al proyecto (raíz del repo) para levantar MySQL + phpMyAdmin. Los datos sensibles (contraseñas, puertos editables) se separan en un archivo `.env` en la raíz y **NO se suben al repositorio**.
+> 1) Considere el diseño de un registro de estudiantes, con la siguiente información: nombres, apellido,  edad,  género,  número  de  documento,  ciudad  de  residencia,  número  de  libreta universitaria, carrera(s) en la que está inscripto, antigüedad en cada una de esas carreras, y si se graduó o no. Diseñar el diagrama de objetos y el diagrama DER correspondiente.
 
-# ¿Qué se agregó?
 
-- **docker-compose.yml** — define servicios `db` (MySQL) y `phpmyadmin`.
-- **.env** — variables sensibles / configurables (ruta: **misma carpeta que** `docker-compose.yml`, es decir *root del proyecto*).
+## Esquema de Base de Datos
 
-> **IMPORTANTE**: Se añadió .env a .gitignore para que no se suba el archivo al repo.
+```mermaid
+erDiagram
+	ESTUDIANTE ||--o{ INSCRIPCION : se_inscribe
+	CARRERA    ||--o{ INSCRIPCION : tiene_inscriptos
 
-# Crear el archivo `.env`
+	ESTUDIANTE {
+		INT    dni PK
+		INT    lu
+		STRING nombre
+		STRING apellido
+		STRING genero
+		INT    edad
+		STRING ciudad
+	}
 
-1. En la raíz del proyecto (donde está `docker-compose.yml`) crea un archivo llamado `.env`.
-2. Pegar el template (editar valores antes de arrancar).
+	CARRERA {
+		INT    id PK
+		STRING nombre
+		INT    duracion
+	}
 
+	INSCRIPCION {
+		INT id PK
+		INT estudiante FK
+		INT carrera FK
+		INT inscripcion
+		INT graduacion
+		INT antiguedad
+	}
 ```
-# MySQL
-MYSQL_ROOT_PASSWORD=MiRootPassSegura123!
-MYSQL_DATABASE=mi_base
-MYSQL_USER=usuario
-MYSQL_PASSWORD=MiPassUsuario123!
 
-# Puertos (opcional — cambiar si hay conflictos)
-MYSQL_HOST_PORT=3306
-PHPMYADMIN_HOST_PORT=8080
+Notas
+- Claves primarias: `ESTUDIANTE.dni`, `CARRERA.id`, `INSCRIPCION.id`.
+- Foráneas: `INSCRIPCION.estudiante -> ESTUDIANTE.dni`, `INSCRIPCION.carrera -> CARRERA.id`.
+- Restricción de unicidad: `(estudiante, carrera)` en `INSCRIPCION` para evitar duplicados.
+- `lu` es único por estudiante.
+
+## Codigo SQL nativo equivalente:
+**2.a**
+- Dar de alta un estudiante.
+``` sql
+INSERT INTO ESTUDIANTE (dni, lu, nombre, apellido, genero, edad, ciudad)
+VALUES (?, ?, ?, ?, ?, ?, ?);
+```
+**2.b**
+- Matricular a un estudiante en una carrera.
+``` sql
+INSERT INTO INSCRIPCION (estudiante, carrera, inscripcion, graduacion, antiguedad)
+VALUES (?, ?, ?, ?, ?);
+```
+**2.c**
+- Recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
+``` sql
+SELECT * FROM ESTUDIANTE
+ORDER BY apellido ASC;
+```
+**2.d**
+- Recuperar un estudiante por su número de libreta universitaria.
+``` sql
+SELECT * FROM ESTUDIANTE
+WHERE lu = ?;
+```
+**2.e**
+- Recuperar todos los estudiantes en base a su género.
+``` sql
+SELECT * FROM ESTUDIANTE
+WHERE genero = ?;
+```
+**2.f**
+- Recuperar las carrera con los estudianes inscriptos, ordenadas por la cantidad de inscriptos.
+``` sql
+SELECT C.id, C.nombre, COUNT(I.estudiante) AS cantidad_inscriptos
+FROM CARRERA C
+JOIN INSCRIPCION I ON C.id = I.carrera
+GROUP BY C.id, C.nombre
+ORDER BY cantidad_inscriptos DESC;
+```
+**2.g**
+- Recuperar los estudiantes de una determinada carrera, filtrados por ciudad de residencia.
+``` sql
+SELECT E.dni, E.nombre, E.apellido, C.nombre AS carrera, E.ciudad
+FROM ESTUDIANTE E
+JOIN INSCRIPCION I ON E.dni = I.estudiante
+JOIN CARRERA C ON I.carrera = C.id
+WHERE C.nombre = ? AND E.ciudad = ?;
 ```
 
-# Comandos básicos - para levantar docker
-
-Desde la raíz del proyecto (donde están `docker-compose.yml` y `.env`):
-- Si te gusta ver lo que hace `docker` en la terminal y visualizar los logs.
-    - **Levantar docker**: `docker-compose up`
-    - **Matar proceso**: `ctrl + c`
-    - **Apagar docker**: `docker-compose down`
-- Si no te interesa ver lo que hace docker y no queres que te quede la terminal ocupada.
-    - **Levantar docker**: `docker-compose up -d`
-    - **Apagar docker**: `docker-compose down`
-
-## Si todo salio bien
-Acceder a phpMyAdmin: `http://localhost:8080` (usuario y contraseña: las que definiste en tu `.env`, `MYSQL_USER` y `MYSQL_PASSWORD`).
-
-## Si todo salio mal
-Lee el siguietne apartado.
-
-# Error común 1: instalaste `docker` pa la mierda.
-Anda a powershell o al emulador de terminal que uses y ejecuta `docker -v` deberia aparecer la version de `Docker` que tenes instalada.
-
-# Error común 2: instalaste `docker` pero no `docker-compose`.
-Anda a powershell o al emulador de terminal que uses y ejecuta `docker-compose -v` deberia aparecer la version de `docker-compose` que tenes instalada.
-
-# Error común: puerto en uso
-
-**Síntoma**: `Bind for 0.0.0.0:3306 failed: port is already allocated` o `address already in use`.
-
-**Soluciones rápidas** (elige una):
-- **Cambiar el puerto** en `.env` (p. ej. `MYSQL_HOST_PORT=3307`) y volver a `docker-compose up`.
-- **Detener el proceso que usa el puerto**:
-    - Linux/macOS:
-    ``` bash
-    sudo lsof -i :3306
-    sudo kill -9 <PID>
-    ```
-    - Windows (PowerShell)
-    ``` powershell
-    netstat -ano | findstr :3306
-    taskkill /PID <PID> /F
-    ```
-
-**Soluciones lentas**: Averigua que programa te esta usando el puerto y apagalo, preguntale a `GPT`.
+# 3. Generar  un  reporte  de  las  carreras,  que  para  cada  carrera  incluya  información  de  los inscriptos y egresados por año. Se deben ordenar las carreras alfabéticamente, y presentar los años de manera cronológica.
+``` sql
+SELECT C.nombre AS carrera, I.inscripcion, I.graduacion, COUNT(I.estudiante) AS cantidad_inscriptos
+FROM CARRERA C
+JOIN INSCRIPCION I ON C.id = I.carrera
+GROUP BY C.nombre, I.inscripcion, I.graduacion
+ORDER BY C.nombre ASC, I.inscripcion ASC;
+```

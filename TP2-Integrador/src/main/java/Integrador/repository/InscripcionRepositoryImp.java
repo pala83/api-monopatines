@@ -2,6 +2,8 @@ package Integrador.repository;
 
 import java.util.List;
 
+import Integrador.dto.CarrerasConInscriptosDTO;
+import Integrador.dto.EstudianteEnCarreraXCiudadDTO;
 import Integrador.dto.InscripcionDTO;
 import Integrador.factory.JPAUtil;
 import Integrador.model.Inscripcion;
@@ -43,6 +45,48 @@ public class InscripcionRepositoryImp implements InscripcionRepository {
             em.close();
         }
         return dto;
+    }
+
+    @Override
+    public List<CarrerasConInscriptosDTO> getCarrerasConInscriptos() {
+        EntityManager em = JPAUtil.getEntityManager();
+        List<CarrerasConInscriptosDTO> resultados = null;
+        try {
+            String queryStr = "SELECT new Integrador.dto.CarrerasConInscriptosDTO(c.nombre, COUNT(i.id)) " +
+                              "FROM Inscripcion i " +
+                              "JOIN i.carrera c " +
+                              "GROUP BY c.nombre " +
+                              "ORDER BY COUNT(i.id) DESC";
+            resultados = em.createQuery(queryStr, CarrerasConInscriptosDTO.class)
+                           .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return resultados;
+    }
+
+    @Override
+    public List<EstudianteEnCarreraXCiudadDTO> getEstudiantesEnCarreraXCiudad(String carrera, String ciudad){
+        EntityManager em = JPAUtil.getEntityManager();
+        List<EstudianteEnCarreraXCiudadDTO> resultados = null;
+        try {
+            String queryStr = "SELECT new Integrador.dto.EstudianteEnCarreraXCiudadDTO(e.dni, e.nombre, e.apellido, c.nombre, e.ciudad) " +
+                              "FROM Inscripcion i " +
+                              "JOIN i.estudiante e " +
+                              "JOIN i.carrera c " +
+                              "WHERE c.nombre = :carrera AND e.ciudad = :ciudad";
+            resultados = em.createQuery(queryStr, EstudianteEnCarreraXCiudadDTO.class)
+                           .setParameter("carrera", carrera)
+                           .setParameter("ciudad", ciudad)
+                           .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return resultados;
     }
 
     @Override

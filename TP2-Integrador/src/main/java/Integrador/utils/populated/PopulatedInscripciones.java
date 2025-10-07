@@ -24,7 +24,6 @@ public class PopulatedInscripciones implements Populated<InscripcionDTO> {
             Carrera car = cr.getById(dto.getId_carrera());
             if(est != null && car != null) {
                 Inscripcion ins = new Inscripcion();
-                ins.setId(dto.getId());
                 ins.setEstudiante(est);
                 ins.setCarrera(car);
                 ins.setInscripcion(dto.getInscripcion());
