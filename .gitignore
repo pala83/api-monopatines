@@ -1,12 +1,10 @@
 HELP.md
 target/
-<<<<<<<< HEAD:TP3-Integrador/.gitignore
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
 ### STS ###
-========
 test/
 facturadoraDB/
 !.mvn/wrapper/maven-wrapper.jar
@@ -25,7 +23,6 @@ facturadoraDB/
 *.ipr
 
 ### Eclipse ###
->>>>>>>> TP2:.gitignore
 .apt_generated
 .classpath
 .factorypath
@@ -52,15 +49,7 @@ build/
 
 ### VS Code ###
 .vscode/
-<<<<<<<< HEAD:TP3-Integrador/.gitignore
-========
 
-### Mac OS ###
-.DS_Store
-
-MyDerbyDB/
-derby.log
-
-### Variables de entorno ###
+### Archivos random que hay en el proyecto ###
+.mvn/
 .env
->>>>>>>> TP2:.gitignore

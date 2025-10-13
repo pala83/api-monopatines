@@ -1,4 +1,4 @@
-package integrador.demo;
+package integrador;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
