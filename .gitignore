@@ -53,3 +53,4 @@ build/
 ### Archivos random que hay en el proyecto ###
 .mvn/
 .env
+*.pdf
