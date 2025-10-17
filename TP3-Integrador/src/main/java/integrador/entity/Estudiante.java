@@ -16,7 +16,7 @@ import lombok.Data;
 public class Estudiante {
     @Id
     @Column(name = "dni")
-    private Integer dni;
+    private Long dni;
     
     @Column(name = "lu", nullable = false, unique = true)
     private Integer lu;

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import integrador.entity.Estudiante;
 
 @Repository("EstudianteRepository")
-public interface EstudianteRepository extends JpaRepository<Estudiante, Integer> {
+public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
 
 }

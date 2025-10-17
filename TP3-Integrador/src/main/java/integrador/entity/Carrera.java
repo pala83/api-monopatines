@@ -15,7 +15,7 @@ import lombok.Data;
 @Data
 public class Carrera {
     @Id
-    private Integer id;
+    private Long id;
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "duracion")

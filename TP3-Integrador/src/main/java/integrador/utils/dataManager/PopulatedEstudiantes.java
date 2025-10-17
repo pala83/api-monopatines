@@ -26,10 +26,9 @@ public class PopulatedEstudiantes extends Populated<Estudiante> {
         
         Iterable<CSVRecord> records = this.read();
         for(CSVRecord r : records){
-            System.out.println("Cargando estudiante: " + r.get("nombre") + " " + r.get("apellido"));
             try {
                 Estudiante e = new Estudiante();
-                e.setDni(Integer.parseInt(r.get("DNI")));
+                e.setDni(Long.parseLong(r.get("DNI")));
                 e.setNombre(r.get("nombre"));
                 e.setApellido(r.get("apellido"));
                 e.setEdad(Integer.parseInt(r.get("edad")));
