@@ -27,7 +27,10 @@ public abstract class Populated<T> {
         Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
         CSVParser parser = null;
         try {
-            parser = CSVFormat.DEFAULT.builder().setHeader().get().parse(reader);
+            parser = CSVFormat.DEFAULT.builder()
+                .setHeader()
+                .get()
+                .parse(reader);
             var records = parser.getRecords(); // materializa todos los registros en memoria
             System.out.println("[Populated.read] Registros leídos: " + records.size() + " desde: " + resourcePath);
             return records;
