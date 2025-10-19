@@ -23,7 +23,6 @@ public abstract class Populated<T> {
         ClassPathResource resource = new ClassPathResource(this.filePath.toString());
         InputStream is = resource.getInputStream();
 
-        // No cerrar el reader/stream hasta materializar los registros para evitar "Stream closed"
         Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
         CSVParser parser = null;
         try {
@@ -31,20 +30,13 @@ public abstract class Populated<T> {
                 .setHeader()
                 .get()
                 .parse(reader);
-            var records = parser.getRecords(); // materializa todos los registros en memoria
-            System.out.println("[Populated.read] Registros leídos: " + records.size() + " desde: " + resourcePath);
+            var records = parser.getRecords();
             return records;
         } catch (IOException e) {
             System.err.println("[Populated.read] ERROR leyendo/parsing CSV '" + resourcePath + "': " + e.getMessage());
             throw e;
         } finally {
-            if (parser != null) {
-                try {
-                    parser.close(); // cierra el reader y el stream subyacente
-                } catch (IOException closeEx) {
-                    System.err.println("[Populated.read] ERROR al cerrar parser para '" + resourcePath + "': " + closeEx.getMessage());
-                }
-            }
+            parser.close();
         }
     }
 

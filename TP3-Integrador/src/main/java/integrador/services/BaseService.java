@@ -2,10 +2,10 @@ package integrador.services;
 
 import java.util.List;
 
-public interface BaseService<T> {
-    List<T> findAll() throws Exception;
-    T findById(Long id) throws Exception;
-    T save(Object entity) throws Exception;
-    T update(Long id, Object entity) throws Exception;
-    boolean delete(Long id) throws Exception;    
+public interface BaseService<Request, Response> {
+    List<Response> findAll();
+    Response findById(Long id);
+    Response save(Request entity);
+    // Response update(Long id, Request entity);
+    boolean delete(Long id);    
 }
