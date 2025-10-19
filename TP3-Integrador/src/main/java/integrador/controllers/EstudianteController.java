@@ -1,4 +1,4 @@
-package integrador.Controllers;
+package integrador.controllers;
 
 import java.util.List;
 

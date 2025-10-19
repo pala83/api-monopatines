@@ -15,8 +15,8 @@ public class InscripcionRequestDTO {
     @Min(value = 0, message = "El ID de la carrera debe ser un número positivo")
     @NotNull(message = "El ID de la carrera no puede ser nulo")
     private Long id_carrera;
-    @NotNull(message = "El año de inscripción no puede ser nulo")
     @Min(value = 1970, message = "El año de inscripción debe ser mayor o igual a 1970")
+    @NotNull(message = "El año de inscripción no puede ser nulo")
     private Integer inscripcion;
     
     private Integer graduacion;

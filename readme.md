@@ -1,102 +1,203 @@
-# TP Integrador - Documentacion
+# TP Integrador 3 - Grupo 20
 
-> 1) Considere el diseño de un registro de estudiantes, con la siguiente información: nombres, apellido,  edad,  género,  número  de  documento,  ciudad  de  residencia,  número  de  libreta universitaria, carrera(s) en la que está inscripto, antigüedad en cada una de esas carreras, y si se graduó o no. Diseñar el diagrama de objetos y el diagrama DER correspondiente.
+## API REST - Documentacion
 
+Base URL por defecto: http://localhost:8090
 
-## Esquema de Base de Datos
+Todas las respuestas son JSON. Los errores se reportan con códigos HTTP estándar (400/404/500) y mensajes descriptivos.
 
-```mermaid
-erDiagram
-	ESTUDIANTE ||--o{ INSCRIPCION : se_inscribe
-	CARRERA    ||--o{ INSCRIPCION : tiene_inscriptos
+---
 
-	ESTUDIANTE {
-		INT    dni PK
-		INT    lu
-		STRING nombre
-		STRING apellido
-		STRING genero
-		INT    edad
-		STRING ciudad
-	}
+## a) Dar de alta un estudiante
 
-	CARRERA {
-		INT    id PK
-		STRING nombre
-		INT    duracion
-	}
+- Método: `POST`
+- Ruta: `/estudiantes`
+- Body: `JSON`
+- Consulta rapida:
+	- `http://localhost:8090/estudiantes`
+	- 	``` json
+		{
+			"dni": 40373769,
+			"lu": 25048,
+			"nombre": "Ulises",
+			"apellido": "Palazzo",
+			"genero": "Macho",
+			"ciudad": "Rauch"
+		}
+		```
 
-	INSCRIPCION {
-		INT id PK
-		INT estudiante FK
-		INT carrera FK
-		INT inscripcion
-		INT graduacion
-		INT antiguedad
-	}
+| Campo 	| Tipo 	| Requerido |
+|-----------|-------|-----------|
+| dni		| Num	| x			|
+| nombre	| Str	| x			|
+| apellido	| Str	| x			|
+| edad		| Num	|  			|
+| genero	| Str	| x			|
+| ciudad	| Str	| x			|
+| lu		| Num	| x			|
+
+Ejemplo usando `curl`:
+
+```bash
+curl -X POST http://localhost:8090/estudiantes \
+	-H "Content-Type: application/json" \
+	-d '{
+		"dni": 40373769,
+		"lu": 25048,
+		"nombre": "Ulises",
+		"apellido": "Palazzo",
+		"genero": "Macho",
+		"ciudad": "Rauch"
+	}'
 ```
 
-Notas
-- Claves primarias: `ESTUDIANTE.dni`, `CARRERA.id`, `INSCRIPCION.id`.
-- Foráneas: `INSCRIPCION.estudiante -> ESTUDIANTE.dni`, `INSCRIPCION.carrera -> CARRERA.id`.
-- Restricción de unicidad: `(estudiante, carrera)` en `INSCRIPCION` para evitar duplicados.
-- `lu` es único por estudiante.
-
-## Codigo SQL nativo equivalente:
-**2.a**
-- Dar de alta un estudiante.
-``` sql
-INSERT INTO ESTUDIANTE (dni, lu, nombre, apellido, genero, edad, ciudad)
-VALUES (?, ?, ?, ?, ?, ?, ?);
-```
-**2.b**
-- Matricular a un estudiante en una carrera.
-``` sql
-INSERT INTO INSCRIPCION (estudiante, carrera, inscripcion, graduacion, antiguedad)
-VALUES (?, ?, ?, ?, ?);
-```
-**2.c**
-- Recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
-``` sql
-SELECT * FROM ESTUDIANTE
-ORDER BY apellido ASC;
-```
-**2.d**
-- Recuperar un estudiante por su número de libreta universitaria.
-``` sql
-SELECT * FROM ESTUDIANTE
-WHERE lu = ?;
-```
-**2.e**
-- Recuperar todos los estudiantes en base a su género.
-``` sql
-SELECT * FROM ESTUDIANTE
-WHERE genero = ?;
-```
-**2.f**
-- Recuperar las carrera con los estudianes inscriptos, ordenadas por la cantidad de inscriptos.
-``` sql
-SELECT C.id, C.nombre, COUNT(I.estudiante) AS cantidad_inscriptos
-FROM CARRERA C
-JOIN INSCRIPCION I ON C.id = I.carrera
-GROUP BY C.id, C.nombre
-ORDER BY cantidad_inscriptos DESC;
-```
-**2.g**
-- Recuperar los estudiantes de una determinada carrera, filtrados por ciudad de residencia.
-``` sql
-SELECT E.dni, E.nombre, E.apellido, C.nombre AS carrera, E.ciudad
-FROM ESTUDIANTE E
-JOIN INSCRIPCION I ON E.dni = I.estudiante
-JOIN CARRERA C ON I.carrera = C.id
-WHERE C.nombre = ? AND E.ciudad = ?;
+Respuesta `201` (ejemplo):
+```json
+{
+	"dni": 40373769,
+	"nombreCompleto": "Ulises Palazzo",
+	"ciudad": "Rauch",
+	"lu": 25048
+}
 ```
 
-# 3. Generar  un  reporte  de  las  carreras,  que  para  cada  carrera  incluya  información  de  los inscriptos y egresados por año. Se deben ordenar las carreras alfabéticamente, y presentar los años de manera cronológica.
-``` sql
-SELECT C.nombre AS carrera, I.inscripcion, I.graduacion, COUNT(I.estudiante) AS cantidad_inscriptos
-FROM CARRERA C
-JOIN INSCRIPCION I ON C.id = I.carrera
-GROUP BY C.nombre, I.inscripcion, I.graduacion
-ORDER BY C.nombre ASC, I.inscripcion ASC;
+---
+
+## b) Matricular un estudiante en una carrera
+
+- Método: `POST`
+- Ruta: `/inscripciones`
+- Body `JSON`:
+- Consulta rapida:
+	- `http://localhost:8090/inscripciones`
+	- ``` json
+		{
+			"id_estudiante": 40373769,
+			"id_carrera": 1,
+			"inscripcion": 2023,
+			"antiguedad": 2
+		}
+		```
+
+| Campo 		| Tipo 	| Requerido |
+|---------------|-------|-----------|
+| id_estudiante	| Num	| x			|
+| id_carrera	| Num	| x			|
+| inscripcion	| Num	| x			|
+| graduacion	| Num	|  			|
+| antiguedad	| Num	| x			|
+
+Ejemplo usando `curl`:
+```bash
+curl -X POST http://localhost:8090/inscripciones \
+	-H "Content-Type: application/json" \
+	-d '{
+		"id_estudiante": 40373769,
+		"id_carrera": 1,
+		"inscripcion": 2023,
+		"antiguedad": 2
+	}'
 ```
+
+Respuesta `201` (ejemplo):
+```json
+{
+	"id_estudiante": 40373769,
+	"id_carrera": 1,
+	"inscripcion": 2023,
+	"graduacion": null,
+	"antiguedad": 2
+}
+```
+
+---
+
+## c) Listar estudiantes con ordenamiento simple
+
+- Método: `GET`
+- Ruta: `/estudiantes/ordenado`
+- Query params:
+	- orderBy: nombre del campo (por ejemplo: nombre, apellido, ciudad, genero, edad, lu, dni)
+	- direction: ASC o DESC (opcional; por defecto ASC)
+
+Ejemplo usando `curl`:
+```bash
+curl "http://localhost:8090/estudiantes/ordenado?orderBy=apellido&direction=DESC"
+curl "http://localhost:8090/estudiantes/ordenado?orderBy=ciudad"
+```
+
+---
+
+## d) Obtener un estudiante por LU
+
+- Método: `GET`
+- Ruta: `/estudiantes/lu/{lu}`
+
+Ejemplo usando `curl`:
+```bash
+curl "http://localhost:8090/estudiantes/lu/25048"
+```
+
+---
+
+## e) Listar estudiantes por género
+
+- Método: `GET`
+- Ruta: `/estudiantes/genero/{genero}`
+
+Ejemplo usando `curl`:
+```bash
+curl "http://localhost:8090/estudiantes/genero/Macho"
+```
+
+---
+
+## f) Carreras con cantidad de inscriptos (ordenado desc)
+
+- Método: `GET`
+- Ruta: `/carreras/inscriptos`
+
+Ejemplo usando `curl`:
+```bash
+curl "http://localhost:8090/carreras/inscriptos"
+```
+
+---
+
+## g) Estudiantes de una carrera, filtrado por ciudad (opcional)
+
+- Método: `GET`
+- Ruta: `/estudiantes/carrera/{carreraId}`
+- Query param:
+	- ciudad (opcional; si se omite, devuelve todos los estudiantes de la carrera)
+
+Ejemplo usando `curl`:
+```bash
+# Con filtro de ciudad
+curl "http://localhost:8090/estudiantes/carrera/1?ciudad=rauch"
+
+# Sin filtro de ciudad
+curl "http://localhost:8090/estudiantes/carrera/1"
+```
+
+---
+
+## h) Reporte de carreras: inscriptos y egresados por año
+
+- Método: `GET`
+- Ruta: `/inscripciones/reporte`
+
+Ejemplo usando `curl`:
+```bash
+curl "http://localhost:8090/inscripciones/reporte"
+```
+
+---
+
+## Consideraciones generales
+- Códigos de error:
+	- 400 Bad Request: parámetros inválidos o cuerpo de solicitud mal formado.
+	- 404 Not Found: recurso inexistente (por ejemplo, LU o IDs no encontrados).
+	- 500 Internal Server Error: fallo inesperado en el servidor.
+- Content-Type: usar `application/json` para los POST.
+- Encoding: UTF-8.

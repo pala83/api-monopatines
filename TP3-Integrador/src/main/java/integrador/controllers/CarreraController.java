@@ -1,4 +1,4 @@
-package integrador.Controllers;
+package integrador.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import integrador.services.CarreraService;
 public class CarreraController {
     @Autowired
     private CarreraService carreraService;
-    
+
     // f) recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos.
     @GetMapping("inscriptos")
     public ResponseEntity<?> getCarrerasConInscriptosOrdenado() {
