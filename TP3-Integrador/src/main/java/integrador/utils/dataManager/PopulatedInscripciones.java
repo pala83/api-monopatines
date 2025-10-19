@@ -43,10 +43,11 @@ public class PopulatedInscripciones extends Populated<Inscripcion> {
                 if(nuevoEstudiante == null || nuevaCarrera == null)
                     System.out.println("Estudiante o Carrera no encontrada para Inscripcion: " + r.toString());
                 else {
+                    int graduacion = Integer.parseInt(r.get("graduacion"));
                     i.setEstudiante(nuevoEstudiante);
                     i.setCarrera(nuevaCarrera);
                     i.setInscripcion(Integer.parseInt(r.get("inscripcion")));
-                    i.setGraduacion(Integer.parseInt(r.get("graduacion")));
+                    i.setGraduacion(graduacion == 0 ? null : graduacion);
                     i.setAntiguedad(Integer.parseInt(r.get("antiguedad")));
                     inscripciones.add(i);
                 }
