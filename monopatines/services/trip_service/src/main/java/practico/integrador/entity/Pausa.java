@@ -1,5 +1,5 @@
 package practico.integrador.entity;
 
-public class Parada {
+public class Pausa {
     
 }
