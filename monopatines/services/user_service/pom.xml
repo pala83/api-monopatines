@@ -9,10 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>practico.integrador</groupId>
-	<artifactId>monopatines</artifactId>
+	<artifactId>user_service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>monopatines</name>
-	<packaging>pom</packaging>
+	<name>user_service</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -30,7 +29,6 @@
 	<properties>
 		<java.version>21</java.version>
 	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -64,17 +62,9 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			
 		</dependency>
 	</dependencies>
-	<modules>
-		<module>api_gateway</module>
-		<module>services/user_service</module>
-		<module>services/vehicle_service</module>
-		<module>services/trip_service</module>
-		<module>services/payment_service</module>
-		<module>services/maintenance_service</module>
-	</modules>
+
 	<build>
 		<plugins>
 			<plugin>
