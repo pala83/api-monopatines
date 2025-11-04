@@ -17,6 +17,7 @@ import lombok.*;
 @Table(name = "usuarios")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Usuario {
 
     @Id

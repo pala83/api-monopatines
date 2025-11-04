@@ -3,20 +3,21 @@ package practico.integrador.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tarifas")
+@Table(name = "pagos")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Tarifa {
+public class Pago {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private BigDecimal precioPorMinuto;
-    private BigDecimal precioPausaPorMinuto;
-    private LocalDate fechaInicioVigencia;
+    private Long idCuenta;
+    private BigDecimal monto;
+    private LocalDateTime fechaPago;
+    private String medio; // Ej: MercadoPago, tarjeta, etc.
 }

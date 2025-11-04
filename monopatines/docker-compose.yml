@@ -1,9 +1,8 @@
-version: "3.9"
 services:
 
   # 🧍‍♂️ USER-SERVICE
   user-service:
-    build: ./user_service
+    build: ./services/user_service
     container_name: user_service
     ports:
       - "8081:8081"
@@ -28,7 +27,7 @@ services:
 
   # 🛴 VEHICLE-SERVICE
   vehicle-service:
-    build: ./vehicle_service
+    build: ./services/vehicle_service
     container_name: vehicle_service
     ports:
       - "8082:8082"
@@ -53,7 +52,7 @@ services:
 
   # 🗺️ TRIP-SERVICE
   trip-service:
-    build: ./trip_service
+    build: ./services/trip_service
     container_name: trip_service
     ports:
       - "8083:8083"
@@ -78,7 +77,7 @@ services:
     
   #  Maintenance-SERVICE
   maintenance-service:
-    build: ./maintenance_service
+    build: ./services/maintenance_service
     container_name: maintenance_service
     ports:
       - "8084:8084"
@@ -103,7 +102,7 @@ services:
     
   #  Payment-SERVICE
   payment-service:
-    build: ./payment_service
+    build: ./services/payment_service
     container_name: payment_service
     ports:
       - "8085:8085"
@@ -138,9 +137,9 @@ services:
       - trip-service
       - maintenance-service
       - payment-service
-    volumes:
-      db_users_data:
-      db_vehicles_data:
-      db_trips_data:
-      db_maintenance_data:
-      db_payment_data:
+volumes:
+  db_users_data:
+  db_vehicles_data:
+  db_trips_data:
+  db_maintenance_data:
+  db_payment_data:
