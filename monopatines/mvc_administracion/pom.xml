@@ -8,22 +8,19 @@
 		<version>4.0.0-RC1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>practico.integrador</groupId>
-	<artifactId>monopatines</artifactId>
+	<groupId>microservicio.administracion</groupId>
+	<artifactId>mvc_administracion</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>monopatines</name>
-	<packaging>pom</packaging>
+	<name>mvc_administracion</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>21</java.version>
 	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -52,17 +49,9 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			
 		</dependency>
 	</dependencies>
-	<modules>
-		<module>api_gateway</module>
-		<module>mvc_administracion</module>
-		<module>mvc_usuario</module>
-		<module>mvc_facturacion</module>
-		<module>mvc_monopatin</module>
-		<module>services/trip_service</module>
-	</modules>
+
 	<build>
 		<plugins>
 			<plugin>

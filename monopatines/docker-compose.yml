@@ -1,5 +1,13 @@
 services:
 
+  admin_service:
+    build:
+      context: ./mvc_administracion
+      dockerfile: Dockerfile
+    ports:
+      - "8090:8090"
+
+
   # 🧍‍♂️ USER-SERVICE
   user-service:
     build: ./services/user_service
