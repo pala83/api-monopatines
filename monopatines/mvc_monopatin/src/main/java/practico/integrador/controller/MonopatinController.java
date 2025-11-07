@@ -28,7 +28,7 @@ public class MonopatinController {
 
     @PostMapping
     public ResponseEntity<MonopatinResponse> create(@Validated @RequestBody MonopatinRequest req) {
-        return ResponseEntity.ok(monopatinService.create(req));
+        return ResponseEntity.ok(monopatinService.save(req));
     }
 
     @PutMapping("{id}")
@@ -45,7 +45,7 @@ public class MonopatinController {
     // endpoint extra: listar disponibles
     @GetMapping("disponibles")
     public ResponseEntity<List<MonopatinResponse>> disponibles() {
-        return ResponseEntity.ok(monopatinService.listDisponibles());
+        return ResponseEntity.ok(monopatinService.listarDisponibles());
     }
 
     // endpoint extra: buscar por cercanía
@@ -53,8 +53,8 @@ public class MonopatinController {
     public ResponseEntity<List<MonopatinResponse>> cercanos(
             @RequestParam Double lat,
             @RequestParam Double lon,
-            @RequestParam(required = false, defaultValue = "10") Integer limit
+            @RequestParam(defaultValue = "10") Integer limit
     ) {
-        return ResponseEntity.ok(monopatinService.listByProximity(lat, lon, limit));
+        return ResponseEntity.ok(monopatinService.listarPorCercania(lat, lon, limit));
     }
 }

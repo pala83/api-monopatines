@@ -22,22 +22,22 @@ public class ParadaController {
         return ResponseEntity.ok(paradaService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<ParadaResponse> getById(@PathVariable Long id) {
         return ResponseEntity.ok(paradaService.findById(id));
     }
 
     @PostMapping
     public ResponseEntity<ParadaResponse> create(@Validated @RequestBody ParadaRequest req) {
-        return ResponseEntity.ok(paradaService.create(req));
+        return ResponseEntity.ok(paradaService.save(req));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<ParadaResponse> update(@PathVariable Long id, @Validated @RequestBody ParadaRequest req) {
         return ResponseEntity.ok(paradaService.update(id, req));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         paradaService.delete(id);
         return ResponseEntity.noContent().build();

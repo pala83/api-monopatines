@@ -3,6 +3,8 @@ package practico.integrador.service;
 
 
 import lombok.RequiredArgsConstructor;
+import practico.integrador.dto.monopatin.MonopatinRequest;
+import practico.integrador.dto.monopatin.MonopatinResponse;
 import practico.integrador.dto.parada.*;
 import practico.integrador.entity.Parada;
 import practico.integrador.repository.ParadaRepository;
@@ -14,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ParadaService {
+public class ParadaService implements BaseService<ParadaRequest, ParadaResponse>{
 
     private final ParadaRepository paradaRepository;
 
@@ -27,13 +29,12 @@ public class ParadaService {
         return toResponse(p);
     }
 
-    public ParadaResponse create(ParadaRequest req) {
+    public ParadaResponse save(ParadaRequest req) {
         Parada p = new Parada();
         p.setNombre(req.getNombre());
         p.setLatitud(req.getLatitud());
         p.setLongitud(req.getLongitud());
-        Parada saved = paradaRepository.save(p);
-        return toResponse(saved);
+        return toResponse(paradaRepository.save(p));
     }
 
     public ParadaResponse update(Long id, ParadaRequest req) {
