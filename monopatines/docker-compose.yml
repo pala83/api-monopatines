@@ -1,66 +1,66 @@
 services:
 
-  admin_service:
-    build:
-      context: ./mvc_administracion
-      dockerfile: Dockerfile
-    ports:
-      - "8090:8090"
+#  admin_service:
+#    build:
+#      context: ./mvc_administracion
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8090:8090"
 
 
   # 🧍‍♂️ USER-SERVICE
-  user-service:
-    build: ./services/user_service
-    container_name: user_service
+  mvc_usuario:
+    build: ./mvc_usuario
+    container_name: mvc_usuario
     ports:
       - "8081:8081"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db_users:3306/db_users
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db_usuario:3306/db_usuario
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=1234
     depends_on:
-      - db_users
+      - db_usuario
 
-  db_users:
+  db_usuario:
     image: mysql:latest
-    container_name: db_users
+    container_name: db_usuario
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: db_users
+      MYSQL_DATABASE: db_usuario
     ports:
       - "3307:3306"
     volumes:
-      - db_users_data:/var/lib/mysql
+      - db_usuario_data:/var/lib/mysql
 
-  # 🛴 VEHICLE-SERVICE
-  vehicle-service:
-    build: ./services/vehicle_service
-    container_name: vehicle_service
+  # 🛴 mvc_monopatin
+  mvc_monopatin:
+    build: ./mvc_monopatin
+    container_name: mvc_monopatin
     ports:
       - "8082:8082"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db_vehicles:3306/db_vehicles
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db_monopatin:3306/db_monopatin
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=1234
     depends_on:
-      - db_vehicles
+      - db_monopatin
 
-  db_vehicles:
+  db_monopatin:
     image: mysql:latest
-    container_name: db_vehicles
+    container_name: db_monopatin
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: db_vehicles
+      MYSQL_DATABASE: db_monopatin
     ports:
       - "3308:3306"
     volumes:
-      - db_vehicles_data:/var/lib/mysql
+      - db_monopatin_data:/var/lib/mysql
 
   # 🗺️ TRIP-SERVICE
   trip-service:
-    build: ./services/trip_service
+    build: ./trip_service
     container_name: trip_service
     ports:
       - "8083:8083"
@@ -83,55 +83,55 @@ services:
     volumes:
       - db_trips_data:/var/lib/mysql
     
-  #  Maintenance-SERVICE
-  maintenance-service:
-    build: ./services/maintenance_service
-    container_name: maintenance_service
+  #  mvc_administracion
+  mvc_administracion:
+    build: ./mvc_administracion
+    container_name: mvc_administracion
     ports:
       - "8084:8084"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db_maintenance:3306/db_maintenance
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db_administracion:3306/db_administracion
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=1234
     depends_on:
-      - db_maintenance
+      - db_administracion
 
-  db_maintenance:
+  db_administracion:
     image: mysql:latest
-    container_name: db_maintenance
+    container_name: db_administracion
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: db_maintenance
+      MYSQL_DATABASE: db_administracion
     ports:
       - "3310:3306"
     volumes:
-      - db_maintenance_data:/var/lib/mysql
+      - db_administracion_data:/var/lib/mysql
     
-  #  Payment-SERVICE
-  payment-service:
-    build: ./services/payment_service
-    container_name: payment_service
+  #  mvc_facturacion
+  mvc_facturacion:
+    build: ./mvc_facturacion
+    container_name: mvc_facturacion
     ports:
       - "8085:8085"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db_payment:3306/db_payment
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db_facturacion:3306/db_facturacion
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=1234
     depends_on:
-      - db_payment
+      - db_facturacion
 
-  db_payment:
+  db_facturacion:
     image: mysql:latest
-    container_name: db_payment
+    container_name: db_facturacion
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: db_payment
+      MYSQL_DATABASE: db_facturacion
     ports:
       - "3311:3306"
     volumes:
-      - db_payment_data:/var/lib/mysql
+      - db_facturacion_data:/var/lib/mysql
 
   # 🚪 API-GATEWAY
   api-gateway:
@@ -140,14 +140,14 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - user-service
-      - vehicle-service
+      - mvc_usuario
+      - mvc_monopatin
       - trip-service
-      - maintenance-service
-      - payment-service
+      - mvc_administracion
+      - mvc_facturacion
 volumes:
-  db_users_data:
-  db_vehicles_data:
+  db_usuario_data:
+  db_monopatin_data:
   db_trips_data:
-  db_maintenance_data:
-  db_payment_data:
+  db_administracion_data:
+  db_facturacion_data:

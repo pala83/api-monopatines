@@ -14,10 +14,14 @@ public class Monopatin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String codigoQR;
+
+    @Column(nullable = false)
     private double kmTotales;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private EstadoMonopatin estado;
 
     @ManyToOne

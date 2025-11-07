@@ -16,7 +16,10 @@ public class Tarifa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private BigDecimal precioPorMinuto;
-    private BigDecimal precioPausaPorMinuto;
+    @Column(nullable = false)
+    private Double precioPorMinuto;
+    @Column(nullable = false)
+    private Double precioPausaPorMinuto;
+    @Column(nullable = false)
     private LocalDate fechaInicioVigencia;
 }

@@ -61,7 +61,7 @@
 		<module>mvc_usuario</module>
 		<module>mvc_facturacion</module>
 		<module>mvc_monopatin</module>
-		<module>services/trip_service</module>
+		<module>trip_service</module>
 	</modules>
 	<build>
 		<plugins>

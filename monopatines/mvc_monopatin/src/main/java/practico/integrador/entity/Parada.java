@@ -14,11 +14,13 @@ public class Parada {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(nullable = false)
     private String nombre;
+    @Column(nullable = false)
     private double latitud;
+    @Column(nullable = false)
     private double longitud;
 
-    @OneToMany(mappedBy = "paradaActual")
+    @OneToMany(mappedBy = "paradaActual", cascade = CascadeType.ALL)
     private List<Monopatin> monopatines;
 }

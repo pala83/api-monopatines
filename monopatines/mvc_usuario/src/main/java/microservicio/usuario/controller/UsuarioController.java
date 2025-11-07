@@ -3,24 +3,26 @@ package microservicio.usuario.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import microservicio.usuario.dto.usuario.UsuarioRequest;
 import microservicio.usuario.dto.usuario.UsuarioResponse;
 import microservicio.usuario.service.UsuarioService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 
 @RestController
-@RequestMapping("usuarios")
+@RequestMapping("/usuarios")
 public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
-
-    @PostMapping("")
+    @GetMapping("/")
+    public ResponseEntity<List<UsuarioResponse>> getAll() {
+        return ResponseEntity.ok(usuarioService.findAll());
+    }
+    @PostMapping("/")
     public ResponseEntity<?> saveUsuario(@Valid @RequestBody UsuarioRequest usuarioRequest) {
         try{
             UsuarioResponse usuarioResponse = usuarioService.save(usuarioRequest);

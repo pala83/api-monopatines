@@ -9,6 +9,7 @@ import microservicio.usuario.dto.usuario.UsuarioRequest;
 import microservicio.usuario.dto.usuario.UsuarioResponse;
 import microservicio.usuario.entity.Usuario;
 import microservicio.usuario.repository.UsuarioRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("UsuarioService")
 public class UsuarioService implements BaseService<UsuarioRequest, UsuarioResponse> {
@@ -17,6 +18,7 @@ public class UsuarioService implements BaseService<UsuarioRequest, UsuarioRespon
     private UsuarioRepository usuarioRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<UsuarioResponse> findAll() {
         return this.usuarioRepository
             .findAll()
