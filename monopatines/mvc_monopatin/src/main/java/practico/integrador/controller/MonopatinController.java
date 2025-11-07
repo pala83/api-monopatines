@@ -26,7 +26,7 @@ public class MonopatinController {
         return ResponseEntity.ok(monopatinService.findById(id));
     }
 
-    @PostMapping
+    @PostMapping("")
     public ResponseEntity<MonopatinResponse> create(@Validated @RequestBody MonopatinRequest req) {
         return ResponseEntity.ok(monopatinService.save(req));
     }
@@ -42,19 +42,19 @@ public class MonopatinController {
         return ResponseEntity.noContent().build();
     }
 
-    // endpoint extra: listar disponibles
+
     @GetMapping("disponibles")
     public ResponseEntity<List<MonopatinResponse>> disponibles() {
         return ResponseEntity.ok(monopatinService.listarDisponibles());
     }
 
-    // endpoint extra: buscar por cercanía
-    @GetMapping("cercanos")
-    public ResponseEntity<List<MonopatinResponse>> cercanos(
-            @RequestParam Double lat,
-            @RequestParam Double lon,
-            @RequestParam(defaultValue = "10") Integer limit
-    ) {
-        return ResponseEntity.ok(monopatinService.listarPorCercania(lat, lon, limit));
-    }
+    // comentado porque rompetodo la query hay que arreglarla
+//    @GetMapping("cercanos")
+//    public ResponseEntity<List<MonopatinResponse>> cercanos(
+//            @RequestParam Double lat,
+//            @RequestParam Double lon,
+//            @RequestParam(defaultValue = "10") Integer limit
+//    ) {
+//        return ResponseEntity.ok(monopatinService.listarPorCercania(lat, lon, limit));
+//    }
 }

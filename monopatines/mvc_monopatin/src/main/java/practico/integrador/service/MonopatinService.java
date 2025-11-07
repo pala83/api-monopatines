@@ -70,14 +70,14 @@ public class  MonopatinService implements BaseService<MonopatinRequest,Monopatin
     public List<MonopatinResponse> listarDisponibles() {
         return monopatinRepository.findByEstado(EstadoMonopatin.DISPONIBLE).stream().map(this::toResponse).collect(Collectors.toList());
     }
-
-    @Transactional
-    public List<MonopatinResponse> listarPorCercania(Double lat, Double lon, int limite) {
-        return monopatinRepository.buscarPorCercania(lat, lon, limite)
-                .stream()
-                .map(this::toResponse)
-                .collect(Collectors.toList());
-    }
+//comentado porque rompetodo la query hay que arreglarla
+//    @Transactional
+//    public List<MonopatinResponse> listarPorCercania(Double lat, Double lon, int limite) {
+//        return monopatinRepository.buscarPorCercania(lat, lon, limite)
+//                .stream()
+//                .map(this::toResponse)
+//                .collect(Collectors.toList());
+//    }
 
     private MonopatinResponse toResponse(Monopatin m) {
         MonopatinResponse r = new MonopatinResponse();

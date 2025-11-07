@@ -3,8 +3,6 @@ package practico.integrador.service;
 
 
 import lombok.RequiredArgsConstructor;
-import practico.integrador.dto.monopatin.MonopatinRequest;
-import practico.integrador.dto.monopatin.MonopatinResponse;
 import practico.integrador.dto.parada.*;
 import practico.integrador.entity.Parada;
 import practico.integrador.repository.ParadaRepository;

@@ -14,11 +14,12 @@ public interface MonopatinRepository extends JpaRepository<Monopatin, Long> {
     @Query("SELECT m FROM Monopatin m WHERE m.estado = :estado")
     List<Monopatin> findByEstado(@Param("estado") EstadoMonopatin estado);
 
-    @Query(
-           " SELECT m.* FROM monopatines JOIN paradas p ON m.parada_actual_id = " +
-           "p.idWHERE m.estado = 'DISPONIBLE'ORDER BY POW(p.latitud - :lat, 2) + " +
-           "POW(p.longitud - :lon, 2) LIMIT :limite "
-    )
-    List<Monopatin> buscarPorCercania(@Param("lat") Double lat, @Param("lon") Double lon, @Param("limite") int limite);
+//comentado porque rompetodo la query hay que arreglarla
+//    @Query(
+//           " SELECT m.* FROM monopatines JOIN paradas p ON m.parada_actual_id = " +
+//           "p.idWHERE m.estado = 'DISPONIBLE'ORDER BY POW(p.latitud - :lat, 2) + " +
+//           "POW(p.longitud - :lon, 2) LIMIT :limite "
+//    )
+ //   List<Monopatin> buscarPorCercania(@Param("lat") Double lat, @Param("lon") Double lon, @Param("limite") int limite);
 
 }

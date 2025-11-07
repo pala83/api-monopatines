@@ -13,7 +13,7 @@ services:
     build: ./mvc_usuario
     container_name: mvc_usuario
     ports:
-      - "8081:8081"
+      - "8082:8082"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db_usuario:3306/db_usuario
       - SPRING_DATASOURCE_USERNAME=root
@@ -38,7 +38,7 @@ services:
     build: ./mvc_monopatin
     container_name: mvc_monopatin
     ports:
-      - "8082:8082"
+      - "8084:8084"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db_monopatin:3306/db_monopatin
       - SPRING_DATASOURCE_USERNAME=root
@@ -63,7 +63,7 @@ services:
     build: ./trip_service
     container_name: trip_service
     ports:
-      - "8083:8083"
+      - "8086:8086"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db_trips:3306/db_trips
       - SPRING_DATASOURCE_USERNAME=root
@@ -82,38 +82,13 @@ services:
       - "3309:3306"
     volumes:
       - db_trips_data:/var/lib/mysql
-    
-  #  mvc_administracion
-  mvc_administracion:
-    build: ./mvc_administracion
-    container_name: mvc_administracion
-    ports:
-      - "8084:8084"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db_administracion:3306/db_administracion
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=1234
-    depends_on:
-      - db_administracion
 
-  db_administracion:
-    image: mysql:latest
-    container_name: db_administracion
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: db_administracion
-    ports:
-      - "3310:3306"
-    volumes:
-      - db_administracion_data:/var/lib/mysql
-    
   #  mvc_facturacion
   mvc_facturacion:
     build: ./mvc_facturacion
     container_name: mvc_facturacion
     ports:
-      - "8085:8085"
+      - "8088:8088"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db_facturacion:3306/db_facturacion
       - SPRING_DATASOURCE_USERNAME=root
@@ -129,9 +104,34 @@ services:
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_DATABASE: db_facturacion
     ports:
-      - "3311:3306"
+      - "3310:3306"
     volumes:
       - db_facturacion_data:/var/lib/mysql
+      -
+  #  mvc_administracion
+  mvc_administracion:
+    build: ./mvc_administracion
+    container_name: mvc_administracion
+    ports:
+      - "8090:8090"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db_administracion:3306/db_administracion
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=1234
+    depends_on:
+      - db_administracion
+
+  db_administracion:
+    image: mysql:latest
+    container_name: db_administracion
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: db_administracion
+    ports:
+      - "3311:3306"
+    volumes:
+      - db_administracion_data:/var/lib/mysql
 
   # 🚪 API-GATEWAY
   api-gateway:

@@ -1,4 +1,4 @@
-package practico.integrador.vehicle_service;
+package practico.integrador;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
