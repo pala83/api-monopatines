@@ -6,6 +6,6 @@ public interface BaseService<Request, Response> {
     List<Response> findAll();
     Response findById(Long id);
     Response save(Request entity);
-    // Response update(Long id, Request entity);
-    boolean delete(Long id);    
+    Response update(Long id, Request entity);
+    void delete(Long id);    
 }

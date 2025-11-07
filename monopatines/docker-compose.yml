@@ -1,153 +1,41 @@
 services:
-
-  admin_service:
-    build:
-      context: ./mvc_administracion
-      dockerfile: Dockerfile
-    ports:
-      - "8090:8090"
-
-
-  # 🧍‍♂️ USER-SERVICE
-  user-service:
-    build: ./services/user_service
-    container_name: user_service
-    ports:
-      - "8081:8081"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db_users:3306/db_users
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=1234
-    depends_on:
-      - db_users
-
-  db_users:
+  db:
     image: mysql:latest
-    container_name: db_users
-    restart: always
+    container_name: mysql_db
+    restart: unless-stopped
+    env_file:       # lee variables desde .env (recomendado)
+      - .env
     environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: db_users
+      MYSQL_ROOT_PASSWORD: "1234"
+      MYSQL_DATABASE: "db_usuario"
+      MYSQL_USER: "admin"
+      MYSQL_PASSWORD: "1234"
     ports:
-      - "3307:3306"
+      - "${MYSQL_HOST_PORT:-3306}:3306"   # opcional: publica MySQL fuera del contenedor
     volumes:
-      - db_users_data:/var/lib/mysql
+      - db_data:/var/lib/mysql
+      - ./initdb:/docker-entrypoint-initdb.d:ro   # scripts SQL/ .sh para inicializar (opcional)
+    networks:
+      - db_network
 
-  # 🛴 VEHICLE-SERVICE
-  vehicle-service:
-    build: ./services/vehicle_service
-    container_name: vehicle_service
-    ports:
-      - "8082:8082"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db_vehicles:3306/db_vehicles
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=1234
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: unless-stopped
     depends_on:
-      - db_vehicles
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      # PMA_USER / PMA_PASSWORD no es necesario salvo que quieras conectar por defecto
+    ports:
+      - "8080:80"
+    networks:
+      - db_network
 
-  db_vehicles:
-    image: mysql:latest
-    container_name: db_vehicles
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: db_vehicles
-    ports:
-      - "3308:3306"
-    volumes:
-      - db_vehicles_data:/var/lib/mysql
-
-  # 🗺️ TRIP-SERVICE
-  trip-service:
-    build: ./services/trip_service
-    container_name: trip_service
-    ports:
-      - "8083:8083"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db_trips:3306/db_trips
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=1234
-    depends_on:
-      - db_trips
-
-  db_trips:
-    image: mysql:latest
-    container_name: db_trips
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: db_trips
-    ports:
-      - "3309:3306"
-    volumes:
-      - db_trips_data:/var/lib/mysql
-    
-  #  Maintenance-SERVICE
-  maintenance-service:
-    build: ./services/maintenance_service
-    container_name: maintenance_service
-    ports:
-      - "8084:8084"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db_maintenance:3306/db_maintenance
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=1234
-    depends_on:
-      - db_maintenance
-
-  db_maintenance:
-    image: mysql:latest
-    container_name: db_maintenance
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: db_maintenance
-    ports:
-      - "3310:3306"
-    volumes:
-      - db_maintenance_data:/var/lib/mysql
-    
-  #  Payment-SERVICE
-  payment-service:
-    build: ./services/payment_service
-    container_name: payment_service
-    ports:
-      - "8085:8085"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db_payment:3306/db_payment
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=1234
-    depends_on:
-      - db_payment
-
-  db_payment:
-    image: mysql:latest
-    container_name: db_payment
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: db_payment
-    ports:
-      - "3311:3306"
-    volumes:
-      - db_payment_data:/var/lib/mysql
-
-  # 🚪 API-GATEWAY
-  api-gateway:
-    build: ./api_gateway
-    container_name: api_gateway
-    ports:
-      - "8080:8080"
-    depends_on:
-      - user-service
-      - vehicle-service
-      - trip-service
-      - maintenance-service
-      - payment-service
 volumes:
-  db_users_data:
-  db_vehicles_data:
-  db_trips_data:
-  db_maintenance_data:
-  db_payment_data:
+  db_data:
+
+networks:
+  db_network:
+    driver: bridge

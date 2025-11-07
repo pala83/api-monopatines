@@ -1,0 +1,88 @@
+services:
+  # ---------------------- Mongo para administración ----------------------
+  admin_service:
+    build:
+      context: ./mvc_administracion
+      dockerfile: Dockerfile
+    container_name: admin_service
+    ports:
+      - "8090:8090"
+    hostname: admin_service
+    environment:
+      # Admin usa MongoDB (URL inyectada por env var)
+      - SPRING_DATA_MONGODB_URI=mongodb://db_admin:27017/db_administracion
+    depends_on:
+      - db_admin
+    networks:
+      - db_network
+
+  db_admin:
+    image: mongo:latest
+    container_name: mongo_admin
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - db_network
+
+  # ---------------------- MySQL compartido con BDs aisladas ----------------------
+  db:
+    image: mysql:latest
+    container_name: mysql_db
+    restart: unless-stopped
+    # Variables globales pueden venir de .env (opcional). Si no existe, usar defaults.
+    environment:
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQL_USER: "${MYSQL_USER}"
+    ports:
+      - "${MYSQL_HOST_PORT:-3306}:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./initdb:/docker-entrypoint-initdb.d:ro   # crea BDs por microservicio
+    networks:
+      - db_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - "8088:8080"   # evitar colisión con api_gateway (8080)
+    networks:
+      - db_network
+
+  # ---------------------- Microservicios MySQL ----------------------
+  usuario_service:
+    container_name: usuario_service
+    build:
+      context: ./mvc_usuario/
+      dockerfile: Dockerfile
+    environment:
+      # JDBC completo hacia el servicio 'db' y la BD creada por MYSQL_DATABASE (ver .env)
+      SPRING_DATASOURCE_URL: "jdbc:mysql://db:3306/${MYSQL_DATABASE}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
+      SPRING_DATASOURCE_USERNAME: "${MYSQL_USER}"
+      SPRING_DATASOURCE_PASSWORD: "${MYSQL_PASSWORD}"
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: "com.mysql.cj.jdbc.Driver"
+    ports:
+      - "8096:8096"   # app escucha 8090 dentro del contenedor
+    hostname: usuario_service
+    networks:
+      - db_network
+    depends_on:
+      - db
+
+volumes:
+  db_data:
+  mongo_data:
+
+networks:
+  db_network:
+    driver: bridge
