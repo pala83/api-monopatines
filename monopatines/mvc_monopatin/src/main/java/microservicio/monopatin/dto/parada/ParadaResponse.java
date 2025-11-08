@@ -8,8 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ParadaResponse {
-    private Long id;
     private String nombre;
-    private Double latitud;
-    private Double longitud;
+    private String ubicacion;
+    private Integer capacidad;
 }

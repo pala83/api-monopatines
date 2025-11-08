@@ -1,54 +1,78 @@
 package microservicio.monopatin.service;
 
-
-
-import lombok.RequiredArgsConstructor;
 import microservicio.monopatin.dto.parada.ParadaRequest;
 import microservicio.monopatin.dto.parada.ParadaResponse;
 import microservicio.monopatin.entity.Parada;
 import microservicio.monopatin.repository.ParadaRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class ParadaService implements BaseService<ParadaRequest, ParadaResponse>{
 
-    private final ParadaRepository paradaRepository;
+    @Autowired
+    private ParadaRepository paradaRepository;
 
+    @Override
+    @Transactional
     public List<ParadaResponse> findAll() {
-        return paradaRepository.findAll().stream().map(this::toResponse).collect(Collectors.toList());
+        return paradaRepository
+            .findAll()
+            .stream()
+            .map(this::toResponse)
+            .toList();
     }
 
+    @Override
+    @Transactional
     public ParadaResponse findById(Long id) {
-        Parada p = paradaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Parada no encontrada"));
-        return toResponse(p);
+        return toResponse(
+            this.paradaRepository
+            .findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Parada con id " + id + " no encontrada")));
     }
 
+    @Override
+    @Transactional
     public ParadaResponse save(ParadaRequest req) {
         Parada p = new Parada();
         p.setNombre(req.getNombre());
-        p.setLatitud(req.getLatitud());
-        p.setLongitud(req.getLongitud());
+        p.setUbicacion(req.getUbicacion());
+        p.setCapacidad(req.getCapacidad());
         return toResponse(paradaRepository.save(p));
     }
 
+    @Override
+    @Transactional
     public ParadaResponse update(Long id, ParadaRequest req) {
-        Parada p = paradaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Parada no encontrada"));
+        Parada p = paradaRepository
+            .findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Parada con id " + id + " no encontrada"));
         p.setNombre(req.getNombre());
-        p.setLatitud(req.getLatitud());
-        p.setLongitud(req.getLongitud());
+        p.setUbicacion(req.getUbicacion());
+        p.setCapacidad(req.getCapacidad());
         return toResponse(paradaRepository.save(p));
     }
 
+    @Override
+    @Transactional
     public void delete(Long id) {
-        paradaRepository.deleteById(id);
+        this.paradaRepository.delete(
+            this.paradaRepository
+            .findById(id)
+            .orElseThrow( () -> new EntityNotFoundException("Parada con id " + id + " no encontrada")));
     }
 
     private ParadaResponse toResponse(Parada p) {
-        return new ParadaResponse(p.getId(), p.getNombre(), p.getLatitud(), p.getLongitud());
+        return new ParadaResponse(
+            p.getNombre(), 
+            p.getUbicacion().getLatitud() + "," + p.getUbicacion().getLongitud(),
+            p.getCapacidad());
     }
 }

@@ -4,30 +4,32 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Parada {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_parada")
     private Long id;
-    @Column(nullable = false)
+    @Column(name = "nombre", nullable = false)
     private String nombre;
-    @Column(nullable = false)
-    private double latitud;
-    @Column(nullable = false)
-    private double longitud;
+
+    @Embedded
+    private Ubicacion ubicacion;
+
+    @Column(name = "capacidad", nullable = false)
+    private Integer capacidad;
 
     @OneToMany(mappedBy = "paradaActual", cascade = CascadeType.ALL)
     private List<Monopatin> monopatines;
