@@ -1,25 +1,25 @@
 package microservicio.administracion.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.index.Indexed;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "mantenimientos")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Document(collection = "mantenimientos")
 public class Mantenimiento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
+    @Indexed
     private Long idMonopatin;
     private LocalDateTime fechaInicio;
     private LocalDateTime fechaFin;
     private String descripcion;
 
-    @Enumerated(EnumType.STRING)
     private TipoMantenimiento tipo;
 }

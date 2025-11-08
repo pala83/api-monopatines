@@ -8,9 +8,9 @@
 		<version>4.0.0-RC1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>practico.integrador</groupId>
+	<groupId>microservicio.monopatin</groupId>
 	<artifactId>mvc_monopatin</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>mvc_monopatin</name>
 	<description>Microservicio de gestión de monopatines</description>
 	<properties>
@@ -95,4 +95,3 @@
 	</build>
 
 </project>
-

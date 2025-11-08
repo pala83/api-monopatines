@@ -8,9 +8,9 @@
 		<version>4.0.0-RC1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>practico.integrador</groupId>
+	<groupId>microservicio.trip</groupId>
 	<artifactId>trip_service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>trip_service</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>

@@ -10,7 +10,9 @@ services:
 
   # 🧍‍♂️ USER-SERVICE
   mvc_usuario:
-    build: ./mvc_usuario
+    build:
+      context: ./mvc_usuario/
+      dockerfile: Dockerfile
     container_name: mvc_usuario
     ports:
       - "8082:8082"
@@ -35,7 +37,9 @@ services:
 
   # 🛴 mvc_monopatin
   mvc_monopatin:
-    build: ./mvc_monopatin
+    build:
+      context: ./mvc_monopatin/
+      dockerfile: Dockerfile
     container_name: mvc_monopatin
     ports:
       - "8084:8084"

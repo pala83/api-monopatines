@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>practico.integrador</groupId>
 	<artifactId>monopatines</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>monopatines</name>
 	<packaging>pom</packaging>
 	<description>Demo project for Spring Boot</description>
