@@ -5,7 +5,6 @@ package microservicio.monopatin.service;
 import lombok.RequiredArgsConstructor;
 import microservicio.monopatin.dto.parada.ParadaRequest;
 import microservicio.monopatin.dto.parada.ParadaResponse;
-import microservicio.monopatin.dto.parada.*;
 import microservicio.monopatin.entity.Parada;
 import microservicio.monopatin.repository.ParadaRepository;
 import org.springframework.stereotype.Service;

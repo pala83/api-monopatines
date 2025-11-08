@@ -10,12 +10,10 @@ import microservicio.monopatin.entity.Parada;
 import microservicio.monopatin.repository.MonopatinRepository;
 import microservicio.monopatin.repository.ParadaRepository;
 import org.springframework.transaction.annotation.Transactional;
-import microservicio.monopatin.dto.monopatin.*;
-import microservicio.monopatin.entity.*;
-import microservicio.monopatin.repository.*;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
-import java.util.*;
+
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
