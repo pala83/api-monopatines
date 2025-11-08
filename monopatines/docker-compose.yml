@@ -107,7 +107,7 @@ services:
       - "3310:3306"
     volumes:
       - db_facturacion_data:/var/lib/mysql
-      -
+
   #  mvc_administracion
   mvc_administracion:
     build: ./mvc_administracion

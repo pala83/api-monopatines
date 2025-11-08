@@ -32,7 +32,7 @@ ENV JAVA_OPTS=""
 ENV SPRING_PROFILES_ACTIVE=prod
 
 # Puerto del microservicio (cambiá según el que uses)
-ARG SERVICE_PORT=8085
+ARG SERVICE_PORT=8088
 EXPOSE ${SERVICE_PORT}
 
 # Comando de ejecución
