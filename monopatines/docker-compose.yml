@@ -4,14 +4,31 @@ services:
 #    build:
 #      context: ./mvc_administracion
 #      dockerfile: Dockerfile
+#    container_name: admin_service
 #    ports:
 #      - "8090:8090"
+#    hostname: admin_service
+#    environment:
+#      # Admin usa MongoDB (URL inyectada por env var)
+#      - SPRING_DATA_MONGODB_URI=mongodb://db_admin:27017/db_administracion
+#    depends_on:
+#      - db_admin
+#    networks:
+#      - db_network
 
-
+#  db_admin:
+#    image: mongo:latest
+#    container_name: mongo_admin
+#    ports:
+#      - "27017:27017"
+#    volumes:
+#      - mongo_data:/data/db
+#    networks:
+#      - db_network
   # 🧍‍♂️ USER-SERVICE
   mvc_usuario:
     build:
-      context: ./mvc_usuario/
+      context: ./mvc_usuario
       dockerfile: Dockerfile
     container_name: mvc_usuario
     ports:
@@ -38,7 +55,7 @@ services:
   # 🛴 mvc_monopatin
   mvc_monopatin:
     build:
-      context: ./mvc_monopatin/
+      context: ./mvc_monopatin
       dockerfile: Dockerfile
     container_name: mvc_monopatin
     ports:
@@ -63,33 +80,35 @@ services:
       - db_monopatin_data:/var/lib/mysql
 
   # 🗺️ TRIP-SERVICE
-  trip-service:
-    build: ./trip_service
-    container_name: trip_service
-    ports:
-      - "8086:8086"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db_trips:3306/db_trips
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=1234
-    depends_on:
-      - db_trips
-
-  db_trips:
-    image: mysql:latest
-    container_name: db_trips
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: db_trips
-    ports:
-      - "3309:3306"
-    volumes:
-      - db_trips_data:/var/lib/mysql
+#  trip-service:
+#    build: ./trip_service
+#    container_name: trip_service
+#    ports:
+#      - "8086:8086"
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:mysql://db_trips:3306/db_trips
+#      - SPRING_DATASOURCE_USERNAME=root
+#      - SPRING_DATASOURCE_PASSWORD=1234
+#    depends_on:
+#      - db_trips
+#
+#  db_trips:
+#    image: mysql:latest
+#    container_name: db_trips
+#    restart: always
+#    environment:
+#      MYSQL_ROOT_PASSWORD: 1234
+#      MYSQL_DATABASE: db_trips
+#    ports:
+#      - "3309:3306"
+#    volumes:
+#      - db_trips_data:/var/lib/mysql
 
   #  mvc_facturacion
   mvc_facturacion:
-    build: ./mvc_facturacion
+    build:
+      context: ./mvc_facturacion
+      dockerfile: Dockerfile
     container_name: mvc_facturacion
     ports:
       - "8088:8088"
@@ -113,29 +132,29 @@ services:
       - db_facturacion_data:/var/lib/mysql
 
   #  mvc_administracion
-  mvc_administracion:
-    build: ./mvc_administracion
-    container_name: mvc_administracion
-    ports:
-      - "8090:8090"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db_administracion:3306/db_administracion
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=1234
-    depends_on:
-      - db_administracion
-
-  db_administracion:
-    image: mysql:latest
-    container_name: db_administracion
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: db_administracion
-    ports:
-      - "3311:3306"
-    volumes:
-      - db_administracion_data:/var/lib/mysql
+#  mvc_administracion:
+#    build: ./mvc_administracion
+#    container_name: mvc_administracion
+#    ports:
+#      - "8090:8090"
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:mysql://db_administracion:3306/db_administracion
+#      - SPRING_DATASOURCE_USERNAME=root
+#      - SPRING_DATASOURCE_PASSWORD=1234
+#    depends_on:
+#      - db_administracion
+#
+#  db_administracion:
+#    image: mysql:latest
+#    container_name: db_administracion
+#    restart: always
+#    environment:
+#      MYSQL_ROOT_PASSWORD: 1234
+#      MYSQL_DATABASE: db_administracion
+#    ports:
+#      - "3311:3306"
+#    volumes:
+#      - db_administracion_data:/var/lib/mysql
 
   # 🚪 API-GATEWAY
   api-gateway:
@@ -146,12 +165,12 @@ services:
     depends_on:
       - mvc_usuario
       - mvc_monopatin
-      - trip-service
-      - mvc_administracion
+#      - trip-service
+     # - mvc_administracion
       - mvc_facturacion
 volumes:
   db_usuario_data:
   db_monopatin_data:
-  db_trips_data:
-  db_administracion_data:
+#  db_trips_data:
+#  mongo_data:
   db_facturacion_data:

@@ -52,7 +52,6 @@ public class TarifaController {
         return ResponseEntity.noContent().build();
     }
 
-    // --- ENDPOINT ESPECIAL ---
     @GetMapping("vigente")
     public ResponseEntity<TarifaResponse> vigente(@RequestParam String fecha) {
         LocalDateTime f = LocalDateTime.parse(fecha);

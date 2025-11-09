@@ -59,14 +59,14 @@
 
 ```json
 [{
-"id": 1,
-"codigoQR": "QR123",
-"kmTotales": 120.5,
-"estado": "DISPONIBLE",
-"paradaActual": {
-"id": 10,
-"nombre": "Plaza Central"
-}
+  "id": 1,
+  "marca": "Xiaomi",
+  "codigoQR": "QR12345",
+  "kmTotales": 0.0,
+  "estado": "DISPONIBLE",
+  "ubicacionActual": "-37.3212, -59.1335",
+  "paradaActualId": null,
+  "paradaActualNombre": null
 }]
 ```
 
@@ -80,24 +80,30 @@
 ```json 
 [
   {
-   "codigoQR": "QR789",
-   "kmTotales": 0,
-   "estado": "DISPONIBLE",
-   "paradaActual": { "id": 11 }
-   }]
+    "marca": "Xiaomi",
+    "codigoQR": "QR12345",
+    "kmTotales": 0.0,
+    "estado": "DISPONIBLE",
+    "ubicacionActual": {
+      "latitud": -37.3212,
+      "longitud": -59.1335
+    },
+    "paradaActualId": 1
+  }
+]
 ```
 **Response (201 Created):**
 ```json 
     [{
-    "id": 3,
-    "codigoQR": "QR789",
-    "kmTotales": 0,
-    "estado": "DISPONIBLE",
-    "paradaActual": {
-    "id": 11,
-    "nombre": "Terminal Norte"
-    }
-    }
+  "id": 3,
+  "marca": "Xiaomi",
+  "codigoQR": "QR12345",
+  "kmTotales": 0.0,
+  "estado": "DISPONIBLE",
+  "ubicacionActual": "-37.3212, -59.1335",
+  "paradaActualId": 1,
+  "paradaActualNombre": "Parque Independencia"
+}
 ]
 ```
 
@@ -111,10 +117,15 @@
 ```json 
 [
   {
-   "codigoQR": "QR789",
-   "kmTotales": 15.2,
-   "estado": "EN_USO",
-   "paradaActual": null
+    "marca": "Xiaomi",
+    "codigoQR": "QR12345",
+    "kmTotales": 0.0,
+    "estado": "EN_USO",
+    "ubicacionActual": {
+      "latitud": -36.3212,
+      "longitud": -89.1335
+    },
+    "paradaActualId": 2
   }
   
 ]
@@ -123,13 +134,16 @@
 **Response (200 OK):**
 ```json 
     [
-    {
+  {
     "id": 3,
-    "codigoQR": "QR789",
-    "kmTotales": 15.2,
+    "marca": "Xiaomi",
+    "codigoQR": "QR12345",
+    "kmTotales": 0.0,
     "estado": "EN_USO",
-    "paradaActual": null
-    }
+    "ubicacionActual": "-36.3212, -89.1335",
+    "paradaActualId": 2,
+    "paradaActualNombre": "Parque facha"
+  }
     ]
 ```
 
@@ -157,6 +171,7 @@
     "codigoQR": "QR123",
     "kmTotales": 120.5,
     "estado": "DISPONIBLE",
+    "ubicacionActual": "-36.3212, -89.1335",
     "paradaActual": {
     "id": 10,
     "nombre": "Plaza Central"

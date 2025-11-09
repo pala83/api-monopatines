@@ -37,6 +37,7 @@ public class Monopatin {
     private EstadoMonopatin estado;
 
     @Embedded
+    @Column(name = "ubicacion")
     private Ubicacion ubicacionActual;
 
     @ManyToOne

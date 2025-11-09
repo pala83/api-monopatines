@@ -73,6 +73,6 @@ public class ParadaService implements BaseService<ParadaRequest, ParadaResponse>
         return new ParadaResponse(
             p.getNombre(), 
             p.getUbicacion().getLatitud() + "," + p.getUbicacion().getLongitud(),
-            p.getCapacidad());
+            p.getCapacidad(),p.getMonopatines());
     }
 }
