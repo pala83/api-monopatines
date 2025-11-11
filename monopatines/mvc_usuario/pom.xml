@@ -3,20 +3,22 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.0-RC1</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>practico.integrador</groupId>
+		<artifactId>monopatines</artifactId>
+		<version>0.0.1</version>
+		<relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>microservicio.usuario</groupId>
 	<artifactId>mvc_usuario</artifactId>
 	<version>0.0.1</version>
 	<name>mvc_usuario</name>
-	<description>Microservicio de gestión de usuarios</description>
+	<packaging>jar</packaging>
 
+	<description>Microservicio de gestión de usuarios</description>
 	<properties>
 		<java.version>21</java.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -55,11 +57,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 		</dependency>
-       <dependency>
-         <groupId>org.apache.commons</groupId>
-         <artifactId>commons-math3</artifactId>
-         <version>3.6.1</version>
-       </dependency>
+
  </dependencies>
 
 	<build>
