@@ -16,6 +16,7 @@
     <name>mvc_monopatin</name>
     <version>0.0.1</version>
     <packaging>jar</packaging>
+    <description>Microservicio de gestión de monopatines</description>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
