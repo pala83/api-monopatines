@@ -38,7 +38,16 @@ services:
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=1234
     depends_on:
-      - db_usuario
+      db_usuario:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "8082" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    networks:
+      - net_monopatines
 
   db_usuario:
     image: mysql:latest
@@ -51,7 +60,14 @@ services:
       - "3307:3306"
     volumes:
       - db_usuario_data:/var/lib/mysql
-
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p1234" ]
+      timeout: 10s
+      retries: 20
+      start_period: 30s
+      interval: 10s
+    networks:
+      - net_monopatines
   # 🛴 mvc_monopatin
   mvc_monopatin:
     build:
@@ -65,7 +81,16 @@ services:
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=1234
     depends_on:
-      - db_monopatin
+      db_monopatin:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "8084" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    networks:
+      - net_monopatines
 
   db_monopatin:
     image: mysql:latest
@@ -78,31 +103,14 @@ services:
       - "3308:3306"
     volumes:
       - db_monopatin_data:/var/lib/mysql
-
-  # 🗺️ TRIP-SERVICE
-#  trip-service:
-#    build: ./trip_service
-#    container_name: trip_service
-#    ports:
-#      - "8086:8086"
-#    environment:
-#      - SPRING_DATASOURCE_URL=jdbc:mysql://db_trips:3306/db_trips
-#      - SPRING_DATASOURCE_USERNAME=root
-#      - SPRING_DATASOURCE_PASSWORD=1234
-#    depends_on:
-#      - db_trips
-#
-#  db_trips:
-#    image: mysql:latest
-#    container_name: db_trips
-#    restart: always
-#    environment:
-#      MYSQL_ROOT_PASSWORD: 1234
-#      MYSQL_DATABASE: db_trips
-#    ports:
-#      - "3309:3306"
-#    volumes:
-#      - db_trips_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p1234" ]
+      timeout: 10s
+      retries: 20
+      start_period: 30s
+      interval: 10s
+    networks:
+      - net_monopatines
 
   #  mvc_facturacion
   mvc_facturacion:
@@ -117,7 +125,16 @@ services:
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=1234
     depends_on:
-      - db_facturacion
+      db_facturacion:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "8088" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    networks:
+      - net_monopatines
 
   db_facturacion:
     image: mysql:latest
@@ -130,6 +147,38 @@ services:
       - "3310:3306"
     volumes:
       - db_facturacion_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p1234" ]
+      timeout: 10s
+      retries: 20
+      start_period: 30s
+      interval: 10s
+    networks:
+      - net_monopatines
+  # 🗺️ TRIP-SERVICE
+  #  trip-service:
+  #    build: ./trip_service
+  #    container_name: trip_service
+  #    ports:
+  #      - "8086:8086"
+  #    environment:
+  #      - SPRING_DATASOURCE_URL=jdbc:mysql://db_trips:3306/db_trips
+  #      - SPRING_DATASOURCE_USERNAME=root
+  #      - SPRING_DATASOURCE_PASSWORD=1234
+  #    depends_on:
+  #      - db_trips
+  #
+  #  db_trips:
+  #    image: mysql:latest
+  #    container_name: db_trips
+  #    restart: always
+  #    environment:
+  #      MYSQL_ROOT_PASSWORD: 1234
+  #      MYSQL_DATABASE: db_trips
+  #    ports:
+  #      - "3309:3306"
+  #    volumes:
+  #      - db_trips_data:/var/lib/mysql
 
   #  mvc_administracion
 #  mvc_administracion:
@@ -158,19 +207,37 @@ services:
 
   # 🚪 API-GATEWAY
   api-gateway:
-    build: ./api_gateway
+    build:
+      context: ./api_gateway
+      dockerfile: Dockerfile
     container_name: api_gateway
     ports:
       - "8080:8080"
+    volumes:
+      - ./api_gateway_config/application.yml:/app/config/application.yml
+    environment:
+      - SPRING_CONFIG_LOCATION=file:/app/config/application.yml
     depends_on:
-      - mvc_usuario
-      - mvc_monopatin
+       - mvc_usuario
+       - mvc_monopatin
 #      - trip-service
      # - mvc_administracion
-      - mvc_facturacion
+       - mvc_facturacion
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost:8080/actuator/health || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    networks:
+      - net_monopatines
 volumes:
   db_usuario_data:
   db_monopatin_data:
 #  db_trips_data:
 #  mongo_data:
   db_facturacion_data:
+
+networks:
+  net_monopatines:
+    driver: bridge

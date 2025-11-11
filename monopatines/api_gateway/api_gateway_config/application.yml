@@ -1,0 +1,104 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.*
+      - org.springframework.boot.autoconfigure.orm.jpa.*
+      - org.springframework.boot.autoconfigure.transaction.*
+      - org.springframework.boot.autoconfigure.sql.*
+  main:
+    web-application-type: reactive
+  sql:
+    init:
+      mode: never
+  cloud:
+    gateway:
+      routes:
+        # USUARIOS
+        - id: usuarios
+          uri: "http://mvc_usuario:8082"
+          predicates:
+            - Path=/usuarios/**
+          filters:
+            - AddResponseHeader=X-Service,Usuarios
+
+        # CUENTAS
+        - id: cuentas
+          uri: "http://mvc_usuario:8082"
+          predicates:
+            - Path=/cuentas/**
+          filters:
+            - AddResponseHeader=X-Service,Cuentas
+
+        # MONOPATINES
+        - id: monopatin
+          uri: "http://mvc_monopatin:8084"
+          predicates:
+            - Path=/monopatines/**
+          filters:
+            - AddResponseHeader=X-Service,Monopatines
+
+        # PARADAS
+        - id: paradas
+          uri: "http://mvc_monopatin:8084"
+          predicates:
+            - Path=/paradas/**
+          filters:
+            - AddResponseHeader=X-Service,Paradas
+
+        # PAGOS
+        - id: pagos
+          uri: "http://mvc_facturacion:8088"
+          predicates:
+            - Path=/pagos/**
+          filters:
+            - AddResponseHeader=X-Service,Pagos
+
+        # TARIFAS
+        - id: tarifas
+          uri: "http://mvc_facturacion:8088"
+          predicates:
+            - Path=/tarifas/**
+          filters:
+            - AddResponseHeader=X-Service,Tarifas
+
+        # HEALTH CHECKS SIMPLES
+        - id: health-usuarios
+          uri: "http://mvc_usuario:8082"
+          predicates:
+            - Path=/health/usuarios
+          filters:
+            - SetPath=/
+
+        - id: health-monopatines
+          uri: "http://mvc_monopatin:8084"
+          predicates:
+            - Path=/health/monopatines
+          filters:
+            - SetPath=/
+
+        - id: health-facturacion
+          uri: "http://mvc_facturacion:8088"
+          predicates:
+            - Path=/health/facturacion
+          filters:
+            - SetPath=/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    org.springframework.boot.autoconfigure.jdbc: ERROR
+    org.springframework.boot.autoconfigure.orm.jpa: ERROR
+    org.springframework.cloud.gateway: DEBUG
