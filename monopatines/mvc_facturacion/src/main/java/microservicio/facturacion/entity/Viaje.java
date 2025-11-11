@@ -1,7 +1,5 @@
 package microservicio.facturacion.entity;
 
-import java.sql.Timestamp;
-
 import jakarta.persistence.Entity;
 
 @Entity

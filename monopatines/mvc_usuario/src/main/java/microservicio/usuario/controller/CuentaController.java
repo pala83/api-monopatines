@@ -2,7 +2,6 @@ package microservicio.usuario.controller;
 
 import java.util.List;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +21,6 @@ import microservicio.usuario.service.CuentaService;
 
 @RestController
 @RequestMapping("cuentas")
-@RequiredArgsConstructor
 public class CuentaController {
     @Autowired
     private CuentaService cuentaService;

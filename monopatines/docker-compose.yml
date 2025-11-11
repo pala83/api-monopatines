@@ -38,14 +38,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=1234
     depends_on:
-      db_usuario:
-        condition: service_healthy
-    healthcheck:
-      test: [ "CMD", "nc", "-z", "localhost", "8082" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 60s
+      - db_usuario
     networks:
       - net_monopatines
 
@@ -60,14 +53,9 @@ services:
       - "3307:3306"
     volumes:
       - db_usuario_data:/var/lib/mysql
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p1234" ]
-      timeout: 10s
-      retries: 20
-      start_period: 30s
-      interval: 10s
     networks:
       - net_monopatines
+
   # 🛴 mvc_monopatin
   mvc_monopatin:
     build:
@@ -81,14 +69,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=1234
     depends_on:
-      db_monopatin:
-        condition: service_healthy
-    healthcheck:
-      test: [ "CMD", "nc", "-z", "localhost", "8084" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 60s
+      - db_monopatin
     networks:
       - net_monopatines
 
@@ -103,12 +84,6 @@ services:
       - "3308:3306"
     volumes:
       - db_monopatin_data:/var/lib/mysql
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p1234" ]
-      timeout: 10s
-      retries: 20
-      start_period: 30s
-      interval: 10s
     networks:
       - net_monopatines
 
@@ -125,14 +100,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=1234
     depends_on:
-      db_facturacion:
-        condition: service_healthy
-    healthcheck:
-      test: [ "CMD", "nc", "-z", "localhost", "8088" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 60s
+      - db_facturacion
     networks:
       - net_monopatines
 
@@ -147,12 +115,6 @@ services:
       - "3310:3306"
     volumes:
       - db_facturacion_data:/var/lib/mysql
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p1234" ]
-      timeout: 10s
-      retries: 20
-      start_period: 30s
-      interval: 10s
     networks:
       - net_monopatines
   # 🗺️ TRIP-SERVICE
@@ -223,12 +185,6 @@ services:
 #      - trip-service
      # - mvc_administracion
        - mvc_facturacion
-    healthcheck:
-      test: [ "CMD", "nc", "-z", "localhost", "8080" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 40s
     networks:
       - net_monopatines
 volumes:
