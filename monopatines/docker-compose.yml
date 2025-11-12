@@ -178,8 +178,8 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-       - mvc_usuario
-       - mvc_monopatin
+       - mvc-usuario
+       - mvc-monopatin
        - mvc-viaje
      # - mvc_administracion
     networks:
@@ -188,6 +188,7 @@ volumes:
   db_usuario_data:
   db_monopatin_data:
   db_viaje_data:
+  db_facturacion_data:
 #  mongo_data:
 
 networks:
