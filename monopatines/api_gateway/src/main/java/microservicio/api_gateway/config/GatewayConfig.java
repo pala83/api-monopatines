@@ -30,7 +30,6 @@ public class GatewayConfig {
                         .path("/paradas/**")
                         .uri("http://mvc-monopatin:8084")
                 )
-
                 // Rutas para FACTURACION
 //                .route("tarifas", r -> r
 //                        .path("/tarifas/**")

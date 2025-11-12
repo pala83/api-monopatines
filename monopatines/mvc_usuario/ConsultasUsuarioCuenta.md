@@ -158,7 +158,8 @@
 {
   "saldo": 1000.00,
   "fechaCreacion": "2025-11-08T12:00:00",
-  "activa": true
+  "activa": true,
+  "tipo": "PREMIUM"
 }
 ```
 - **Response (201 Created):**

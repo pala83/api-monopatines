@@ -1,5 +1,6 @@
 package microservicio.monopatin.service;
 
+import microservicio.monopatin.dto.monopatin.MonopatinResponse;
 import microservicio.monopatin.dto.parada.ParadaRequest;
 import microservicio.monopatin.dto.parada.ParadaResponse;
 import microservicio.monopatin.entity.Parada;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -70,9 +72,13 @@ public class ParadaService implements BaseService<ParadaRequest, ParadaResponse>
     }
 
     private ParadaResponse toResponse(Parada p) {
+        List<MonopatinResponse> monopatines = p.getMonopatines().stream().map(m ->
+                new MonopatinResponse(m.getId(), m.getMarca(), m.getCodigoQR(), m.getKmTotales(), m.getUsoTotalMinutos(),
+                        m.getEstado(),m.getFechaUltimoMantenimiento(),m.getUbicacionActual().getLatitud()+","+m.getUbicacionActual().getLongitud(),m.getParadaActual().getId(),
+                        m.getParadaActual().getNombre())).toList();
         return new ParadaResponse(
             p.getNombre(), 
             p.getUbicacion().getLatitud() + "," + p.getUbicacion().getLongitud(),
-            p.getCapacidad(),p.getMonopatines());
+            p.getCapacidad(),monopatines);
     }
 }
