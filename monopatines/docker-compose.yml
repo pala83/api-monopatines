@@ -26,7 +26,7 @@ services:
 #    networks:
 #      - db_network
   # 🧍‍♂️ USER-SERVICE
-  mvc_usuario:
+  mvc-usuario:
     build:
       context: ./mvc_usuario
       dockerfile: Dockerfile
@@ -56,8 +56,8 @@ services:
     networks:
       - net_monopatines
 
-  # 🛴 mvc_monopatin
-  mvc_monopatin:
+  # mvc_monopatin
+  mvc-monopatin:
     build:
       context: ./mvc_monopatin
       dockerfile: Dockerfile
@@ -170,23 +170,18 @@ services:
 #      - db_administracion_data:/var/lib/mysql
 
   # 🚪 API-GATEWAY
-  api-gateway:
+  api_gateway:
     build:
       context: ./api_gateway
       dockerfile: Dockerfile
     container_name: api_gateway
     ports:
       - "8080:8080"
-    volumes:
-      - ./api_gateway_config/application.yml:/app/config/application.yml
-    environment:
-      - SPRING_CONFIG_LOCATION=file:/app/config/application.yml
     depends_on:
        - mvc_usuario
        - mvc_monopatin
        - mvc-viaje
      # - mvc_administracion
-       - mvc_facturacion
     networks:
       - net_monopatines
 volumes:
@@ -194,7 +189,6 @@ volumes:
   db_monopatin_data:
   db_viaje_data:
 #  mongo_data:
-  db_facturacion_data:
 
 networks:
   net_monopatines:

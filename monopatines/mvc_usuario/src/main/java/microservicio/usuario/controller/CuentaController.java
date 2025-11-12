@@ -36,7 +36,7 @@ public class CuentaController {
         }
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> findByID(@PathVariable Long id){
         try{
             return ResponseEntity.status(HttpStatus.OK).body(cuentaService.findById(id));
@@ -55,7 +55,7 @@ public class CuentaController {
         }
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAccount(@PathVariable Long id){
         try{
             this.cuentaService.delete(id);
@@ -65,7 +65,7 @@ public class CuentaController {
         }
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/editar/{id}")
     public ResponseEntity<?> editAccount(@PathVariable Long id, @RequestBody @Validated CuentaRequest request){
         try {
             CuentaResponse response = this.cuentaService.update(id, request);
