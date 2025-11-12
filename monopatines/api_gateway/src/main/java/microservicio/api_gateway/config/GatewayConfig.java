@@ -39,14 +39,17 @@ public class GatewayConfig {
                         .uri("http://mvc-viaje:8086")
                 )
                 // Rutas para FACTURACION
-//                .route("tarifas", r -> r
-//                        .path("/tarifas/**")
-//                        .uri("http://mvc-facturacion:8088")
-//                )
-//                .route("pagos", r -> r
-//                        .path("/pagos/**")
-//                        .uri("http://mvc-facturacion:8088")
-//                )
+                .route("tarifas", r -> r
+                        .path("/tarifas/**")
+                        .uri("http://mvc-facturacion:8088")
+                )
+                .route("cargas", r -> r
+                        .path("/cargas/**")
+                        .uri("http://mvc-facturacion:8088")
+                ).route("subscripciones", r -> r
+                        .path("/subscripciones/**")
+                        .uri("http://mvc-facturacion:8088")
+                )
                 .build();
     }
 }

@@ -15,7 +15,7 @@ import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service("ParadaService")
 public class ParadaService implements BaseService<ParadaRequest, ParadaResponse>{
 
     @Autowired

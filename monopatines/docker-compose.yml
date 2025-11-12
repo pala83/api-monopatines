@@ -187,6 +187,7 @@ services:
        - mvc-usuario
        - mvc-monopatin
        - mvc-viaje
+       - mvc-facturacion
      # - mvc_administracion
     networks:
       - net_monopatines
