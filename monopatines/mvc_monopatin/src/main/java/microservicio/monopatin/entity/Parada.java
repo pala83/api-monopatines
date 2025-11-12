@@ -33,4 +33,8 @@ public class Parada {
 
     @OneToMany(mappedBy = "paradaActual", cascade = CascadeType.ALL)
     private List<Monopatin> monopatines;
+
+    public void agregarMonopatin(Monopatin m) {
+        this.monopatines.add(m);
+    }
 }
