@@ -39,6 +39,7 @@ public class CuentaService implements BaseService<CuentaRequest, CuentaResponse>
         cuenta.setFechaCreacion(request.getFechaCreacion());
         cuenta.setSaldo(request.getSaldo());
         cuenta.setActiva(request.isActiva());
+        cuenta.setTipo(request.getTipo());
         return this.castResponse(this.cuentaRepository.save(cuenta));
     }
 
@@ -57,6 +58,7 @@ public class CuentaService implements BaseService<CuentaRequest, CuentaResponse>
         cuenta.setSaldo(request.getSaldo());
         cuenta.setFechaCreacion(request.getFechaCreacion());
         cuenta.setActiva(request.isActiva());
+        cuenta.setTipo(request.getTipo());
         return this.castResponse(cuentaRepository.save(cuenta));
     }
 
@@ -74,7 +76,8 @@ public class CuentaService implements BaseService<CuentaRequest, CuentaResponse>
                 cuenta.getId(),
                 cuenta.getSaldo(),
                 cuenta.isActiva(),
-                cuenta.getFechaCreacion()
+                cuenta.getFechaCreacion(),
+                cuenta.getTipo()
         );
     }
 }

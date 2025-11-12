@@ -28,7 +28,7 @@
         <module>mvc_usuario</module>
         <module>mvc_facturacion</module>
         <module>mvc_monopatin</module>
-        <module>trip_service</module>
+        <module>mvc_viaje</module>
     </modules>
 
     <dependencyManagement>

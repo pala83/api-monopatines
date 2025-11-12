@@ -1,13 +1,13 @@
-package microservicio.trip.trip_service;
+package microservicio.viaje;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TripServiceApplication {
+public class MvcViajeApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TripServiceApplication.class, args);
+		SpringApplication.run(MvcViajeApplication.class, args);
 	}
 
 }

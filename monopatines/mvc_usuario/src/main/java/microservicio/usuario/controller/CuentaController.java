@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PatchMapping;
 
 import microservicio.usuario.dto.cuenta.CuentaRequest;
 import microservicio.usuario.dto.cuenta.CuentaResponse;
@@ -70,6 +71,25 @@ public class CuentaController {
             CuentaResponse response = this.cuentaService.update(id, request);
             return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró la cuenta con el ID: "+id);
+        }
+    }
+
+    // Activar/Anular cuenta
+    @PatchMapping("{id}/activar")
+    public ResponseEntity<?> activar(@PathVariable Long id){
+        try{
+            return ResponseEntity.ok(this.cuentaService.updateActivacionCuenta(id, true));
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró la cuenta con el ID: "+id);
+        }
+    }
+
+    @PatchMapping("{id}/anular")
+    public ResponseEntity<?> anular(@PathVariable Long id){
+        try{
+            return ResponseEntity.ok(this.cuentaService.updateActivacionCuenta(id, false));
+        }catch(Exception e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró la cuenta con el ID: "+id);
         }
     }

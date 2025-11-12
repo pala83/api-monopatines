@@ -15,6 +15,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 @Entity
 @Data
@@ -33,6 +35,10 @@ public class Cuenta {
 
     @Column(name = "activa")
     private boolean activa;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo", nullable = false)
+    private TipoCuenta tipo = TipoCuenta.BASICA;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "cuentas")
     @JsonBackReference

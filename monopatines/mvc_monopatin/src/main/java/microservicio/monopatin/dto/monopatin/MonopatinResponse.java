@@ -1,5 +1,7 @@
 package microservicio.monopatin.dto.monopatin;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +15,9 @@ public class MonopatinResponse {
     private String marca;
     private String codigoQR;
     private Double kmTotales;
+    private Long usoTotalMinutos;
     private EstadoMonopatin estado;
+    private LocalDateTime fechaUltimoMantenimiento;
     private String ubicacionActual;
     private Long paradaActualId;
     private String paradaActualNombre;

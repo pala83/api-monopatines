@@ -1,5 +1,7 @@
 package microservicio.monopatin.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -23,18 +25,24 @@ public class Monopatin {
     @Column(name = "id_monopatin")
     private Long id;
 
+    @Column(name = "codigo_qr", unique = true, nullable = false)
+    private String codigoQR;
+
     @Column(name = "marca", nullable = false)
     private String marca;
 
-    @Column(name = "codigo_qr", nullable = false)
-    private String codigoQR;
-
-    @Column(name = "km_totales", nullable = false)
+    @Column(name = "km_totales")
     private double kmTotales = 0.0;
+
+    @Column(name = "uso_total_minutos")
+    private Long usoTotalMinutos = 0L;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
     private EstadoMonopatin estado;
+
+    @Column(name = "fecha_ultimo_mantenimiento")
+    private LocalDateTime fechaUltimoMantenimiento = LocalDateTime.now();
 
     @Embedded
     @Column(name = "ubicacion")

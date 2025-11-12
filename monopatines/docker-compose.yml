@@ -87,6 +87,31 @@ services:
     networks:
       - net_monopatines
 
+# 🗺️ MVC_VIAJE
+  mvc-viaje:
+    build: ./mvc_viaje
+    container_name: mvc_viaje
+    ports:
+      - "8086:8086"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db_viaje:3306/db_viaje
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=1234
+    depends_on:
+      - db_viaje
+
+  db_viaje:
+    image: mysql:latest
+    container_name: db_viaje
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: db_viaje
+    ports:
+      - "3309:3306"
+    volumes:
+      - db_viaje_data:/var/lib/mysql
+
   #  mvc_facturacion
   mvc_facturacion:
     build:
@@ -117,30 +142,7 @@ services:
       - db_facturacion_data:/var/lib/mysql
     networks:
       - net_monopatines
-  # 🗺️ TRIP-SERVICE
-  #  trip-service:
-  #    build: ./trip_service
-  #    container_name: trip_service
-  #    ports:
-  #      - "8086:8086"
-  #    environment:
-  #      - SPRING_DATASOURCE_URL=jdbc:mysql://db_trips:3306/db_trips
-  #      - SPRING_DATASOURCE_USERNAME=root
-  #      - SPRING_DATASOURCE_PASSWORD=1234
-  #    depends_on:
-  #      - db_trips
-  #
-  #  db_trips:
-  #    image: mysql:latest
-  #    container_name: db_trips
-  #    restart: always
-  #    environment:
-  #      MYSQL_ROOT_PASSWORD: 1234
-  #      MYSQL_DATABASE: db_trips
-  #    ports:
-  #      - "3309:3306"
-  #    volumes:
-  #      - db_trips_data:/var/lib/mysql
+
 
   #  mvc_administracion
 #  mvc_administracion:
@@ -182,7 +184,7 @@ services:
     depends_on:
        - mvc_usuario
        - mvc_monopatin
-#      - trip-service
+       - mvc-viaje
      # - mvc_administracion
        - mvc_facturacion
     networks:
@@ -190,7 +192,7 @@ services:
 volumes:
   db_usuario_data:
   db_monopatin_data:
-#  db_trips_data:
+  db_viaje_data:
 #  mongo_data:
   db_facturacion_data:
 

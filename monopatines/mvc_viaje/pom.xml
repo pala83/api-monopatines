@@ -2,33 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.0-RC1</version>
-		<relativePath/> <!-- lookup parent from repository -->
+        <groupId>practico.integrador</groupId>
+        <artifactId>monopatines</artifactId>
+        <version>0.0.1</version>
+        <relativePath>../pom.xml</relativePath>
 	</parent>
-	<groupId>microservicio.trip</groupId>
-	<artifactId>trip_service</artifactId>
+	<groupId>microservicio.viaje</groupId>
+	<artifactId>mvc_viaje</artifactId>
+	<name>mvc_viaje</name>
 	<version>0.0.1</version>
-	<name>trip_service</name>
-	<description>Demo project for Spring Boot</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
-	<properties>
-		<java.version>21</java.version>
-	</properties>
+	<packaging>jar</packaging>
+	<description>Microservicio de Viaje</description>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -43,6 +30,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+  			<groupId>org.springframework.boot</groupId>
+  			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.mysql</groupId>
@@ -63,7 +54,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 		</dependency>
-	</dependencies>
+
+        <!-- El tramite que usamos pa los csv -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>1.14.1</version>
+		</dependency>
+    </dependencies>
 
 	<build>
 		<plugins>
@@ -99,4 +97,3 @@
 	</build>
 
 </project>
-

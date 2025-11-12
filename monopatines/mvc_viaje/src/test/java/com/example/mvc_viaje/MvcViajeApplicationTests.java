@@ -1,10 +1,10 @@
-package microservicio.trip.trip_service;
+package com.example.mvc_viaje;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TripServiceApplicationTests {
+class MvcViajeApplicationTests {
 
 	@Test
 	void contextLoads() {

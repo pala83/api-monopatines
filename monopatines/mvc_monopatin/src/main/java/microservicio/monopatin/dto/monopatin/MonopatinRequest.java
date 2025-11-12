@@ -1,5 +1,7 @@
 package microservicio.monopatin.dto.monopatin;
 
+import java.time.LocalDateTime;
+
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -22,12 +24,16 @@ public class MonopatinRequest {
 
     @DecimalMin("0.0")
     private Double kmTotales;
+    @DecimalMin("0.0")
+    private Long usoTotalMinutos;
 
     @NotNull(message = "El estado no puede ser nulo")
     private EstadoMonopatin estado;
 
     @NotNull(message = "La ubicación actual no puede ser nula")
     private Ubicacion ubicacionActual;
+
+    private LocalDateTime fechaUltimoMantenimiento;
 
     private Long paradaActualId; // opcional
 }
