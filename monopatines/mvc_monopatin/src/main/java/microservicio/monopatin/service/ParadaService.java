@@ -70,6 +70,12 @@ public class ParadaService implements BaseService<ParadaRequest, ParadaResponse>
             .findById(id)
             .orElseThrow( () -> new EntityNotFoundException("Parada con id " + id + " no encontrada")));
     }
+    @Transactional
+    public ParadaResponse findMonopatinById(Long id) {
+        return toResponse(
+                this.paradaRepository
+                        .findMonopatinById(id)
+                        .orElseThrow(() -> new EntityNotFoundException("No se encontró parada para el monopatin con id: " + id))); }
 
     private ParadaResponse toResponse(Parada p) {
         List<MonopatinResponse> monopatines = p.getMonopatines().stream().map(m ->

@@ -35,7 +35,10 @@ public class ParadaController {
     public ResponseEntity<ParadaResponse> getById(@PathVariable Long id) {
         return ResponseEntity.ok(paradaService.findById(id));
     }
-
+    @GetMapping("monopatin/{id}")
+    public ResponseEntity<ParadaResponse> getByMonopatin(@PathVariable Long id) {
+        return ResponseEntity.ok(paradaService.findMonopatinById(id));
+    }
     @PostMapping("")
     public ResponseEntity<ParadaResponse> create(@Validated @RequestBody ParadaRequest req) {
         return ResponseEntity.ok(paradaService.save(req));
