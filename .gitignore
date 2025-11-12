@@ -15,6 +15,7 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
+monopatines/.idea
 *.iws
 *.iml
 *.ipr
