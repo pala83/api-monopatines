@@ -1,0 +1,631 @@
+{
+	"info": {
+		"_postman_id": "4fa3e99e-41a5-4bee-a705-631ec8be7b6e",
+		"name": "Tpe Arq",
+		"description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "49876957",
+		"_collection_link": "https://rdinellivillalba-4379365.postman.co/workspace/Rodrigo-Alejandro-Dinelli-Villa~468f3871-7283-4128-8811-7992b9ae4b0e/collection/49876957-4fa3e99e-41a5-4bee-a705-631ec8be7b6e?action=share&source=collection_link&creator=49876957"
+	},
+	"item": [
+		{
+			"name": "ApiGateway",
+			"item": [
+				{
+					"name": "GatewayUsuario",
+					"item": [
+						{
+							"name": "GatewayUsuario",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre\": \"Luca\",\r\n  \"aaa\": \"Tonto\",\r\n  \"email\": \"Luca.aa@example.com\",\r\n  \"telefono\": \"+5493412345679\",\r\n  \"password\": \"12343\",\r\n  \"rol\": \"ADMIN\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BASE_PATH}}/usuarios"
+							},
+							"response": []
+						},
+						{
+							"name": "GatewayUsuario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status es 2xx\", function () {\r",
+											"  pm.expect(pm.response.code).to.be.within(200, 299);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Content-Type es JSON\", function () {\r",
+											"  pm.response.to.have.header(\"Content-Type\");\r",
+											"  const ct = pm.response.headers.get(\"Content-Type\");\r",
+											"  pm.expect(ct).to.include(\"application/json\");\r",
+											"});\r",
+											"\r",
+											"if (pm.response.code >= 400) {\r",
+											"  console.log(\"Status:\", pm.response.code, \"Body:\", pm.response.text());\r",
+											"  pm.test(\"La API no debería responder 4xx/5xx en /usuarios\", function () {\r",
+											"    pm.expect.fail(`Respuesta ${pm.response.code} para ${pm.request.url}`);\r",
+											"  });\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Body es JSON válido\", function () {\r",
+											"  pm.expect(() => pm.response.json()).to.not.throw();\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Respuesta es array de usuarios\", function () {\r",
+											"  const data = pm.response.json();\r",
+											"  pm.expect(data).to.be.an(\"array\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": "{{BASE_PATH}}/usuarios"
+							},
+							"response": []
+						},
+						{
+							"name": "GatewayUsuario",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{BASE_PATH}}/usuarios/1"
+							},
+							"response": []
+						},
+						{
+							"name": "GatewayUsuario",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre\": \"Luca\",\r\n  \"apellido\": \"Tonto\",\r\n  \"email\": \"Luca.Tonto@example.com\",\r\n  \"telefono\": \"+5493412345679\",\r\n  \"password\": \"12343\",\r\n  \"rol\": \"ADMIN\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BASE_PATH}}/usuarios/2"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GatewayMonopatin",
+					"item": [
+						{
+							"name": "GatewayMonopatin",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{BASE_PATH}}/monopatines"
+							},
+							"response": []
+						},
+						{
+							"name": "GatewayMonopatin",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"marca\": \"Xiaomi\",\r\n  \"codigoQR\": \"QR12345\",\r\n  \"kmTotales\": 0.0,\r\n  \"estado\": \"DISPONIBLE\",\r\n  \"ubicacionActual\": {\r\n    \"latitud\": -37.3212,\r\n    \"longitud\": -59.1335\r\n  },\r\n  \"paradaActualId\": 2 \r\n\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BASE_PATH}}/monopatines"
+							},
+							"response": []
+						},
+						{
+							"name": "GatewayMonopatin",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{BASE_PATH}}/monopatines/1"
+							},
+							"response": []
+						},
+						{
+							"name": "GatewayMonopatin",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"marca\": \"Xiaomi\",\r\n  \"codigoQR\": \"QR12345\",\r\n  \"kmTotales\": 0.0,\r\n  \"estado\": \"DISPONIBLE\",\r\n  \"ubicacionActual\": {\r\n    \"latitud\": -37.3212,\r\n    \"longitud\": -59.1335\r\n  },\r\n  \"paradaActualId\": 2 \r\n\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BASE_PATH}}/monopatines/2"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Servicios individuales",
+			"item": [
+				{
+					"name": "Monopatin",
+					"item": [
+						{
+							"name": "monopatin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"marca\": \"Xiaomi\",\n  \"codigoQR\": \"QR12345\",\n  \"kmTotales\": 0.0,\n  \"estado\": \"DISPONIBLE\",\n  \"ubicacionActual\": {\n    \"latitud\": -37.3212,\n    \"longitud\": -59.1335\n  },\n  \"paradaActualId\": 1\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8084/monopatines",
+								"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+							},
+							"response": []
+						},
+						{
+							"name": "monopatin",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8084/monopatines"
+							},
+							"response": [
+								{
+									"name": "monopatin",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": "http://localhost:8084/monopatines/1"
+									},
+									"_postman_previewlanguage": "",
+									"header": [],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": ""
+								},
+								{
+									"name": "monopatin",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": "http://localhost:8084/monopatines/disponibles"
+									},
+									"_postman_previewlanguage": "",
+									"header": [],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "monopatin",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "http://localhost:8084/monopatines/2"
+							},
+							"response": []
+						},
+						{
+							"name": "monopatin",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"codigoQR\": \"QR-003\",\r\n  \"kmTotales\": 1.0,\r\n  \"estado\": \"DISPONIBLE\",\r\n  \"paradaActualId\": null\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8084/monopatines/3"
+							},
+							"response": []
+						},
+						{
+							"name": "parada",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nombre\": \"Parque Independencia\",\n  \"ubicacion\": {\n    \"latitud\": -37.3212,\n    \"longitud\": -59.1335\n  },\n  \"capacidad\":10\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8084/paradas",
+								"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+							},
+							"response": []
+						},
+						{
+							"name": "parada",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8084/paradas"
+							},
+							"response": [
+								{
+									"name": "parada X Id",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": "http://localhost:8084/paradas/1"
+									},
+									"_postman_previewlanguage": null,
+									"header": null,
+									"cookie": [],
+									"body": null
+								}
+							]
+						},
+						{
+							"name": "parada",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "http://localhost:8084/paradas/1"
+							},
+							"response": []
+						},
+						{
+							"name": "parada",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre\": \"Parque Independencia - Norte\",\r\n  \"latitud\": -37.320,\r\n  \"longitud\": -59.138\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8084/paradas/2"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Facturacion",
+					"item": [
+						{
+							"name": "tarifa",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"precioPorMinuto\": 7.50,\n  \"precioPausaPorMinuto\": 1.00,\n  \"fechaInicioVigencia\": \"2025-12-01T00:00:00\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8088/tarifas",
+								"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+							},
+							"response": []
+						},
+						{
+							"name": "tarifa",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8088/tarifas"
+							},
+							"response": [
+								{
+									"name": "tarifa",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": "http://localhost:8088/tarifas/1"
+									},
+									"_postman_previewlanguage": "",
+									"header": [],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "tarifa",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "http://localhost:8088/tarifas/2"
+							},
+							"response": []
+						},
+						{
+							"name": "tarifa",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"precioPorMinuto\": 2.00,\r\n  \"precioPausaPorMinuto\": 3.50,\r\n  \"fechaInicioVigencia\": \"2025-12-15T00:00:00\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8088/tarifas/1"
+							},
+							"response": []
+						},
+						{
+							"name": "pago",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"idCuenta\": 1003,\n  \"monto\": 3200.50,\n  \"fechaPago\": \"2025-11-08T16:00:00\",\n  \"medio\": \"EFECTIVO\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8088/pagos",
+								"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+							},
+							"response": []
+						},
+						{
+							"name": "pago",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8088/pagos"
+							},
+							"response": [
+								{
+									"name": "pago",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": "http://localhost:8088/pagos/1"
+									},
+									"_postman_previewlanguage": "",
+									"header": [],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "pago",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "http://localhost:8088/pagos/1"
+							},
+							"response": []
+						},
+						{
+							"name": "pago",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"idCuenta\": 1003,\r\n  \"monto\": 3300.00,\r\n  \"fechaPago\": \"2025-11-08T18:00:00\",\r\n  \"medio\": \"TRANSFERENCIA\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8088/pagos/1"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Usuario",
+					"item": [
+						{
+							"name": "user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8082/api/cuentas/",
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nombre\": \"Luca\",\n  \"apellido\": \"Tonto\",\n  \"email\": \"Luca.Tonto@example.com\",\n  \"telefono\": \"+5493412345679\",\n  \"password\": \"12343\",\n  \"rol\": \"ADMIN\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8082/api/usuarios/",
+								"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
