@@ -1,5 +1,7 @@
 package microservicio.monopatin.utils;
 
+import java.nio.file.Paths;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -19,7 +21,7 @@ public class CargarDatos implements CommandLineRunner{
 
     private void cargarMonopatines() throws Exception {
         PopulatedMonopatines populator = new PopulatedMonopatines(
-            java.nio.file.Paths.get(PATH_DATA, "monopatines.csv"),
+            Paths.get(PATH_DATA, "monopatines.csv"),
             this.monopatinRepository,
             this.paradaRepository
         );
@@ -28,7 +30,7 @@ public class CargarDatos implements CommandLineRunner{
 
     private void cargarParadas() throws Exception {
         PopulatedParadas populator = new PopulatedParadas(
-            java.nio.file.Paths.get(PATH_DATA, "paradas.csv"),
+            Paths.get(PATH_DATA, "paradas.csv"),
             this.paradaRepository
         );
         populator.poblar();
