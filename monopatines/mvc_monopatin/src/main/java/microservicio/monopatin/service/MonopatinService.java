@@ -1,7 +1,6 @@
 package microservicio.monopatin.service;
 
 
-import lombok.RequiredArgsConstructor;
 import microservicio.monopatin.dto.monopatin.MonopatinRequest;
 import microservicio.monopatin.dto.monopatin.MonopatinResponse;
 import microservicio.monopatin.entity.EstadoMonopatin;
@@ -16,9 +15,7 @@ import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Service("MonopatinService")
 public class  MonopatinService implements BaseService<MonopatinRequest, MonopatinResponse> {
 
     @Autowired
