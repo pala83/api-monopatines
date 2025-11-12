@@ -87,9 +87,11 @@ services:
     networks:
       - net_monopatines
 
-# 🗺️ MVC_VIAJE
+#  MVC_VIAJE
   mvc-viaje:
-    build: ./mvc_viaje
+    build:
+      context: ./mvc_viaje
+      dockerfile: Dockerfile
     container_name: mvc_viaje
     ports:
       - "8086:8086"
@@ -99,6 +101,8 @@ services:
       - SPRING_DATASOURCE_PASSWORD=1234
     depends_on:
       - db_viaje
+    networks:
+      - net_monopatines
 
   db_viaje:
     image: mysql:latest
@@ -111,6 +115,8 @@ services:
       - "3309:3306"
     volumes:
       - db_viaje_data:/var/lib/mysql
+    networks:
+      - net_monopatines
 
   #  mvc_facturacion
   mvc-facturacion:

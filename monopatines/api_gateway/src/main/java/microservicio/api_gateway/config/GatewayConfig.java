@@ -20,15 +20,23 @@ public class GatewayConfig {
                         .path("/cuentas/**")
                         .uri("http://mvc-usuario:8082")
                 )
-
                 // Rutas para MONOPATIN
                 .route("monopatines", r -> r
                         .path("/monopatines/**")
-                        .uri("http://mvc-monopatin:8084")  // ajusta puerto si es necesario
+                        .uri("http://mvc-monopatin:8084")
                 )
                 .route("paradas", r -> r
                         .path("/paradas/**")
                         .uri("http://mvc-monopatin:8084")
+                )
+                // Rutas para Viajes
+                .route("viajes", r -> r
+                        .path("/viajes/**")
+                        .uri("http://mvc-viaje:8086")
+                )
+                .route("pausas", r -> r
+                        .path("/pausas/**")
+                        .uri("http://mvc-viaje:8086")
                 )
                 // Rutas para FACTURACION
 //                .route("tarifas", r -> r
