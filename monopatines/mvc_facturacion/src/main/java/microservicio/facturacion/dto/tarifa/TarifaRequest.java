@@ -2,21 +2,17 @@ package microservicio.facturacion.dto.tarifa;
 
 
 
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.DecimalMin;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
+import lombok.RequiredArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TarifaRequest {
-    @NotNull
+    @DecimalMin("0.0")
     private Double precioPorMinuto;
-    @NotNull
-    private Double precioPausaPorMinuto;
-    @NotNull
-    private LocalDateTime fechaInicioVigencia;
+    @DecimalMin("0.0")
+    private Double precioPorMinutoExtendido;
+    @DecimalMin("0.0")
+    private Double mensualidadPremium;
 }

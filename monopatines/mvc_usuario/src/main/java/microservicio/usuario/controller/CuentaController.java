@@ -36,7 +36,7 @@ public class CuentaController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<?> findByID(@PathVariable Long id){
         try{
             return ResponseEntity.status(HttpStatus.OK).body(cuentaService.findById(id));

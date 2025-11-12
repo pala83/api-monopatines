@@ -113,7 +113,7 @@ services:
       - db_viaje_data:/var/lib/mysql
 
   #  mvc_facturacion
-  mvc_facturacion:
+  mvc-facturacion:
     build:
       context: ./mvc_facturacion
       dockerfile: Dockerfile
@@ -181,6 +181,7 @@ services:
        - mvc-usuario
        - mvc-monopatin
        - mvc-viaje
+       - mvc-facturacion
      # - mvc_administracion
     networks:
       - net_monopatines
