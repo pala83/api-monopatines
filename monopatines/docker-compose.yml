@@ -26,7 +26,7 @@ services:
 #    networks:
 #      - db_network
   # 🧍‍♂️ USER-SERVICE
-  mvc_usuario:
+  mvc-usuario:
     build:
       context: ./mvc_usuario
       dockerfile: Dockerfile
@@ -56,8 +56,8 @@ services:
     networks:
       - net_monopatines
 
-  # 🛴 mvc_monopatin
-  mvc_monopatin:
+  # mvc_monopatin
+  mvc-monopatin:
     build:
       context: ./mvc_monopatin
       dockerfile: Dockerfile
@@ -87,36 +87,36 @@ services:
     networks:
       - net_monopatines
 
-  #  mvc_facturacion
-  mvc_facturacion:
-    build:
-      context: ./mvc_facturacion
-      dockerfile: Dockerfile
-    container_name: mvc_facturacion
-    ports:
-      - "8088:8088"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db_facturacion:3306/db_facturacion
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=1234
-    depends_on:
-      - db_facturacion
-    networks:
-      - net_monopatines
-
-  db_facturacion:
-    image: mysql:latest
-    container_name: db_facturacion
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: db_facturacion
-    ports:
-      - "3310:3306"
-    volumes:
-      - db_facturacion_data:/var/lib/mysql
-    networks:
-      - net_monopatines
+  # mvc_facturacion
+#  mvc-facturacion:
+#    build:
+#      context: ./mvc_facturacion
+#      dockerfile: Dockerfile
+#    container_name: mvc_facturacion
+#    ports:
+#      - "8088:8088"
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:mysql://db_facturacion:3306/db_facturacion
+#      - SPRING_DATASOURCE_USERNAME=root
+#      - SPRING_DATASOURCE_PASSWORD=1234
+#    depends_on:
+#      - db_facturacion
+#    networks:
+#      - net_monopatines
+#
+#  db_facturacion:
+#    image: mysql:latest
+#    container_name: db_facturacion
+#    restart: always
+#    environment:
+#      MYSQL_ROOT_PASSWORD: 1234
+#      MYSQL_DATABASE: db_facturacion
+#    ports:
+#      - "3310:3306"
+#    volumes:
+#      - db_facturacion_data:/var/lib/mysql
+#    networks:
+#      - net_monopatines
   # 🗺️ TRIP-SERVICE
   #  trip-service:
   #    build: ./trip_service
@@ -168,31 +168,27 @@ services:
 #      - db_administracion_data:/var/lib/mysql
 
   # 🚪 API-GATEWAY
-  api-gateway:
+  api_gateway:
     build:
       context: ./api_gateway
       dockerfile: Dockerfile
     container_name: api_gateway
     ports:
       - "8080:8080"
-    volumes:
-      - ./api_gateway_config/application.yml:/app/config/application.yml
-    environment:
-      - SPRING_CONFIG_LOCATION=file:/app/config/application.yml
     depends_on:
-       - mvc_usuario
-       - mvc_monopatin
+       - mvc-usuario
+       - mvc-monopatin
+#       - mvc-facturacion
 #      - trip-service
      # - mvc_administracion
-       - mvc_facturacion
     networks:
       - net_monopatines
 volumes:
   db_usuario_data:
   db_monopatin_data:
+#  db_facturacion_data:
 #  db_trips_data:
 #  mongo_data:
-  db_facturacion_data:
 
 networks:
   net_monopatines:

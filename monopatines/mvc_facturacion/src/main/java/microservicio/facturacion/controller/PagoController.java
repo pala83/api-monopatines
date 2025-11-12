@@ -53,7 +53,6 @@ public class PagoController {
         return ResponseEntity.noContent().build();
     }
 
-    // --- ENDPOINT ESPECIAL ---
     @GetMapping("total")
     public ResponseEntity<Double> totalFacturado(@RequestParam String desde, @RequestParam String hasta) {
         LocalDateTime d = LocalDateTime.parse(desde);
