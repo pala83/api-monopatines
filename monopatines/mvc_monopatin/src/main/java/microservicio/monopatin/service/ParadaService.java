@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service("ParadaService")

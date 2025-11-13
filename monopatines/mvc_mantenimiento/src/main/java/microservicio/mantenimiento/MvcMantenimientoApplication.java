@@ -1,13 +1,13 @@
-package microservicio.administracion;
+package microservicio.mantenimiento;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MvcAdministraccionApplication {
+public class MvcMantenimientoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MvcAdministraccionApplication.class, args);
+		SpringApplication.run(MvcMantenimientoApplication.class, args);
 	}
 
 }

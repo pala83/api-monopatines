@@ -24,7 +24,7 @@
 
     <modules>
         <module>api_gateway</module>
-        <module>mvc_administracion</module>
+        <module>mvc_mantenimiento</module>
         <module>mvc_usuario</module>
         <module>mvc_facturacion</module>
         <module>mvc_monopatin</module>
