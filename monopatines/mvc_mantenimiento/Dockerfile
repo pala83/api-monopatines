@@ -1,6 +1,9 @@
 FROM eclipse-temurin:21-jdk-alpine
-ARG JAR_FILE=target/mvc_administracion-0.0.1.jar
+RUN apk add --no-cache netcat-openbsd
 WORKDIR /app
-COPY ${JAR_FILE} mvc_administracion.jar
+COPY ./target/mvc_mantenimiento-0.0.1.jar /app/app.jar
 EXPOSE 8090
-ENTRYPOINT ["sh","-c","java -jar /app/mvc_administracion.jar"]
+ENTRYPOINT sh -c 'echo "Waiting for db_mantenimiento:3306..."; \
+  until nc -z db_mantenimiento 3306; do echo "db not ready yet - sleeping 2s"; sleep 2; done; \
+  echo "db is up - starting app"; \
+  exec java -jar /app/app.jar'

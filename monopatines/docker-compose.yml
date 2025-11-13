@@ -1,30 +1,4 @@
 services:
-
-#  admin_service:
-#    build:
-#      context: ./mvc_administracion
-#      dockerfile: Dockerfile
-#    container_name: admin_service
-#    ports:
-#      - "8090:8090"
-#    hostname: admin_service
-#    environment:
-#      # Admin usa MongoDB (URL inyectada por env var)
-#      - SPRING_DATA_MONGODB_URI=mongodb://db_admin:27017/db_administracion
-#    depends_on:
-#      - db_admin
-#    networks:
-#      - db_network
-
-#  db_admin:
-#    image: mongo:latest
-#    container_name: mongo_admin
-#    ports:
-#      - "27017:27017"
-#    volumes:
-#      - mongo_data:/data/db
-#    networks:
-#      - db_network
   # 🧍‍♂️ USER-SERVICE
   mvc-usuario:
     build:
@@ -151,29 +125,35 @@ services:
 
 
   #  mvc_administracion
-#  mvc_administracion:
-#    build: ./mvc_administracion
-#    container_name: mvc_administracion
-#    ports:
-#      - "8090:8090"
-#    environment:
-#      - SPRING_DATASOURCE_URL=jdbc:mysql://db_administracion:3306/db_administracion
-#      - SPRING_DATASOURCE_USERNAME=root
-#      - SPRING_DATASOURCE_PASSWORD=1234
-#    depends_on:
-#      - db_administracion
-#
-#  db_administracion:
-#    image: mysql:latest
-#    container_name: db_administracion
-#    restart: always
-#    environment:
-#      MYSQL_ROOT_PASSWORD: 1234
-#      MYSQL_DATABASE: db_administracion
-#    ports:
-#      - "3311:3306"
-#    volumes:
-#      - db_administracion_data:/var/lib/mysql
+  mvc-mantenimiento:
+    build:
+      context: ./mvc_mantenimiento
+      dockerfile: Dockerfile
+    container_name: mvc_mantenimiento
+    ports:
+      - "8090:8090"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db_mantenimiento:3306/db_mantenimiento
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=1234
+    depends_on:
+      - db_mantenimiento
+    networks:
+      - net_monopatines
+
+  db_mantenimiento:
+    image: mysql:latest
+    container_name: db_mantenimiento
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: db_mantenimiento
+    ports:
+      - "3311:3306"
+    volumes:
+      - db_mantenimiento_data:/var/lib/mysql
+    networks:
+      - net_monopatines
 
   # 🚪 API-GATEWAY
   api_gateway:
@@ -188,7 +168,7 @@ services:
        - mvc-monopatin
        - mvc-viaje
        - mvc-facturacion
-     # - mvc_administracion
+     # - mvc_mantenimiento
     networks:
       - net_monopatines
 volumes:
@@ -196,6 +176,7 @@ volumes:
   db_monopatin_data:
   db_viaje_data:
   db_facturacion_data:
+  db_mantenimiento_data:
 #  mongo_data:
 
 networks:
