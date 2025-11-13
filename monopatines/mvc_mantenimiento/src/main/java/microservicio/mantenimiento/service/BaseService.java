@@ -1,4 +1,4 @@
-package microservicio.facturacion.service;
+package microservicio.mantenimiento.service;
 
 import java.util.List;
 
