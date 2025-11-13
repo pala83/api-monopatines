@@ -100,6 +100,66 @@ public class  MonopatinService implements BaseService<MonopatinRequest, Monopati
         return toResponse(monopatinRepository.save(m));
     }
 
+    @Transactional
+    public MonopatinResponse ubicarEnParada(Long monopatinId, Long paradaId) {
+        Monopatin monopatin = monopatinRepository.findById(monopatinId)
+            .orElseThrow(() -> new EntityNotFoundException("Monopatín con ID " + monopatinId + " no encontrado"));        
+        Parada parada = paradaRepository.findById(paradaId)
+            .orElseThrow(() -> new EntityNotFoundException("Parada con ID " + paradaId + " no encontrada"));
+        
+        if (monopatin.getEstado() == EstadoMonopatin.EN_USO) {
+            throw new IllegalStateException("No se puede ubicar el monopatín en una parada mientras está en uso");
+        }
+        
+        if (monopatin.getEstado() == EstadoMonopatin.MANTENIMIENTO) {
+            throw new IllegalStateException("No se puede ubicar el monopatín en una parada mientras está en mantenimiento");
+        }
+        
+        long monopatinesEnParada = monopatinRepository.countByParadaActual(parada);
+        if (monopatinesEnParada >= parada.getCapacidad()) {
+            throw new IllegalStateException("La parada '" + parada.getNombre() + "' ha alcanzado su capacidad máxima (" + parada.getCapacidad() + ")");
+        }
+        
+        // Actualizar ubicación del monopatín
+        monopatin.setParadaActual(parada);
+        monopatin.setUbicacionActual(parada.getUbicacion());
+        
+        // Agregar el monopatín a la lista de monopatines de la parada
+        if (!parada.getMonopatines().contains(monopatin)) {
+            parada.agregarMonopatin(monopatin);
+        }
+        
+        // Si estaba en otra ubicación y está disponible, mantener su estado
+        // TODO: Preguntar en caso de que esté en mantenimiento
+        if (monopatin.getEstado() != EstadoMonopatin.DISPONIBLE) {
+            monopatin.setEstado(EstadoMonopatin.DISPONIBLE);
+        }
+        
+        return toResponse(monopatinRepository.save(monopatin));
+    }
+
+    @Transactional
+    public MonopatinResponse retirarDeParada(Long monopatinId) {
+        Monopatin monopatin = monopatinRepository.findById(monopatinId)
+            .orElseThrow(() -> new EntityNotFoundException("Monopatín con ID " + monopatinId + " no encontrado"));
+        
+        if (monopatin.getParadaActual() == null) {
+            throw new IllegalStateException("El monopatín no está ubicado en ninguna parada");
+        }
+        
+        // Se entiende que el monopatin ahhora anda suelto, rodando por la carretera
+        monopatin.setParadaActual(null);
+        
+        return toResponse(monopatinRepository.save(monopatin));
+    }
+
+    @Transactional(readOnly = true)
+    public boolean verificarMonopatinEnParada(Long paradaId, Long monopatinId) {
+        Monopatin monopatin = monopatinRepository.findById(monopatinId)
+            .orElseThrow(() -> new EntityNotFoundException("Monopatín con ID " + monopatinId + " no encontrado"));
+        return (monopatin.getParadaActual() != null && monopatin.getParadaActual().getId().equals(paradaId));
+    }
+
     private MonopatinResponse toResponse(Monopatin m) {
         MonopatinResponse r = new MonopatinResponse();
         r.setId(m.getId());
