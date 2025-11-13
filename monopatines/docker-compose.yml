@@ -168,7 +168,7 @@ services:
        - mvc-monopatin
        - mvc-viaje
        - mvc-facturacion
-     # - mvc_mantenimiento
+       - mvc-mantenimiento
     networks:
       - net_monopatines
 volumes:
@@ -177,7 +177,6 @@ volumes:
   db_viaje_data:
   db_facturacion_data:
   db_mantenimiento_data:
-#  mongo_data:
 
 networks:
   net_monopatines:

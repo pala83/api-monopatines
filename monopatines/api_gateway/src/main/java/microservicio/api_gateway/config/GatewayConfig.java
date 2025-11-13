@@ -50,6 +50,11 @@ public class GatewayConfig {
                         .path("/subscripciones/**")
                         .uri("http://mvc-facturacion:8088")
                 )
+                // Rutas para Mantenipiento
+                .route("mantenimientos", r -> r
+                        .path("/mantenimientos/**")
+                        .uri("http://mvc-mantenimiento:8090")
+                )
                 .build();
     }
 }
