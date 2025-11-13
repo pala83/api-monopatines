@@ -1,11 +1,11 @@
 package microservicio.mantenimiento.repository;
 
-import microservicio.mantenimiento.entity.RegistroMantenimiento;
-
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import microservicio.mantenimiento.entity.RegistroMantenimiento;
+
 @Repository("registroMantenimientoRepository")
-public interface RegistroMantenimientoRepository extends MongoRepository<RegistroMantenimiento, Long> {
+public interface RegistroMantenimientoRepository extends JpaRepository<RegistroMantenimiento, Long> {
 
 }
