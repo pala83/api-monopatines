@@ -1,5 +1,10 @@
 package microservicio.mantenimiento.dto.registroMantenimiento;
 
-public class RegistroMantenimientoRequest {
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
+@Data
+public class RegistroMantenimientoRequest {
+	@NotNull
+	private Long idMonopatin;
 }

@@ -92,14 +92,13 @@ public class  MonopatinService implements BaseService<MonopatinRequest, Monopati
             .toList();
     }
 
-//comentado porque rompetodo la query hay que arreglarla
-//    @Transactional
-//    public List<MonopatinResponse> listarPorCercania(Double lat, Double lon, int limite) {
-//        return monopatinRepository.buscarPorCercania(lat, lon, limite)
-//                .stream()
-//                .map(this::toResponse)
-//                .collect(Collectors.toList());
-//    }
+    @Transactional
+    public MonopatinResponse actualizarEstado(Long id, EstadoMonopatin nuevoEstado) {
+        Monopatin m = monopatinRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Monopatin con id " + id + " no encontrado"));
+        m.setEstado(nuevoEstado);
+        return toResponse(monopatinRepository.save(m));
+    }
 
     private MonopatinResponse toResponse(Monopatin m) {
         MonopatinResponse r = new MonopatinResponse();
@@ -108,9 +107,11 @@ public class  MonopatinService implements BaseService<MonopatinRequest, Monopati
         r.setCodigoQR(m.getCodigoQR());
         r.setKmTotales(m.getKmTotales());
         r.setEstado(m.getEstado());
-        r.setUbicacionActual(
-            m.getUbicacionActual().getLatitud() + ", " + m.getUbicacionActual().getLongitud()
-        );
+        if (m.getUbicacionActual() != null) {
+            r.setUbicacionActual(
+                m.getUbicacionActual().getLatitud() + ", " + m.getUbicacionActual().getLongitud()
+            );
+        }
         if (m.getParadaActual() != null) {
             r.setParadaActualId(m.getParadaActual().getId());
             r.setParadaActualNombre(m.getParadaActual().getNombre());
