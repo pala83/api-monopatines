@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import microservicio.monopatin.dto.parada.ParadaRequest;
 import microservicio.monopatin.dto.parada.ParadaResponse;
 import microservicio.monopatin.service.ParadaService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,8 +25,8 @@ import java.util.List;
 @RequestMapping("paradas")
 @RequiredArgsConstructor
 public class ParadaController {
-
-    private final ParadaService paradaService;
+    @Autowired
+    private ParadaService paradaService;
 
     @GetMapping
     public ResponseEntity<List<ParadaResponse>> getAll() {

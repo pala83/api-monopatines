@@ -1,5 +1,13 @@
 package microservicio.mantenimiento.dto.registroMantenimiento;
 
-public class RegistroMantenimientoResponse {
+import java.time.LocalDateTime;
 
+import lombok.Data;
+
+@Data
+public class RegistroMantenimientoResponse {
+	private Long id;
+	private Long idMonopatin;
+	private LocalDateTime fechaInicio;
+	private LocalDateTime fechaFin;
 }

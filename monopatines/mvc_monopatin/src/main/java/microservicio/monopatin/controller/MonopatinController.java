@@ -4,7 +4,10 @@ package microservicio.monopatin.controller;
 import lombok.RequiredArgsConstructor;
 import microservicio.monopatin.dto.monopatin.MonopatinRequest;
 import microservicio.monopatin.dto.monopatin.MonopatinResponse;
+import microservicio.monopatin.entity.EstadoMonopatin;
 import microservicio.monopatin.service.MonopatinService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -22,8 +26,8 @@ import java.util.List;
 @RequestMapping("monopatines")
 @RequiredArgsConstructor
 public class MonopatinController {
-
-    private final MonopatinService monopatinService;
+    @Autowired
+    private MonopatinService monopatinService;  
 
     @GetMapping
     public ResponseEntity<List<MonopatinResponse>> getAll() {
@@ -57,13 +61,12 @@ public class MonopatinController {
         return ResponseEntity.ok(monopatinService.listarDisponibles());
     }
 
-    // comentado porque rompetodo la query hay que arreglarla
-//    @GetMapping("cercanos")
-//    public ResponseEntity<List<MonopatinResponse>> cercanos(
-//            @RequestParam Double lat,
-//            @RequestParam Double lon,
-//            @RequestParam(defaultValue = "10") Integer limit
-//    ) {
-//        return ResponseEntity.ok(monopatinService.listarPorCercania(lat, lon, limit));
-//    }
+    // Endpoint para actualizar solo el estado del monopatín
+    @PatchMapping("{id}/estado")
+        public ResponseEntity<MonopatinResponse> actualizarEstado(
+                @PathVariable Long id,
+                @RequestBody EstadoMonopatin estado
+        ) {
+            return ResponseEntity.ok(monopatinService.actualizarEstado(id, estado));
+        }
 }
