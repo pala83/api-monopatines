@@ -2,6 +2,7 @@ package microservicio.mantenimiento.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +18,10 @@ import microservicio.mantenimiento.dto.registroMantenimiento.RegistroMantenimien
 import microservicio.mantenimiento.service.RegistroMantenimientoService;
 
 @RestController
-@RequestMapping("mantenimientos")
+@RequestMapping("registros")
 @RequiredArgsConstructor
 public class RegistroMantenimientoController {
-
+    @Autowired
     private final RegistroMantenimientoService registroMantenimientoService;
 
     @GetMapping

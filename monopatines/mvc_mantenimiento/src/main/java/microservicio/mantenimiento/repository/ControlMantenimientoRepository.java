@@ -5,7 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import microservicio.mantenimiento.entity.ControlMantenimiento;
 
+import java.util.List;
+
 @Repository("controlMantenimientoRepository")
 public interface ControlMantenimientoRepository extends JpaRepository<ControlMantenimiento, Long> {
-
+    List<ControlMantenimiento> findByActivo(Boolean activo);
 }
