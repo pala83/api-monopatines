@@ -1,4 +1,4 @@
-package microservicio.administracion.entity;
+package microservicio.mantenimiento.entity;
 
 public enum TipoMantenimiento {
     CORRECTIVO,
