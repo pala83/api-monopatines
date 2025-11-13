@@ -6,6 +6,7 @@ import java.time.YearMonth;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import microservicio.facturacion.entity.EstadoSubscripcion;
+import microservicio.facturacion.entity.Vigencia;
 
 @Data
 @AllArgsConstructor
@@ -15,4 +16,5 @@ public class SubscripcionResponse {
     private LocalDate fechaPago;
     private Long monto;
     private EstadoSubscripcion estado;
+    private Vigencia vigencia;
 }

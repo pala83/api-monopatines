@@ -1,6 +1,7 @@
 package microservicio.facturacion.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,5 +23,8 @@ public class Tarifa {
     private Double precioPorMinutoExtendido;
     @Column(name = "mensualidad_premium")
     private Double mensualidadPremium;
+
+    @Embedded
+    private Vigencia vigencia;
 
 }

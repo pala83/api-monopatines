@@ -3,11 +3,13 @@ package microservicio.facturacion.dto.subscripcion;
 import java.time.LocalDate;
 import java.time.YearMonth;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import microservicio.facturacion.entity.EstadoSubscripcion;
+import microservicio.facturacion.entity.Vigencia;
 
 @Data
 @RequiredArgsConstructor
@@ -23,5 +25,8 @@ public class SubscripcionRequest {
     private Long monto;
     @NotNull(message = "El estado no puede ser nulo")
     private EstadoSubscripcion estado;
+    
+    @Valid
+    private Vigencia vigencia;
 
 }

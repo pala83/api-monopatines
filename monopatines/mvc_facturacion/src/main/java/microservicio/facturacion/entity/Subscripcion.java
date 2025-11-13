@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -32,4 +33,8 @@ public class Subscripcion {
     private Long monto;
     @Enumerated(EnumType.STRING)
     private EstadoSubscripcion estado = EstadoSubscripcion.ACTIVA;
+
+    @Embedded
+    private Vigencia vigencia;
 }
+

@@ -45,6 +45,7 @@ public class SubscripcionService implements BaseService<SubscripcionRequest, Sub
         s.setFechaPago(request.getFechaPago());
         s.setMonto(request.getMonto());
         s.setEstado(request.getEstado());
+        s.setVigencia(request.getVigencia());
         return this.toResponse(subscripcionRepository.save(s));
     }
 
@@ -57,6 +58,7 @@ public class SubscripcionService implements BaseService<SubscripcionRequest, Sub
         s.setFechaPago(req.getFechaPago());
         s.setMonto(req.getMonto());
         s.setEstado(req.getEstado());
+        s.setVigencia(req.getVigencia());
         return this.toResponse(subscripcionRepository.save(s));
     }
 
@@ -74,7 +76,8 @@ public class SubscripcionService implements BaseService<SubscripcionRequest, Sub
             subscripcion.getPeriodo(),
             subscripcion.getFechaPago(),
             subscripcion.getMonto(),
-            subscripcion.getEstado()
+            subscripcion.getEstado(),
+            subscripcion.getVigencia()
         );
     }
 }

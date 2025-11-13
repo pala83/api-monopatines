@@ -1,5 +1,6 @@
 package microservicio.facturacion.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,7 @@ public class TarifaService implements BaseService<TarifaRequest, TarifaResponse>
         tarifa.setPrecioPorMinuto(request.getPrecioPorMinuto());
         tarifa.setPrecioPorMinutoExtendido(request.getPrecioPorMinutoExtendido());
         tarifa.setMensualidadPremium(request.getMensualidadPremium());
+        tarifa.setVigencia(request.getVigencia());
         return this.toResponse(tarifaRepository.save(tarifa));
     }
 
@@ -53,6 +55,7 @@ public class TarifaService implements BaseService<TarifaRequest, TarifaResponse>
         t.setPrecioPorMinuto(req.getPrecioPorMinuto());
         t.setPrecioPorMinutoExtendido(req.getPrecioPorMinutoExtendido());
         t.setMensualidadPremium(req.getMensualidadPremium());
+        t.setVigencia(req.getVigencia());
         return this.toResponse(tarifaRepository.save(t));
     }
 
@@ -64,12 +67,22 @@ public class TarifaService implements BaseService<TarifaRequest, TarifaResponse>
         );
     }
 
+    @Transactional(readOnly = true)
+    public TarifaResponse findTarifaVigente(LocalDate fecha) {
+        LocalDate fechaBusqueda = (fecha != null) ? fecha : LocalDate.now();
+        return tarifaRepository.findTarifaVigente(fechaBusqueda)
+            .map(this::toResponse)
+            .orElseThrow(() -> new EntityNotFoundException(
+                "No se encontró una tarifa vigente para la fecha: " + fechaBusqueda));
+    }
+
     private TarifaResponse toResponse(Tarifa tarifa) {
         return new TarifaResponse(
             tarifa.getId(),
             tarifa.getPrecioPorMinuto(),
             tarifa.getPrecioPorMinutoExtendido(),
-            tarifa.getMensualidadPremium()
+            tarifa.getMensualidadPremium(),
+            tarifa.getVigencia()
         );
     }
 }

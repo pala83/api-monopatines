@@ -1,10 +1,10 @@
 package microservicio.facturacion.controller;
 
-import microservicio.facturacion.dto.tarifa.TarifaRequest;
-import microservicio.facturacion.dto.tarifa.TarifaResponse;
-import microservicio.facturacion.service.TarifaService;
+import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import microservicio.facturacion.dto.tarifa.TarifaRequest;
+import microservicio.facturacion.dto.tarifa.TarifaResponse;
+import microservicio.facturacion.service.TarifaService;
 
 @RestController
 @RequestMapping("tarifas")
@@ -71,6 +74,18 @@ public class TarifaController {
             return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró la tarifa con el ID: "+id);
+        }
+    }
+
+    @GetMapping("/vigente")
+    public ResponseEntity<?> getTarifaVigente(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha){
+        try {
+            TarifaResponse tarifa = tarifaService.findTarifaVigente(fecha);
+            return ResponseEntity.ok(tarifa);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("No se encontró una tarifa vigente" + (fecha != null ? " para la fecha: " + fecha : " actual"));
         }
     }
 }
