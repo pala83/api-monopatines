@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class GatewayConfig {
 
     @Bean
-    public RouteLocator customRoutes(RouteLocatorBuilder builder) {
+    RouteLocator customRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
                 // Rutas para USUARIOS
                 .route("usuarios", r -> r
@@ -51,12 +51,12 @@ public class GatewayConfig {
                         .uri("http://mvc-facturacion:8088")
                 )
                 // Rutas para Mantenipiento
-                .route("registros", r -> r
-                        .path("/registros/**")
+                .route("registroMantenimientos", r -> r
+                        .path("/registroMantenimientos/**")
                         .uri("http://mvc-mantenimiento:8090")
                 )
-                .route("controles", r -> r
-                        .path("/controles/**")
+                .route("controlMantenimientos", r -> r
+                        .path("/controlMantenimientos/**")
                         .uri("http://mvc-mantenimiento:8090")
                 )
                 .build();

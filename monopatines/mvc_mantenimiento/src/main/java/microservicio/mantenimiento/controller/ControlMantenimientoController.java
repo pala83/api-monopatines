@@ -20,7 +20,7 @@ import microservicio.mantenimiento.dto.controlMantenimiento.ControlMantenimiento
 import microservicio.mantenimiento.service.ControlMantenimientoService;
 
 @RestController
-@RequestMapping("controles")
+@RequestMapping("controlMantenimientos")
 @RequiredArgsConstructor
 public class ControlMantenimientoController {
     @Autowired

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,25 +19,45 @@ import microservicio.mantenimiento.dto.registroMantenimiento.RegistroMantenimien
 import microservicio.mantenimiento.service.RegistroMantenimientoService;
 
 @RestController
-@RequestMapping("registros")
+@RequestMapping("registroMantenimientos")
 @RequiredArgsConstructor
 public class RegistroMantenimientoController {
     @Autowired
     private final RegistroMantenimientoService registroMantenimientoService;
 
-    @GetMapping
+    // Obtener todos los registros de mantenimiento
+    @GetMapping("")
     public ResponseEntity<List<RegistroMantenimientoResponse>> getAll() {
         return ResponseEntity.ok(registroMantenimientoService.findAll());
     }
 
+    // Obtener un registro de mantenimiento por ID
     @GetMapping("{id}")
     public ResponseEntity<RegistroMantenimientoResponse> getById(@PathVariable Long id) {
         return ResponseEntity.ok(registroMantenimientoService.findById(id));
+    }
+
+    // Obtener todos los registros de mantenimiento de un monopatín específico
+    @GetMapping("/monopatin/{idMonopatin}")
+    public ResponseEntity<List<RegistroMantenimientoResponse>> getByMonopatin(@PathVariable Long idMonopatin) {
+        return ResponseEntity.ok(registroMantenimientoService.findByIdMonopatin(idMonopatin));
+    }
+
+    // Obtener los registros de mantenimiento activos de un monopatín
+    @GetMapping("/monopatin/{idMonopatin}/activos")
+    public ResponseEntity<List<RegistroMantenimientoResponse>> getMantenimientosActivos(@PathVariable Long idMonopatin) {
+        return ResponseEntity.ok(registroMantenimientoService.findMantenimientosActivos(idMonopatin));
     }
 
     // Registrar un monopatín en mantenimiento y marcarlo NO disponible
     @PostMapping
     public ResponseEntity<RegistroMantenimientoResponse> registrar(@Validated @RequestBody RegistroMantenimientoRequest req) {
         return ResponseEntity.ok(registroMantenimientoService.save(req));
+    }
+
+    // Finalizar un registro de mantenimiento y marcar el monopatín como DISPONIBLE
+    @PatchMapping("/{id}/finalizar")
+    public ResponseEntity<RegistroMantenimientoResponse> finalizarMantenimiento(@PathVariable Long id) {
+        return ResponseEntity.ok(registroMantenimientoService.finalizarMantenimiento(id));
     }
 }
