@@ -77,13 +77,35 @@ public class ParadaService implements BaseService<ParadaRequest, ParadaResponse>
                         .orElseThrow(() -> new EntityNotFoundException("No se encontró parada para el monopatin con id: " + id))); }
 
     private ParadaResponse toResponse(Parada p) {
-        List<MonopatinResponse> monopatines = p.getMonopatines().stream().map(m ->
-                new MonopatinResponse(m.getId(), m.getMarca(), m.getCodigoQR(), m.getKmTotales(), m.getUsoTotalMinutos(),
-                        m.getEstado(),m.getFechaUltimoMantenimiento(),m.getUbicacionActual().getLatitud()+","+m.getUbicacionActual().getLongitud(),m.getParadaActual().getId(),
-                        m.getParadaActual().getNombre())).toList();
+        List<MonopatinResponse> monopatines = p.getMonopatines().stream()
+            .map(m -> {
+                Long paradaId = null;
+                String paradaNombre = null;
+                if (m.getParadaActual() != null) {
+                    paradaId = m.getParadaActual().getId();
+                    paradaNombre = m.getParadaActual().getNombre();
+                }
+                
+                return new MonopatinResponse(
+                    m.getId(), 
+                    m.getMarca(), 
+                    m.getCodigoQR(), 
+                    m.getKmTotales(), 
+                    m.getUsoTotalMinutos(),
+                    m.getEstado(),
+                    m.getFechaUltimoMantenimiento(),
+                    m.getUbicacionActual().getLatitud() + "," + m.getUbicacionActual().getLongitud(),
+                    paradaId,
+                    paradaNombre
+                );
+            })
+            .toList();
+            
         return new ParadaResponse(
             p.getNombre(), 
             p.getUbicacion().getLatitud() + "," + p.getUbicacion().getLongitud(),
-            p.getCapacidad(),monopatines);
+            p.getCapacidad(),
+            monopatines
+        );
     }
 }

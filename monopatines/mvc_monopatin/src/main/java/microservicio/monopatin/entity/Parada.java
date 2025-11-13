@@ -1,5 +1,6 @@
 package microservicio.monopatin.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -22,6 +23,7 @@ public class Parada {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_parada")
     private Long id;
+    
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
@@ -32,7 +34,7 @@ public class Parada {
     private Integer capacidad;
 
     @OneToMany(mappedBy = "paradaActual", cascade = CascadeType.ALL)
-    private List<Monopatin> monopatines;
+    private List<Monopatin> monopatines = new ArrayList<>();
 
     public void agregarMonopatin(Monopatin m) {
         this.monopatines.add(m);

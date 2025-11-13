@@ -3,52 +3,47 @@ package microservicio.monopatin.utils.dataManager;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.csv.CSVRecord;
 
+import microservicio.monopatin.dto.parada.ParadaRequest;
 import microservicio.monopatin.entity.Parada;
 import microservicio.monopatin.entity.Ubicacion;
-import microservicio.monopatin.repository.ParadaRepository;
+import microservicio.monopatin.service.ParadaService;
 
 public class PopulatedParadas extends Populated<Parada> {
-    private ParadaRepository paradaRepository;
+    private ParadaService paradaService;
     
-    public PopulatedParadas(Path filePath, ParadaRepository paradaRepository) {
+    public PopulatedParadas(Path filePath, ParadaService paradaService) {
         super(filePath);
-        this.paradaRepository = paradaRepository;
+        this.paradaService = paradaService;
     }
 
     @Override
     public void poblar() throws IOException, ParseException {
-        List<Parada> paradas = new ArrayList<>();
+        int paradasCargadas = 0;
         Iterable<CSVRecord> records = this.read();
+        
         for(CSVRecord record : records){
             try {
-                Parada p = new Parada();
-                p.setNombre(record.get("nombre"));
-                Ubicacion u = new Ubicacion(
+                ParadaRequest request = new ParadaRequest();
+                request.setNombre(record.get("nombre"));
+                
+                Ubicacion ubicacion = new Ubicacion(
                     Double.parseDouble(record.get("latitud")),
                     Double.parseDouble(record.get("longitud"))
                 );
-                p.setUbicacion(u);
-                p.setCapacidad(Integer.parseInt(record.get("capacidad")));
-                paradas.add(p);
+                request.setUbicacion(ubicacion);
+                request.setCapacidad(Integer.parseInt(record.get("capacidad")));
+                paradaService.save(request);
+                paradasCargadas++;
+                
             } catch (Exception e) {
-                System.err.println("[PopulatedParadas.poblar] ERROR parsing registro de parada: " + record.toString());
+                System.err.println("[PopulatedParadas.poblar] ERROR procesando parada: " + record.toString() + " - " + e.getMessage());
             }
         }
-        try {
-            if(!paradas.isEmpty()){
-                this.paradaRepository.saveAll(paradas);
-                System.out.println("[PopulatedParadas.poblar] Se han poblado " + paradas.size() + " paradas.");
-            } else {
-                System.out.println("[PopulatedParadas.poblar] No hay paradas para poblar.");
-            }
-        } catch (Exception e) {
-            System.err.println("[PopulatedParadas.poblar] ERROR guardando paradas: " + e.getMessage());
-        }
+        
+        System.out.println("[PopulatedParadas.poblar] Se han poblado " + paradasCargadas + " paradas.");
     }
 
 }
