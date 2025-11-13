@@ -11,6 +11,111 @@
 - #### Importar el archivo Tpe Arq Grupo20.postman_collection.json a postman, va a tirar error en {{BASE_PATH}} rellenar con http://localhost:8080 **Este archivo tiene los endpoints del gateway y de los servicios individuales**
 
 
+# Sistema de Monopatines - Arquitectura de Microservicios
+
+```mermaid
+erDiagram
+%% Microservicio de Usuario
+    USUARIO ||--o{ USUARIO_CUENTA : tiene
+    CUENTA ||--o{ USUARIO_CUENTA : pertenece
+    USUARIO {
+        Long id PK
+        String nombre
+        String apellido
+        String email
+        String telefono
+        String password
+        String rol
+    }
+    CUENTA {
+        Long id PK
+        Double saldo
+        Timestamp fechaCreacion
+        boolean active
+        String tipo
+    }
+    USUARIO_CUENTA {
+        Long usuarioId FK
+        Long cuentaId FK
+    }
+
+%% Microservicio de Monopatín
+    MONOPATIN }o--|| PARADA : esta_en
+    MONOPATIN {
+        Long id PK
+        String codigoQR
+        String marca
+        double kmTotales
+        Long usoTotalMinutos
+        String estado
+        LocalDateTime fechaUltimoMantenimiento
+        String ubicacionActual
+        Long paradaActualId FK
+    }
+    PARADA {
+        Long id PK
+        String nombre
+        String ubicacion
+        Integer capacidad
+    }
+
+%% Microservicio de Viaje
+    VIAJE }o--|| MONOPATIN : utiliza
+    VIAJE }o--|| USUARIO : realizado_por
+    VIAJE }o--|| CUENTA : se_cobra_a
+    VIAJE ||--o{ PAUSA : tiene
+    VIAJE {
+        Long id PK
+        Long idUsuario FK
+        Long idMonopatin FK
+        Long idCuenta FK
+        LocalDateTime fechaInicio
+        LocalDateTime fechaFin
+        String ubicacionInicio
+        String ubicacionFin
+        double distanciaRecorrida
+        String estado
+    }
+    PAUSA {
+        Long id PK
+        Long viajeId FK
+        LocalDateTime tiempoInicio
+        LocalDateTime tiempoFin
+        Long duracionSegundos
+        Boolean extendido
+    }
+
+%% Microservicio de Facturación
+    CARGA }o--|| VIAJE : por
+    CARGA }o--|| CUENTA : se_carga_a
+    SUBSCRIPTION }o--|| CUENTA : para
+    CARGA {
+        Long id PK
+        Long viajeId FK
+        Long cuentaId FK
+        Long montoTotal
+        Long cargaNormal
+        Long cargaPausaExtendida
+        Long duracionMinutos
+        Long duracionPausaMinutos
+        Double kmRecorridos
+        LocalDateTime fechaCarga
+    }
+    SUBSCRIPTION {
+        Long id PK
+        Long idCuenta FK
+        YearMonth periodo
+        LocalDate fechaPago
+        Long monto
+        String estado
+    }
+    TARIFA {
+        Long id PK
+        Double precioPorMinuto
+        Double precioPorMinutoExtendido
+        Double mensualidadPremium
+    }
+```
 ### Despliegue de microservicios individuales
 **Microservicios actuales funcionando:**
 - `mvc_usuario`
