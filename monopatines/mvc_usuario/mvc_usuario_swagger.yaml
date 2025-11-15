@@ -1,0 +1,377 @@
+openapi: 3.0.3
+info:
+  title: Microservicio de Usuario y Cuenta
+  description: API para gestión de usuarios y cuentas del sistema
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Gateway local
+  - url: http://localhost:8082
+    description: Servidor local de desarrollo
+
+paths:
+  /usuarios:
+    get:
+      summary: Listar todos los usuarios
+      description: Obtiene la lista completa de usuarios registrados
+      responses:
+        '200':
+          description: Lista de usuarios obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UsuarioCompleto'
+    post:
+      summary: Crear un nuevo usuario
+      description: Registra un nuevo usuario en el sistema
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioCreacion'
+      responses:
+        '201':
+          description: Usuario creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+
+  /usuarios/{id}:
+    get:
+      summary: Obtener usuario por ID
+      description: Recupera la información de un usuario específico
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Usuario encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsuarioCompleto'
+        '404':
+          description: Usuario no encontrado
+    put:
+      summary: Actualizar usuario existente
+      description: Modifica la información de un usuario
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioActualizacion'
+      responses:
+        '200':
+          description: Usuario actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+    delete:
+      summary: Eliminar usuario
+      description: Elimina un usuario del sistema
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '204':
+          description: Usuario eliminado exitosamente
+
+  /cuentas:
+    get:
+      summary: Listar todas las cuentas
+      description: Obtiene la lista completa de cuentas registradas
+      responses:
+        '200':
+          description: Lista de cuentas obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CuentaCompleta'
+    post:
+      summary: Crear una nueva cuenta
+      description: Registra una nueva cuenta en el sistema
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CuentaCreacion'
+      responses:
+        '201':
+          description: Cuenta creada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cuenta'
+
+  /cuentas/{id}:
+    get:
+      summary: Obtener cuenta por ID
+      description: Recupera la información de una cuenta específica
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Cuenta encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CuentaCompleta'
+        '404':
+          description: Cuenta no encontrada
+    put:
+      summary: Actualizar cuenta existente
+      description: Modifica la información de una cuenta
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CuentaActualizacion'
+      responses:
+        '200':
+          description: Cuenta actualizada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cuenta'
+    delete:
+      summary: Eliminar cuenta
+      description: Elimina una cuenta del sistema
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '204':
+          description: Cuenta eliminada exitosamente
+
+components:
+  schemas:
+    Usuario:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        nombre:
+          type: string
+          example: "Juan"
+        apellido:
+          type: string
+          example: "Pérez"
+        email:
+          type: string
+          format: email
+          example: "juan.perez@example.com"
+        telefono:
+          type: string
+          example: "+5491122334455"
+        rol:
+          $ref: '#/components/schemas/Rol'
+        cuentas:
+          type: array
+          items:
+            $ref: '#/components/schemas/CuentaResumen'
+
+    UsuarioCompleto:
+      allOf:
+        - $ref: '#/components/schemas/Usuario'
+        - type: object
+          properties:
+            cuentas:
+              type: array
+              items:
+                $ref: '#/components/schemas/CuentaResumen'
+
+    UsuarioCreacion:
+      type: object
+      required:
+        - nombre
+        - apellido
+        - email
+        - password
+      properties:
+        nombre:
+          type: string
+          example: "María"
+        apellido:
+          type: string
+          example: "Lopez"
+        email:
+          type: string
+          format: email
+          example: "maria.lopez@example.com"
+        telefono:
+          type: string
+          example: "+5491155667788"
+        password:
+          type: string
+          format: password
+          example: "secure_password"
+        rol:
+          $ref: '#/components/schemas/Rol'
+
+    UsuarioActualizacion:
+      type: object
+      properties:
+        nombre:
+          type: string
+          example: "María"
+        apellido:
+          type: string
+          example: "Lopez"
+        email:
+          type: string
+          format: email
+          example: "maria.lopez@example.com"
+        telefono:
+          type: string
+          example: "+5491144455566"
+        rol:
+          $ref: '#/components/schemas/Rol'
+
+    Cuenta:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        saldo:
+          type: number
+          format: double
+          example: 5000.00
+        fechaCreacion:
+          type: string
+          format: date-time
+          example: "2025-10-01T10:00:00"
+        activa:
+          type: boolean
+          example: true
+        tipo:
+          $ref: '#/components/schemas/TipoCuenta'
+
+    CuentaCompleta:
+      allOf:
+        - $ref: '#/components/schemas/Cuenta'
+        - type: object
+          properties:
+            usuarios:
+              type: array
+              items:
+                $ref: '#/components/schemas/UsuarioResumen'
+
+    CuentaResumen:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        saldo:
+          type: number
+          format: double
+          example: 5000.00
+        activa:
+          type: boolean
+          example: true
+        tipo:
+          $ref: '#/components/schemas/TipoCuenta'
+
+    UsuarioResumen:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        nombre:
+          type: string
+          example: "Juan"
+        apellido:
+          type: string
+          example: "Pérez"
+        email:
+          type: string
+          format: email
+          example: "juan.perez@example.com"
+
+    CuentaCreacion:
+      type: object
+      required:
+        - saldo
+        - fechaCreacion
+        - activa
+      properties:
+        saldo:
+          type: number
+          format: double
+          example: 1000.00
+        fechaCreacion:
+          type: string
+          format: date-time
+          example: "2025-11-08T12:00:00"
+        activa:
+          type: boolean
+          example: true
+        tipo:
+          $ref: '#/components/schemas/TipoCuenta'
+
+    CuentaActualizacion:
+      type: object
+      properties:
+        saldo:
+          type: number
+          format: double
+          example: 1500.75
+        activa:
+          type: boolean
+          example: false
+        tipo:
+          $ref: '#/components/schemas/TipoCuenta'
+
+    Rol:
+      type: string
+      enum: [ USUARIO, ADMIN, MANTENIMIENTO]
+      example: "ADMIN"
+
+    TipoCuenta:
+      type: string
+      enum: [ BASICA, PREMIUM ]
+      example: "PREMIUM"
