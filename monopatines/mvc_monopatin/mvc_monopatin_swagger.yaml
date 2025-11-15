@@ -1,0 +1,449 @@
+openapi: 3.0.3
+info:
+  title: Microservicio de Monopatines y Paradas
+  description: API para gestión de monopatines y paradas del sistema
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Gateway local
+  - url: http://localhost:8084
+    description: Servidor local de desarrollo
+
+tags:
+  - name: Monopatines
+    description: Operaciones relacionadas con monopatines
+  - name: Paradas
+    description: Operaciones relacionadas con paradas de monopatines
+
+paths:
+  /monopatines:
+    get:
+      tags: ["Monopatines"]
+      summary: Listar todos los monopatines
+      description: Obtiene la lista completa de monopatines registrados
+      responses:
+        '200':
+          description: Lista de monopatines obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MonopatinCompleto'
+    post:
+      tags: ["Monopatines"]
+      summary: Crear un nuevo monopatín
+      description: Registra un nuevo monopatín en el sistema
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/MonopatinCreacion'
+      responses:
+        '201':
+          description: Monopatín creado exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Monopatin'
+
+  /monopatines/{id}:
+    get:
+      tags: ["Monopatines"]
+      summary: Obtener monopatín por ID
+      description: Recupera la información de un monopatín específico
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Monopatín encontrado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Monopatin'
+        '404':
+          description: Monopatín no encontrado
+    put:
+      tags: ["Monopatines"]
+      summary: Actualizar monopatín existente
+      description: Modifica la información de un monopatín
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/MonopatinActualizacion'
+      responses:
+        '200':
+          description: Monopatín actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Monopatin'
+    delete:
+      tags: ["Monopatines"]
+      summary: Eliminar monopatín
+      description: Elimina un monopatín del sistema
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Monopatín eliminado exitosamente
+
+  /monopatines/disponibles:
+    get:
+      tags: ["Monopatines"]
+      summary: Listar monopatines disponibles
+      description: Obtiene la lista de monopatines con estado DISPONIBLE
+      responses:
+        '200':
+          description: Lista de monopatines disponibles obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MonopatinDisponible'
+
+  /paradas:
+    get:
+      tags: ["Paradas"]
+      summary: Listar todas las paradas
+      description: Obtiene la lista completa de paradas registradas
+      responses:
+        '200':
+          description: Lista de paradas obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ParadaCompleta'
+    post:
+      tags: ["Paradas"]
+      summary: Crear una nueva parada
+      description: Registra una nueva parada en el sistema
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParadaCreacion'
+      responses:
+        '201':
+          description: Parada creada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Parada'
+
+  /paradas/{id}:
+    get:
+      tags: ["Paradas"]
+      summary: Obtener parada por ID
+      description: Recupera la información de una parada específica
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Parada encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParadaCompleta'
+        '404':
+          description: Parada no encontrada
+    put:
+      tags: ["Paradas"]
+      summary: Actualizar parada existente
+      description: Modifica la información de una parada
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParadaActualizacion'
+      responses:
+        '200':
+          description: Parada actualizada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Parada'
+    delete:
+      tags: ["Paradas"]
+      summary: Eliminar parada
+      description: Elimina una parada del sistema
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '204':
+          description: Parada eliminada exitosamente
+
+components:
+  schemas:
+    Monopatin:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        marca:
+          type: string
+          example: "Xiaomi"
+        codigoQR:
+          type: string
+          example: "QR12345"
+        kmTotales:
+          type: number
+          format: double
+          example: 100.5
+        estado:
+          $ref: '#/components/schemas/EstadoMonopatin'
+        ubicacionActual:
+          type: string
+          example: "-37.3212, -59.1335"
+        paradaActualId:
+          type: integer
+          nullable: true
+          example: 1
+        paradaActualNombre:
+          type: string
+          nullable: true
+          example: "Parque Independencia"
+
+    MonopatinCompleto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        codigoQR:
+          type: string
+          example: "QR123"
+        kmTotales:
+          type: number
+          format: double
+          example: 100.5
+        estado:
+          $ref: '#/components/schemas/EstadoMonopatin'
+        paradaActual:
+          $ref: '#/components/schemas/ParadaResumen'
+
+    MonopatinDisponible:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        codigoQR:
+          type: string
+          example: "QR123"
+        kmTotales:
+          type: number
+          format: double
+          example: 120.5
+        estado:
+          type: string
+          example: "DISPONIBLE"
+        ubicacionActual:
+          type: string
+          example: "-36.3212, -89.1335"
+        paradaActual:
+          $ref: '#/components/schemas/ParadaResumen'
+
+    MonopatinCreacion:
+      type: object
+      required:
+        - marca
+        - codigoQR
+        - estado
+      properties:
+        marca:
+          type: string
+          example: "Xiaomi"
+        codigoQR:
+          type: string
+          example: "QR12345"
+        kmTotales:
+          type: number
+          format: double
+          example: 0.0
+        estado:
+          $ref: '#/components/schemas/EstadoMonopatin'
+        ubicacionActual:
+          $ref: '#/components/schemas/Ubicacion'
+        paradaActualId:
+          type: integer
+          example: 1
+
+    MonopatinActualizacion:
+      type: object
+      properties:
+        marca:
+          type: string
+          example: "Xiaomi"
+        codigoQR:
+          type: string
+          example: "QR12345"
+        kmTotales:
+          type: number
+          format: double
+          example: 0.0
+        estado:
+          $ref: '#/components/schemas/EstadoMonopatin'
+        ubicacionActual:
+          $ref: '#/components/schemas/Ubicacion'
+        paradaActualId:
+          type: integer
+          example: 2
+
+    Parada:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        nombre:
+          type: string
+          example: "Plaza Central"
+        latitud:
+          type: number
+          format: double
+          example: -37.321
+        longitud:
+          type: number
+          format: double
+          example: -59.132
+
+    ParadaCompleta:
+      allOf:
+        - $ref: '#/components/schemas/Parada'
+        - type: object
+          properties:
+            monopatines:
+              type: array
+              items:
+                $ref: '#/components/schemas/MonopatinResumen'
+
+    ParadaResumen:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        nombre:
+          type: string
+          example: "Plaza Central"
+
+    ParadaCreacion:
+      type: object
+      required:
+        - nombre
+        - latitud
+        - longitud
+      properties:
+        nombre:
+          type: string
+          example: "Parque Independencia"
+        latitud:
+          type: number
+          format: double
+          example: -37.322
+        longitud:
+          type: number
+          format: double
+          example: -59.140
+
+    ParadaActualizacion:
+      type: object
+      properties:
+        nombre:
+          type: string
+          example: "Parque Independencia - Norte"
+        latitud:
+          type: number
+          format: double
+          example: -37.320
+        longitud:
+          type: number
+          format: double
+          example: -59.138
+
+    MonopatinResumen:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        codigoQR:
+          type: string
+          example: "QR123"
+        kmTotales:
+          type: number
+          format: double
+          example: 100.5
+        estado:
+          $ref: '#/components/schemas/EstadoMonopatin'
+
+    Ubicacion:
+      type: object
+      properties:
+        latitud:
+          type: number
+          format: double
+          example: -37.3212
+        longitud:
+          type: number
+          format: double
+          example: -59.1335
+
+    EstadoMonopatin:
+      type: string
+      enum: [DISPONIBLE, EN_USO, MANTENIMIENTO]
+      example: "DISPONIBLE"
