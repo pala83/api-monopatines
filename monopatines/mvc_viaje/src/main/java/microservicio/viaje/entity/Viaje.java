@@ -3,18 +3,7 @@ package microservicio.viaje.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.AttributeOverrides;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -59,7 +48,7 @@ public class Viaje {
     @Column(name = "estado")
     private EstadoViaje estado = EstadoViaje.EN_CURSO;
 
-    @OneToMany(mappedBy = "viaje", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "viaje", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Pausa> pausas;
 
     public void agregarPausa(Pausa p) {

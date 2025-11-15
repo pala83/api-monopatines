@@ -22,10 +22,6 @@ public class Pausa {
     @Column(name = "id_pausa")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "viaje_id", nullable = false)
-    private Viaje viaje;
-
     @Column(name = "tiempo_inicio")
     private LocalDateTime tiempoInicio = LocalDateTime.now();
     @Column(name = "tiempo_fin")
@@ -35,4 +31,7 @@ public class Pausa {
     private Long duracionSegundos = 0L;
     @Column(name = "extendido")
     private Boolean extendido = false;
+    @ManyToOne
+    @JoinColumn(name = "viaje_id", nullable = false)
+    private Viaje viaje;
 }

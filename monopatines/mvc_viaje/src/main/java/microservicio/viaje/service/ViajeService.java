@@ -40,8 +40,8 @@ public class ViajeService implements BaseService<ViajeRequest, ViajeResponse> {
         viaje.setIdMonopatin(request.getMonopatinId());
         viaje.setFechaInicio(request.getInicio());
         viaje.setFechaFin(request.getFin());
-        viaje.setUbicacionInicio(request.getOrigen());
-        viaje.setUbicacionFin(request.getDestino());
+        viaje.setUbicacionInicio(request.getUbicacionInicio());
+        viaje.setUbicacionFin(request.getUbicacionFin());
         viaje.setDistanciaRecorrida(request.getDistanciaRecorrida());
         return this.castResponse(this.viajeRepository.save(viaje));
     }
@@ -59,21 +59,29 @@ public class ViajeService implements BaseService<ViajeRequest, ViajeResponse> {
         Viaje viaje = this.viajeRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("No se encontro el viaje con ID: " + id));
         viaje.setFechaFin(request.getFin());
-        viaje.setUbicacionFin(request.getDestino());
+        viaje.setUbicacionFin(request.getUbicacionFin());
         viaje.setDistanciaRecorrida(request.getDistanciaRecorrida());
         return this.castResponse(this.viajeRepository.save(viaje));
     }
 
     private ViajeResponse castResponse(Viaje viaje) {
+        Long duracionSegundos = null;
+
+        if (viaje.getFechaInicio() != null && viaje.getFechaFin() != null) {
+            duracionSegundos = Duration.between(viaje.getFechaInicio(), viaje.getFechaFin()).getSeconds();
+        }
+
         return new ViajeResponse(
-            viaje.getIdUsuario(),
-            viaje.getIdCuenta(),
-            viaje.getIdMonopatin(),
-            viaje.getFechaInicio(),
-            viaje.getFechaFin(),
-            Duration.between(viaje.getFechaInicio(), viaje.getFechaFin()).getSeconds(),
-            viaje.getDistanciaRecorrida(),
-            viaje.getEstado()
+                viaje.getIdUsuario(),
+                viaje.getIdCuenta(),
+                viaje.getIdMonopatin(),
+                viaje.getFechaInicio(),
+                viaje.getFechaFin(),
+                duracionSegundos,
+                viaje.getDistanciaRecorrida(),
+                viaje.getEstado(),
+                viaje.getUbicacionInicio(),
+                viaje.getUbicacionFin()
         );
     }
 }
