@@ -47,9 +47,6 @@ public class ControlMantenimientoService implements BaseService<ControlMantenimi
         control.setUsoMinutos(req.getUsoMinutos());
         control.setActivo(req.getActivo());
         ControlMantenimiento saved = controlMantenimientoRepository.save(control);
-        if (req.getIdMonopatin() != null) {
-            monopatinClient.actualizarEstado(req.getIdMonopatin(), "MANTENIMIENTO");
-        }
         return toResponse(saved);
     }
 
@@ -74,14 +71,12 @@ public class ControlMantenimientoService implements BaseService<ControlMantenimi
     }
 
     @Transactional
-    public ControlMantenimientoResponse finalizarMantenimiento(Long id, Long idMonopatin) {
+    public ControlMantenimientoResponse finalizarMantenimiento(Long id) {
         ControlMantenimiento control = controlMantenimientoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Control de mantenimiento con id " + id + " no encontrado"));
         control.setActivo(false);
         ControlMantenimiento updated = controlMantenimientoRepository.save(control);
-        if (idMonopatin != null) {
-            monopatinClient.actualizarEstado(idMonopatin, "DISPONIBLE");
-        }
+
         return toResponse(updated);
     }
     @Transactional(readOnly = true)

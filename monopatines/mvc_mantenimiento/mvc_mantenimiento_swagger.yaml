@@ -1,0 +1,404 @@
+openapi: 3.0.3
+info:
+  title: Microservicio de Mantenimiento
+  description: API para gestión de controles y registros de mantenimiento de monopatines
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Gateway local
+  - url: http://localhost:8090
+    description: Servidor local de desarrollo
+
+tags:
+  - name: ControlMantenimientos
+    description: Operaciones relacionadas con controles de mantenimiento
+  - name: RegistroMantenimientos
+    description: Operaciones relacionadas con registros de mantenimiento
+
+paths:
+  /controlMantenimientos:
+    get:
+      tags: ["ControlMantenimientos"]
+      summary: Listar todos los controles de mantenimiento
+      description: Obtiene la lista completa de controles de mantenimiento registrados
+      responses:
+        '200':
+          description: Lista de controles de mantenimiento obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ControlMantenimientoResponse'
+    post:
+      tags: ["ControlMantenimientos"]
+      summary: Crear un nuevo control de mantenimiento
+      description: Registra un nuevo control de mantenimiento en el sistema
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ControlMantenimientoRequest'
+      responses:
+        '200':
+          description: Control de mantenimiento creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ControlMantenimientoResponse'
+
+  /controlMantenimientos/{id}:
+    get:
+      tags: ["ControlMantenimientos"]
+      summary: Obtener control de mantenimiento por ID
+      description: Recupera la información de un control de mantenimiento específico
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Control de mantenimiento encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ControlMantenimientoResponse'
+        '404':
+          description: Control de mantenimiento no encontrado
+    put:
+      tags: ["ControlMantenimientos"]
+      summary: Actualizar control de mantenimiento existente
+      description: Modifica la información de un control de mantenimiento
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ControlMantenimientoRequest'
+      responses:
+        '200':
+          description: Control de mantenimiento actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ControlMantenimientoResponse'
+    delete:
+      tags: ["ControlMantenimientos"]
+      summary: Eliminar control de mantenimiento
+      description: Elimina un control de mantenimiento del sistema
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '204':
+          description: Control de mantenimiento eliminado exitosamente
+
+  /controlMantenimientos/activo/{activo}:
+    get:
+      tags: ["ControlMantenimientos"]
+      summary: Listar controles de mantenimiento por estado activo
+      description: Obtiene la lista de controles de mantenimiento filtrados por estado activo/inactivo
+      parameters:
+        - name: activo
+          in: path
+          required: true
+          schema:
+            type: boolean
+          example: true
+      responses:
+        '200':
+          description: Lista de controles de mantenimiento filtrados por estado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ControlMantenimientoResponse'
+
+  /controlMantenimientos/{id}/finalizar:
+    patch:
+      tags: ["ControlMantenimientos"]
+      summary: Finalizar mantenimiento
+      description: Finaliza un mantenimiento y actualiza el estado del monopatín
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Mantenimiento finalizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ControlMantenimientoResponse'
+
+  /registroMantenimientos:
+    get:
+      tags: ["RegistroMantenimientos"]
+      summary: Obtener todos los registros de mantenimiento
+      description: Obtiene la lista completa de registros de mantenimiento
+      responses:
+        '200':
+          description: Lista de registros de mantenimiento obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RegistroMantenimientoResponse'
+    post:
+      tags: ["RegistroMantenimientos"]
+      summary: Registrar monopatín en mantenimiento
+      description: |
+        Registra un monopatín en mantenimiento y lo marca como NO disponible automáticamente.
+        
+        **Validaciones:**
+        - Verifica que el monopatín existe (consulta al microservicio de monopatines)
+        - Valida que no haya otro mantenimiento activo para ese monopatín
+        - Marca automáticamente el estado del monopatín como "MANTENIMIENTO"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistroMantenimientoRequest'
+            examples:
+              ejemplo-registro:
+                summary: "Ejemplo de registro"
+                value:
+                  idMonopatin: 1
+      responses:
+        '200':
+          description: Registro de mantenimiento creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegistroMantenimientoResponse'
+              examples:
+                ejemplo-respuesta:
+                  summary: "Respuesta exitosa"
+                  value:
+                    id: 1
+                    idMonopatin: 1
+                    fechaInicio: "2025-11-13T10:30:00"
+                    fechaFin: null
+        '404':
+          description: El monopatín no existe
+        '400':
+          description: El monopatín ya está en mantenimiento
+
+  /registroMantenimientos/{id}:
+    get:
+      tags: ["RegistroMantenimientos"]
+      summary: Obtener registro de mantenimiento por ID
+      description: Recupera la información de un registro de mantenimiento específico
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Registro de mantenimiento encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegistroMantenimientoResponse'
+              examples:
+                ejemplo-respuesta:
+                  summary: "Respuesta exitosa"
+                  value:
+                    id: 1
+                    idMonopatin: 1
+                    fechaInicio: "2025-11-13T10:30:00"
+                    fechaFin: "2025-11-13T14:45:00"
+        '404':
+          description: Registro de mantenimiento no encontrado
+
+  /registroMantenimientos/monopatin/{idMonopatin}:
+    get:
+      tags: ["RegistroMantenimientos"]
+      summary: Obtener historial de mantenimientos de un monopatín
+      description: Obtiene todos los registros de mantenimiento (finalizados y activos) de un monopatín específico
+      parameters:
+        - name: idMonopatin
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Lista de registros de mantenimiento del monopatín
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RegistroMantenimientoResponse'
+              examples:
+                ejemplo-respuesta:
+                  summary: "Historial de mantenimientos"
+                  value:
+                    - id: 1
+                      idMonopatin: 1
+                      fechaInicio: "2025-11-10T09:00:00"
+                      fechaFin: "2025-11-10T12:00:00"
+                    - id: 5
+                      idMonopatin: 1
+                      fechaInicio: "2025-11-13T10:30:00"
+                      fechaFin: null
+
+  /registroMantenimientos/monopatin/{idMonopatin}/activos:
+    get:
+      tags: ["RegistroMantenimientos"]
+      summary: Obtener mantenimientos activos de un monopatín
+      description: Obtiene solo los registros de mantenimiento activos (sin fecha fin) de un monopatín
+      parameters:
+        - name: idMonopatin
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Lista de registros de mantenimiento activos del monopatín
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RegistroMantenimientoResponse'
+              examples:
+                ejemplo-respuesta:
+                  summary: "Mantenimientos activos"
+                  value:
+                    - id: 5
+                      idMonopatin: 1
+                      fechaInicio: "2025-11-13T10:30:00"
+                      fechaFin: null
+
+  /registroMantenimientos/{id}/finalizar:
+    post:
+      tags: ["RegistroMantenimientos"]
+      summary: Finalizar mantenimiento
+      description: |
+        Finaliza un registro de mantenimiento y marca el monopatín como DISPONIBLE nuevamente.
+        
+        **Validaciones:**
+        - Verifica que el registro de mantenimiento existe
+        - Valida que el mantenimiento no haya sido finalizado previamente
+        - Marca automáticamente el estado del monopatín como "DISPONIBLE"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Registro de mantenimiento finalizado exitosamente
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RegistroMantenimientoResponse'
+              examples:
+                ejemplo-respuesta:
+                  summary: "Mantenimiento finalizado"
+                  value:
+                    id: 1
+                    idMonopatin: 1
+                    fechaInicio: "2025-11-13T10:30:00"
+                    fechaFin: "2025-11-13T14:45:00"
+        '404':
+          description: El registro de mantenimiento no existe
+        '400':
+          description: El mantenimiento ya fue finalizado
+
+components:
+  schemas:
+    ControlMantenimientoRequest:
+      type: object
+      properties:
+        kilometraje:
+          type: number
+          format: double
+          example: 150.5
+        usoMinutos:
+          type: integer
+          example: 120
+        activo:
+          type: boolean
+          example: true
+
+    ControlMantenimientoResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        kilometraje:
+          type: number
+          format: double
+          example: 150.5
+        usoMinutos:
+          type: integer
+          example: 120
+        activo:
+          type: boolean
+          example: true
+        ultimoMantenimiento:
+          type: string
+          format: date-time
+          example: "2025-11-15T10:30:00"
+
+    RegistroMantenimientoRequest:
+      type: object
+      required:
+        - idMonopatin
+      properties:
+        idMonopatin:
+          type: integer
+          example: 1
+
+    RegistroMantenimientoResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        idMonopatin:
+          type: integer
+          example: 1
+        fechaInicio:
+          type: string
+          format: date-time
+          example: "2025-11-13T10:30:00"
+        fechaFin:
+          type: string
+          format: date-time
+          nullable: true
+          example: "2025-11-13T14:45:00"

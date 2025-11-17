@@ -1,0 +1,535 @@
+openapi: 3.0.3
+info:
+  title: Microservicio de Facturación
+  description: API para gestión de tarifas, suscripciones y cargas del sistema
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Gateway local
+  - url: http://localhost:8088
+    description: Servidor local de desarrollo
+
+tags:
+  - name: Tarifas
+    description: Operaciones relacionadas con tarifas
+  - name: Subscripciones
+    description: Operaciones relacionadas con suscripciones
+  - name: Cargas
+    description: Operaciones relacionadas con cargas
+
+paths:
+  /tarifas:
+    get:
+      tags: ["Tarifas"]
+      summary: Listar todas las tarifas
+      description: Obtiene la lista completa de tarifas registradas
+      responses:
+        '200':
+          description: Lista de tarifas obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TarifaResponse'
+        '500':
+          description: Error interno del servidor
+    post:
+      tags: ["Tarifas"]
+      summary: Crear una nueva tarifa
+      description: Registra una nueva tarifa en el sistema
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TarifaRequest'
+      responses:
+        '200':
+          description: Tarifa creada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TarifaResponse'
+        '502':
+          description: Error al crear la tarifa
+
+  /tarifas/{id}:
+    get:
+      tags: ["Tarifas"]
+      summary: Obtener una tarifa por ID
+      description: Recupera la información de una tarifa específica
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Tarifa encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TarifaResponse'
+        '400':
+          description: No existe la tarifa con el ID especificado
+    delete:
+      tags: ["Tarifas"]
+      summary: Eliminar una tarifa
+      description: Elimina una tarifa del sistema
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Tarifa eliminada exitosamente
+        '400':
+          description: Error al eliminar la tarifa
+
+  /tarifas/editar/{id}:
+    put:
+      tags: ["Tarifas"]
+      summary: Actualizar una tarifa existente
+      description: Modifica la información de una tarifa
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TarifaRequest'
+      responses:
+        '200':
+          description: Tarifa actualizada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TarifaResponse'
+        '404':
+          description: No se encontró la tarifa con el ID especificado
+
+  /tarifas/vigente:
+    get:
+      tags: ["Tarifas"]
+      summary: Obtener tarifa vigente
+      description: Recupera la tarifa vigente para una fecha específica o la fecha actual
+      parameters:
+        - name: fecha
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+          example: "2025-11-15"
+      responses:
+        '200':
+          description: Tarifa vigente encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TarifaResponse'
+        '404':
+          description: No se encontró una tarifa vigente
+
+  /subscripciones:
+    get:
+      tags: ["Subscripciones"]
+      summary: Listar todas las suscripciones
+      description: Obtiene la lista completa de suscripciones registradas
+      responses:
+        '200':
+          description: Lista de suscripciones obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubscripcionResponse'
+        '500':
+          description: Error interno del servidor
+    post:
+      tags: ["Subscripciones"]
+      summary: Crear una nueva suscripción
+      description: Registra una nueva suscripción en el sistema
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscripcionRequest'
+      responses:
+        '200':
+          description: Suscripción creada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscripcionResponse'
+        '502':
+          description: Error al crear la suscripción
+
+  /subscripciones/{id}:
+    get:
+      tags: ["Subscripciones"]
+      summary: Obtener una suscripción por ID
+      description: Recupera la información de una suscripción específica
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Suscripción encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscripcionResponse'
+        '400':
+          description: No existe la suscripción con el ID especificado
+    delete:
+      tags: ["Subscripciones"]
+      summary: Eliminar una suscripción
+      description: Elimina una suscripción del sistema
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Suscripción eliminada exitosamente
+        '400':
+          description: Error al eliminar la suscripción
+
+  /subscripciones/editar/{id}:
+    put:
+      tags: ["Subscripciones"]
+      summary: Actualizar una suscripción existente
+      description: Modifica la información de una suscripción
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscripcionRequest'
+      responses:
+        '200':
+          description: Suscripción actualizada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscripcionResponse'
+        '404':
+          description: No se encontró la suscripción con el ID especificado
+
+  /cargas:
+    get:
+      tags: ["Cargas"]
+      summary: Listar todas las cargas
+      description: Obtiene la lista completa de cargas registradas
+      responses:
+        '200':
+          description: Lista de cargas obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CargaResponse'
+        '500':
+          description: Error interno del servidor
+    post:
+      tags: ["Cargas"]
+      summary: Crear una nueva carga
+      description: Registra una nueva carga en el sistema
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CargaRequest'
+      responses:
+        '200':
+          description: Carga creada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CargaResponse'
+        '502':
+          description: Error al crear la carga
+
+  /cargas/{id}:
+    get:
+      tags: ["Cargas"]
+      summary: Obtener una carga por ID
+      description: Recupera la información de una carga específica
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Carga encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CargaResponse'
+        '400':
+          description: No existe la carga con el ID especificado
+    delete:
+      tags: ["Cargas"]
+      summary: Eliminar una carga
+      description: Elimina una carga del sistema
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Carga eliminada exitosamente
+        '400':
+          description: Error al eliminar la carga
+
+  /cargas/editar/{id}:
+    put:
+      tags: ["Cargas"]
+      summary: Actualizar una carga existente
+      description: Modifica la información de una carga
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CargaRequest'
+      responses:
+        '200':
+          description: Carga actualizada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CargaResponse'
+        '404':
+          description: No se encontró la carga con el ID especificado
+
+components:
+  schemas:
+    TarifaRequest:
+      type: object
+      required:
+        - precioPorMinuto
+        - precioPorMinutoExtendido
+        - mensualidadPremium
+        - vigencia
+      properties:
+        precioPorMinuto:
+          type: number
+          format: double
+          example: 5.50
+        precioPorMinutoExtendido:
+          type: number
+          format: double
+          example: 3.00
+        mensualidadPremium:
+          type: number
+          format: double
+          example: 1500.00
+        vigencia:
+          $ref: '#/components/schemas/Vigencia'
+
+    TarifaResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        precioPorMinuto:
+          type: number
+          format: double
+          example: 5.50
+        precioPorMinutoExtendido:
+          type: number
+          format: double
+          example: 3.00
+        mensualidadPremium:
+          type: number
+          format: double
+          example: 1500.00
+        vigencia:
+          $ref: '#/components/schemas/Vigencia'
+
+    SubscripcionRequest:
+      type: object
+      required:
+        - idCuenta
+        - periodoFacturacion
+        - fechaPago
+        - monto
+        - vigencia
+      properties:
+        idCuenta:
+          type: integer
+          example: 1001
+        periodoFacturacion:
+          type: string
+          format: year-month
+          example: "2025-11"
+        fechaPago:
+          type: string
+          format: date
+          example: "2025-11-15"
+        monto:
+          type: integer
+          example: 1500
+        estado:
+          $ref: '#/components/schemas/EstadoSubscripcion'
+        vigencia:
+          $ref: '#/components/schemas/Vigencia'
+
+    SubscripcionResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        idCuenta:
+          type: integer
+          example: 1001
+        periodoFacturacion:
+          type: string
+          format: year-month
+          example: "2025-11"
+        fechaPago:
+          type: string
+          format: date
+          example: "2025-11-15"
+        monto:
+          type: integer
+          example: 1500
+        estado:
+          $ref: '#/components/schemas/EstadoSubscripcion'
+        vigencia:
+          $ref: '#/components/schemas/Vigencia'
+
+    CargaRequest:
+      type: object
+      required:
+        - viajeId
+        - cuentaId
+      properties:
+        viajeId:
+          type: integer
+          example: 5001
+        cuentaId:
+          type: integer
+          example: 1001
+        montoTotal:
+          type: integer
+          example: 2500
+        cargaNormal:
+          type: integer
+          example: 2000
+        cargaPausaExtendida:
+          type: integer
+          example: 500
+        duracionMinutos:
+          type: integer
+          example: 45
+        duracionPausaMinutos:
+          type: integer
+          example: 15
+        kmRecorridos:
+          type: number
+          format: double
+          example: 8.5
+
+    CargaResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        viajeId:
+          type: integer
+          example: 5001
+        cuentaId:
+          type: integer
+          example: 1001
+        montoTotal:
+          type: integer
+          example: 2500
+        cargaNormal:
+          type: integer
+          example: 2000
+        cargaPausaExtendida:
+          type: integer
+          example: 500
+        duracionMinutos:
+          type: integer
+          example: 45
+        duracionPausaMinutos:
+          type: integer
+          example: 15
+        kmRecorridos:
+          type: number
+          format: double
+          example: 8.5
+        fechaCarga:
+          type: string
+          format: date-time
+          example: "2025-11-15T10:30:00"
+
+    Vigencia:
+      type: object
+      required:
+        - inicio
+      properties:
+        inicio:
+          type: string
+          format: date
+          example: "2025-01-01"
+        fin:
+          type: string
+          format: date
+          nullable: true
+          example: "2025-12-31"
+
+    EstadoSubscripcion:
+      type: string
+      enum: [ACTIVA, INACTIVA, SUSPENDIDA]
+      example: "ACTIVA"

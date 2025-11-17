@@ -8,7 +8,6 @@ servers:
     description: Gateway local
   - url: http://localhost:8084
     description: Servidor local de desarrollo
-
 tags:
   - name: Monopatines
     description: Operaciones relacionadas con monopatines
