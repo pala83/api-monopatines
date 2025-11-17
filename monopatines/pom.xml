@@ -29,6 +29,7 @@
         <module>mvc_facturacion</module>
         <module>mvc_monopatin</module>
         <module>mvc_viaje</module>
+        <module>mvc_asistente</module>
     </modules>
 
     <dependencyManagement>
