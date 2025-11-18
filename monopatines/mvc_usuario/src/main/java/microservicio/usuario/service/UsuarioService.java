@@ -2,9 +2,11 @@ package microservicio.usuario.service;
 
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
+import microservicio.usuario.dto.login.UserDetailsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import jakarta.transaction.Transactional;
 import microservicio.usuario.dto.usuario.UsuarioRequest;
 import microservicio.usuario.dto.usuario.UsuarioResponse;
@@ -13,10 +15,12 @@ import microservicio.usuario.repository.UsuarioRepository;
 import microservicio.usuario.service.exception.NotFoundException;
 
 @Service("UsuarioService")
+@RequiredArgsConstructor
 public class UsuarioService implements BaseService<UsuarioRequest, UsuarioResponse> {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -70,6 +74,27 @@ public class UsuarioService implements BaseService<UsuarioRequest, UsuarioRespon
         u.setRol(request.getRol());
         u.setCuentas(request.getCuentas());
         return castResponse(this.usuarioRepository.save(u));
+    }
+    @Transactional
+    public Long validarCredenciales(String username, String password) {
+        // Buscar usuario por email/username
+        Usuario usuario = usuarioRepository.findByEmail(username)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        // Validar contraseña
+        if (passwordEncoder.matches(password, usuario.getPassword())) {
+            return usuario.getId(); // Devuelve ID si es válido
+        }
+        throw new RuntimeException("Credenciales inválidas");
+    }
+    @Transactional
+    public UserDetailsResponse getUserDetails(Long id) {
+        UsuarioResponse usuario = findById(id); // Tu método existente
+
+        return new UserDetailsResponse(
+                id,
+                usuario.getEmail(),
+                List.of(usuario.getRol().name())
+        );
     }
 
     private UsuarioResponse castResponse(Usuario usuario){

@@ -1,5 +1,7 @@
 package microservicio.usuario.controller;
 
+import microservicio.usuario.dto.login.LoginRequest;
+import microservicio.usuario.dto.login.UserDetailsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,6 +78,21 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró el usuario con el ID: "+id);
         }
     }
-    
+    @PostMapping("/validar")
+    public ResponseEntity<Long> validarCredenciales(@RequestBody LoginRequest request) {
+        try {
+            return ResponseEntity.ok(usuarioService.validarCredenciales(request.username(), request.password()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+    @GetMapping("/{id}/details")
+    public ResponseEntity<UserDetailsResponse> getUserDetails(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(usuarioService.getUserDetails(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 
 }
