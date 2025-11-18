@@ -1,0 +1,342 @@
+openapi: 3.0.3
+info:
+  title: Microservicio de Viajes y Pausas
+  description: API para gestión de viajes y pausas del sistema de movilidad
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Gateway local
+  - url: http://localhost:8086
+    description: Servidor local de desarrollo
+tags:
+  - name: Viajes
+    description: Operaciones relacionadas con viajes
+  - name: Pausas
+    description: Operaciones relacionadas con pausas de viajes
+paths:
+  /viajes:
+    get:
+      tags: ["Viajes"]
+      summary: Listar todos los viajes
+      description: Obtiene la lista completa de viajes registrados
+      responses:
+        '200':
+          description: Lista de viajes obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ViajeResponse'
+        '500':
+          description: Error interno del servidor
+    post:
+      tags: ["Viajes"]
+      summary: Crear un nuevo viaje
+      description: Registra un nuevo viaje en el sistema
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ViajeRequest'
+      responses:
+        '200':
+          description: Viaje creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ViajeResponse'
+        '502':
+          description: Error al crear el viaje
+
+  /viajes/{id}:
+    get:
+      tags: ["Viajes"]
+      summary: Obtener viaje por ID
+      description: Recupera la información de un viaje específico
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Viaje encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ViajeResponse'
+        '400':
+          description: Viaje no encontrado
+    put:
+      tags: ["Viajes"]
+      summary: Actualizar viaje existente
+      description: Modifica la información de un viaje
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ViajeRequest'
+      responses:
+        '200':
+          description: Viaje actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ViajeResponse'
+        '404':
+          description: Viaje no encontrado
+    delete:
+      tags: ["Viajes"]
+      summary: Eliminar viaje
+      description: Elimina un viaje del sistema
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Viaje eliminado exitosamente
+        '400':
+          description: Error al eliminar el viaje
+
+  /pausas:
+    get:
+      tags: ["Pausas"]
+      summary: Listar todas las pausas
+      description: Obtiene la lista completa de pausas registradas
+      responses:
+        '200':
+          description: Lista de pausas obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PausaResponse'
+        '500':
+          description: Error interno del servidor
+    post:
+      tags: ["Pausas"]
+      summary: Crear una nueva pausa
+      description: Registra una nueva pausa en el sistema
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PausaRequest'
+      responses:
+        '200':
+          description: Pausa creada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PausaResponse'
+        '502':
+          description: Error al crear la pausa
+
+  /pausas/{id}:
+    get:
+      tags: ["Pausas"]
+      summary: Obtener pausa por ID
+      description: Recupera la información de una pausa específica
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Pausa encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PausaResponse'
+        '400':
+          description: Pausa no encontrada
+    put:
+      tags: ["Pausas"]
+      summary: Actualizar pausa existente
+      description: Modifica la información de una pausa
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PausaRequest'
+      responses:
+        '200':
+          description: Pausa actualizada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PausaResponse'
+        '404':
+          description: Pausa no encontrada
+    delete:
+      tags: ["Pausas"]
+      summary: Eliminar pausa
+      description: Elimina una pausa del sistema
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Pausa eliminada exitosamente
+        '400':
+          description: Error al eliminar la pausa
+
+components:
+  schemas:
+    ViajeRequest:
+      type: object
+      required:
+        - usuarioId
+        - cuentaId
+        - monopatinId
+        - ubicacionInicio
+      properties:
+        usuarioId:
+          type: integer
+          example: 1
+        cuentaId:
+          type: integer
+          example: 1
+        monopatinId:
+          type: integer
+          example: 1
+        inicio:
+          type: string
+          format: date-time
+          example: "2025-10-01T10:00:00"
+        fin:
+          type: string
+          format: date-time
+          example: "2025-10-01T11:30:00"
+        ubicacionInicio:
+          $ref: '#/components/schemas/Ubicacion'
+        ubicacionFin:
+          $ref: '#/components/schemas/Ubicacion'
+        distanciaRecorrida:
+          type: number
+          format: double
+          minimum: 0.0
+          example: 5.5
+        estado:
+          $ref: '#/components/schemas/EstadoViaje'
+
+    ViajeResponse:
+      type: object
+      properties:
+        usuarioId:
+          type: integer
+          example: 1
+        cuentaId:
+          type: integer
+          example: 1
+        monopatinId:
+          type: integer
+          example: 1
+        fechaInicio:
+          type: string
+          format: date-time
+          example: "2025-10-01T10:00:00"
+        fechaFin:
+          type: string
+          format: date-time
+          example: "2025-10-01T11:30:00"
+        duracionSegundos:
+          type: integer
+          example: 5400
+        distanciaRecorrida:
+          type: number
+          format: double
+          example: 5.5
+        estado:
+          $ref: '#/components/schemas/EstadoViaje'
+        ubicacionInicio:
+          $ref: '#/components/schemas/Ubicacion'
+        ubicacionFin:
+          $ref: '#/components/schemas/Ubicacion'
+
+    PausaRequest:
+      type: object
+      properties:
+        viajeId:
+          type: integer
+          example: 1
+        tiempoInicio:
+          type: string
+          format: date-time
+          example: "2025-10-01T10:30:00"
+        tiempoFin:
+          type: string
+          format: date-time
+          example: "2025-10-01T10:45:00"
+        duracionSegundos:
+          type: integer
+          minimum: 0
+          example: 900
+        extendido:
+          type: boolean
+          example: false
+
+    PausaResponse:
+      type: object
+      properties:
+        viajeId:
+          type: integer
+          example: 1
+        tiempoInicio:
+          type: string
+          format: date-time
+          example: "2025-10-01T10:30:00"
+        tiempoFin:
+          type: string
+          format: date-time
+          example: "2025-10-01T10:45:00"
+
+    Ubicacion:
+      type: object
+      properties:
+        latitud:
+          type: number
+          format: double
+          example: -34.603722
+        longitud:
+          type: number
+          format: double
+          example: -58.381592
+
+    EstadoViaje:
+      type: string
+      enum: [EN_CURSO, PAUSADO, FINALIZADO]
+      example: "EN_CURSO"
