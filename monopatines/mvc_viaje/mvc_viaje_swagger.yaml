@@ -6,19 +6,21 @@ info:
 servers:
   - url: http://localhost:8080
     description: Gateway local
-  - url: http://localhost:8086
-    description: Servidor local de desarrollo
+
 tags:
   - name: Viajes
     description: Operaciones relacionadas con viajes
   - name: Pausas
     description: Operaciones relacionadas con pausas de viajes
+
 paths:
   /viajes:
     get:
       tags: ["Viajes"]
       summary: Listar todos los viajes
       description: Obtiene la lista completa de viajes registrados
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: Lista de viajes obtenida exitosamente
@@ -28,12 +30,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ViajeResponse'
-        '500':
-          description: Error interno del servidor
     post:
       tags: ["Viajes"]
       summary: Crear un nuevo viaje
       description: Registra un nuevo viaje en el sistema
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -47,14 +49,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ViajeResponse'
-        '502':
-          description: Error al crear el viaje
 
   /viajes/{id}:
     get:
       tags: ["Viajes"]
       summary: Obtener viaje por ID
       description: Recupera la información de un viaje específico
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -69,12 +71,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ViajeResponse'
-        '400':
-          description: Viaje no encontrado
     put:
       tags: ["Viajes"]
       summary: Actualizar viaje existente
       description: Modifica la información de un viaje
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -95,12 +97,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ViajeResponse'
-        '404':
-          description: Viaje no encontrado
     delete:
       tags: ["Viajes"]
       summary: Eliminar viaje
       description: Elimina un viaje del sistema
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -111,14 +113,14 @@ paths:
       responses:
         '200':
           description: Viaje eliminado exitosamente
-        '400':
-          description: Error al eliminar el viaje
 
   /pausas:
     get:
       tags: ["Pausas"]
       summary: Listar todas las pausas
       description: Obtiene la lista completa de pausas registradas
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: Lista de pausas obtenida exitosamente
@@ -128,12 +130,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/PausaResponse'
-        '500':
-          description: Error interno del servidor
     post:
       tags: ["Pausas"]
       summary: Crear una nueva pausa
       description: Registra una nueva pausa en el sistema
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -147,14 +149,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PausaResponse'
-        '502':
-          description: Error al crear la pausa
 
   /pausas/{id}:
     get:
       tags: ["Pausas"]
       summary: Obtener pausa por ID
       description: Recupera la información de una pausa específica
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -169,12 +171,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PausaResponse'
-        '400':
-          description: Pausa no encontrada
     put:
       tags: ["Pausas"]
       summary: Actualizar pausa existente
       description: Modifica la información de una pausa
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -195,12 +197,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PausaResponse'
-        '404':
-          description: Pausa no encontrada
     delete:
       tags: ["Pausas"]
       summary: Eliminar pausa
       description: Elimina una pausa del sistema
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -211,8 +213,6 @@ paths:
       responses:
         '200':
           description: Pausa eliminada exitosamente
-        '400':
-          description: Error al eliminar la pausa
 
 components:
   schemas:
@@ -340,3 +340,9 @@ components:
       type: string
       enum: [EN_CURSO, PAUSADO, FINALIZADO]
       example: "EN_CURSO"
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

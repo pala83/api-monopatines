@@ -64,7 +64,7 @@ public class CargaController {
         }
     }
 
-   @PutMapping("/editar/{id}")
+   @PutMapping("{id}")
     public ResponseEntity<?> editCarga(@PathVariable Long id, @RequestBody @Validated CargaRequest request){
         try {
             CargaResponse response = this.cargaService.update(id, request);

@@ -1,23 +1,21 @@
 package microservicio.api_gateway.config;
 
-import microservicio.api_gateway.security.jwt.JwtFilter;
+import microservicio.api_gateway.security.jwt.JwtGatewayFilter;
 import microservicio.api_gateway.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Configuration
-@EnableWebSecurity
-@EnableMethodSecurity
+@EnableWebFluxSecurity
+@EnableReactiveMethodSecurity
 public class SecurityConfig {
 
     private final TokenProvider tokenProvider;
@@ -32,55 +30,52 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authz -> authz
+    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+        return http
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)
+                .authorizeExchange(exchanges -> exchanges
                         // ========== ENDPOINTS PÚBLICOS ==========
-                        .requestMatchers(HttpMethod.POST, "/api/authenticate").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
+                        .pathMatchers(HttpMethod.POST, "/authController/authenticate").permitAll()
 
                         // Paradas públicas (solo consultas GET)
-                        .requestMatchers(HttpMethod.GET, "/paradas").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/paradas/**").permitAll()
+                        .pathMatchers(HttpMethod.GET, "/paradas").permitAll()
+                        .pathMatchers(HttpMethod.GET, "/paradas/**").permitAll()
 
                         // Monopatines públicos (solo consultas GET específicas)
-                        .requestMatchers(HttpMethod.GET, "/monopatines/disponibles").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/monopatines/{id}").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/monopatines/{monopatinId}/esta-en-parada/{paradaId}").permitAll()
+                        .pathMatchers(HttpMethod.GET, "/monopatines/disponibles").permitAll()
+                        .pathMatchers(HttpMethod.GET, "/monopatines/{id}").permitAll()
+                        .pathMatchers(HttpMethod.GET, "/monopatines/{monopatinId}/esta-en-parada/{paradaId}").permitAll()
 
                         // ========== ENDPOINTS DE ADMINISTRADOR ==========
                         // Monopatines - CRUD completo (solo admin)
-                        .requestMatchers(HttpMethod.GET, "/monopatines").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/monopatines").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/monopatines/{id}").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/monopatines/{id}").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PATCH, "/monopatines/{id}/estado").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PATCH, "/monopatines/{id}/ubicar-en-parada").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PATCH, "/monopatines/{id}/retirar-de-parada").hasAuthority("ADMIN")
+                        .pathMatchers(HttpMethod.GET, "/monopatines").hasAuthority("ADMIN")
+                        .pathMatchers(HttpMethod.POST, "/monopatines").hasAuthority("ADMIN")
+                        .pathMatchers(HttpMethod.PUT, "/monopatines/{id}").hasAuthority("ADMIN")
+                        .pathMatchers(HttpMethod.DELETE, "/monopatines/{id}").hasAuthority("ADMIN")
+                        .pathMatchers(HttpMethod.PATCH, "/monopatines/{id}/estado").hasAuthority("ADMIN")
+                        .pathMatchers(HttpMethod.PATCH, "/monopatines/{id}/ubicar-en-parada").hasAuthority("ADMIN")
+                        .pathMatchers(HttpMethod.PATCH, "/monopatines/{id}/retirar-de-parada").hasAuthority("ADMIN")
 
                         // Paradas - Crear/Actualizar/Eliminar (solo admin)
-                        .requestMatchers(HttpMethod.POST, "/paradas").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/paradas/{id}").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/paradas/{id}").hasAuthority("ADMIN")
+                        .pathMatchers(HttpMethod.POST, "/paradas").hasAuthority("ADMIN")
+                        .pathMatchers(HttpMethod.PUT, "/paradas/{id}").hasAuthority("ADMIN")
+                        .pathMatchers(HttpMethod.DELETE, "/paradas/{id}").hasAuthority("ADMIN")
 
                         // ========== ENDPOINTS DE USUARIO/PREMIUM ==========
-                        .requestMatchers("/cuentas/**").hasAnyAuthority("USER", "PREMIUM", "ADMIN")
-                        .requestMatchers("/viajes/**").hasAnyAuthority("USER", "PREMIUM", "ADMIN")
-                        .requestMatchers("/pausas/**").hasAnyAuthority("USER", "PREMIUM", "ADMIN")
-                        .requestMatchers("/cargas/**").hasAnyAuthority("USER", "PREMIUM", "ADMIN")
-                        .requestMatchers("/subscripciones/**").hasAnyAuthority("USER", "PREMIUM", "ADMIN")
+                        .pathMatchers("/cuentas/**").hasAnyAuthority("USUARIO", "MANTENIMIENTO", "ADMIN")
+                        .pathMatchers("/viajes/**").hasAnyAuthority("USUARIO", "MANTENIMIENTO", "ADMIN")
+                        .pathMatchers("/pausas/**").hasAnyAuthority("USUARIO", "MANTENIMIENTO", "ADMIN")
+                        .pathMatchers("/cargas/**").hasAnyAuthority("USUARIO", "MANTENIMIENTO", "ADMIN")
+                        .pathMatchers("/subscripciones/**").hasAnyAuthority("USUARIO", "MANTENIMIENTO", "ADMIN")
 
-                        // ========== ENDPOINTS DE MANTENIMIENTO (ADMIN) ==========
-                        .requestMatchers("/registroMantenimientos/**").hasAuthority("ADMIN")
-                        .requestMatchers("/controlMantenimientos/**").hasAuthority("ADMIN")
-                        .requestMatchers("/tarifas/**").hasAuthority("ADMIN")
+                        // ========== ENDPOINTS DE MANTENIMIENTO ==========
+                        .pathMatchers("/registroMantenimientos/**").hasAnyAuthority("MANTENIMIENTO", "ADMIN")
+                        .pathMatchers("/controlMantenimientos/**").hasAnyAuthority("MANTENIMIENTO", "ADMIN")
+                        .pathMatchers("/tarifas/**").hasAnyAuthority("MANTENIMIENTO", "ADMIN")
 
-                        .anyRequest().authenticated()
+                        .anyExchange().authenticated()
                 )
-                .addFilterBefore(new JwtFilter(this.tokenProvider), UsernamePasswordAuthenticationFilter.class);
-
-        return http.build();
+                .addFilterAt(new JwtGatewayFilter(tokenProvider), SecurityWebFiltersOrder.AUTHENTICATION)
+                .build();
     }
 }

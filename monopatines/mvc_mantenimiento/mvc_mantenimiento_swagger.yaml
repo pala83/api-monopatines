@@ -3,12 +3,9 @@ info:
   title: Microservicio de Mantenimiento
   description: API para gestión de controles y registros de mantenimiento de monopatines
   version: 1.0.0
-
 servers:
   - url: http://localhost:8080
     description: Gateway local
-  - url: http://localhost:8090
-    description: Servidor local de desarrollo
 
 tags:
   - name: ControlMantenimientos
@@ -22,6 +19,8 @@ paths:
       tags: ["ControlMantenimientos"]
       summary: Listar todos los controles de mantenimiento
       description: Obtiene la lista completa de controles de mantenimiento registrados
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: Lista de controles de mantenimiento obtenida exitosamente
@@ -35,6 +34,8 @@ paths:
       tags: ["ControlMantenimientos"]
       summary: Crear un nuevo control de mantenimiento
       description: Registra un nuevo control de mantenimiento en el sistema
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -54,6 +55,8 @@ paths:
       tags: ["ControlMantenimientos"]
       summary: Obtener control de mantenimiento por ID
       description: Recupera la información de un control de mantenimiento específico
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -74,6 +77,8 @@ paths:
       tags: ["ControlMantenimientos"]
       summary: Actualizar control de mantenimiento existente
       description: Modifica la información de un control de mantenimiento
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -98,6 +103,8 @@ paths:
       tags: ["ControlMantenimientos"]
       summary: Eliminar control de mantenimiento
       description: Elimina un control de mantenimiento del sistema
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -114,6 +121,8 @@ paths:
       tags: ["ControlMantenimientos"]
       summary: Listar controles de mantenimiento por estado activo
       description: Obtiene la lista de controles de mantenimiento filtrados por estado activo/inactivo
+      security:
+        - bearerAuth: []
       parameters:
         - name: activo
           in: path
@@ -136,6 +145,8 @@ paths:
       tags: ["ControlMantenimientos"]
       summary: Finalizar mantenimiento
       description: Finaliza un mantenimiento y actualiza el estado del monopatín
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -156,6 +167,8 @@ paths:
       tags: ["RegistroMantenimientos"]
       summary: Obtener todos los registros de mantenimiento
       description: Obtiene la lista completa de registros de mantenimiento
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: Lista de registros de mantenimiento obtenida exitosamente
@@ -170,22 +183,14 @@ paths:
       summary: Registrar monopatín en mantenimiento
       description: |
         Registra un monopatín en mantenimiento y lo marca como NO disponible automáticamente.
-        
-        **Validaciones:**
-        - Verifica que el monopatín existe (consulta al microservicio de monopatines)
-        - Valida que no haya otro mantenimiento activo para ese monopatín
-        - Marca automáticamente el estado del monopatín como "MANTENIMIENTO"
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/RegistroMantenimientoRequest'
-            examples:
-              ejemplo-registro:
-                summary: "Ejemplo de registro"
-                value:
-                  idMonopatin: 1
       responses:
         '200':
           description: Registro de mantenimiento creado exitosamente
@@ -193,14 +198,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RegistroMantenimientoResponse'
-              examples:
-                ejemplo-respuesta:
-                  summary: "Respuesta exitosa"
-                  value:
-                    id: 1
-                    idMonopatin: 1
-                    fechaInicio: "2025-11-13T10:30:00"
-                    fechaFin: null
         '404':
           description: El monopatín no existe
         '400':
@@ -211,6 +208,8 @@ paths:
       tags: ["RegistroMantenimientos"]
       summary: Obtener registro de mantenimiento por ID
       description: Recupera la información de un registro de mantenimiento específico
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -225,14 +224,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RegistroMantenimientoResponse'
-              examples:
-                ejemplo-respuesta:
-                  summary: "Respuesta exitosa"
-                  value:
-                    id: 1
-                    idMonopatin: 1
-                    fechaInicio: "2025-11-13T10:30:00"
-                    fechaFin: "2025-11-13T14:45:00"
         '404':
           description: Registro de mantenimiento no encontrado
 
@@ -241,6 +232,8 @@ paths:
       tags: ["RegistroMantenimientos"]
       summary: Obtener historial de mantenimientos de un monopatín
       description: Obtiene todos los registros de mantenimiento (finalizados y activos) de un monopatín específico
+      security:
+        - bearerAuth: []
       parameters:
         - name: idMonopatin
           in: path
@@ -257,24 +250,14 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/RegistroMantenimientoResponse'
-              examples:
-                ejemplo-respuesta:
-                  summary: "Historial de mantenimientos"
-                  value:
-                    - id: 1
-                      idMonopatin: 1
-                      fechaInicio: "2025-11-10T09:00:00"
-                      fechaFin: "2025-11-10T12:00:00"
-                    - id: 5
-                      idMonopatin: 1
-                      fechaInicio: "2025-11-13T10:30:00"
-                      fechaFin: null
 
   /registroMantenimientos/monopatin/{idMonopatin}/activos:
     get:
       tags: ["RegistroMantenimientos"]
       summary: Obtener mantenimientos activos de un monopatín
       description: Obtiene solo los registros de mantenimiento activos (sin fecha fin) de un monopatín
+      security:
+        - bearerAuth: []
       parameters:
         - name: idMonopatin
           in: path
@@ -291,26 +274,14 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/RegistroMantenimientoResponse'
-              examples:
-                ejemplo-respuesta:
-                  summary: "Mantenimientos activos"
-                  value:
-                    - id: 5
-                      idMonopatin: 1
-                      fechaInicio: "2025-11-13T10:30:00"
-                      fechaFin: null
 
   /registroMantenimientos/{id}/finalizar:
     post:
       tags: ["RegistroMantenimientos"]
       summary: Finalizar mantenimiento
-      description: |
-        Finaliza un registro de mantenimiento y marca el monopatín como DISPONIBLE nuevamente.
-        
-        **Validaciones:**
-        - Verifica que el registro de mantenimiento existe
-        - Valida que el mantenimiento no haya sido finalizado previamente
-        - Marca automáticamente el estado del monopatín como "DISPONIBLE"
+      description: Finaliza un registro de mantenimiento y marca el monopatín como DISPONIBLE nuevamente
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -325,14 +296,6 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/RegistroMantenimientoResponse'
-              examples:
-                ejemplo-respuesta:
-                  summary: "Mantenimiento finalizado"
-                  value:
-                    id: 1
-                    idMonopatin: 1
-                    fechaInicio: "2025-11-13T10:30:00"
-                    fechaFin: "2025-11-13T14:45:00"
         '404':
           description: El registro de mantenimiento no existe
         '400':
@@ -402,3 +365,9 @@ components:
           format: date-time
           nullable: true
           example: "2025-11-13T14:45:00"
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

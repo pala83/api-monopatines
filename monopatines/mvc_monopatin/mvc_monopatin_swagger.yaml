@@ -1,18 +1,17 @@
 openapi: 3.0.3
 info:
   title: Microservicio de Monopatines y Paradas
-  description: API para gestión de monopatines y paradas del sistema
+  description: API para gestión de monopatines y paradas
   version: 1.0.0
 servers:
   - url: http://localhost:8080
     description: Gateway local
-  - url: http://localhost:8084
-    description: Servidor local de desarrollo
+
 tags:
   - name: Monopatines
     description: Operaciones relacionadas con monopatines
   - name: Paradas
-    description: Operaciones relacionadas con paradas de monopatines
+    description: Operaciones relacionadas con paradas
 
 paths:
   /monopatines:
@@ -20,6 +19,8 @@ paths:
       tags: ["Monopatines"]
       summary: Listar todos los monopatines
       description: Obtiene la lista completa de monopatines registrados
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: Lista de monopatines obtenida exitosamente
@@ -33,6 +34,8 @@ paths:
       tags: ["Monopatines"]
       summary: Crear un nuevo monopatín
       description: Registra un nuevo monopatín en el sistema
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -56,6 +59,7 @@ paths:
       tags: ["Monopatines"]
       summary: Obtener monopatín por ID
       description: Recupera la información de un monopatín específico
+      # SIN security - es público
       parameters:
         - name: id
           in: path
@@ -78,6 +82,8 @@ paths:
       tags: ["Monopatines"]
       summary: Actualizar monopatín existente
       description: Modifica la información de un monopatín
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -106,6 +112,8 @@ paths:
       tags: ["Monopatines"]
       summary: Eliminar monopatín
       description: Elimina un monopatín del sistema
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -122,6 +130,7 @@ paths:
       tags: ["Monopatines"]
       summary: Listar monopatines disponibles
       description: Obtiene la lista de monopatines con estado DISPONIBLE
+      # SIN security - es público
       responses:
         '200':
           description: Lista de monopatines disponibles obtenida exitosamente
@@ -137,6 +146,7 @@ paths:
       tags: ["Paradas"]
       summary: Listar todas las paradas
       description: Obtiene la lista completa de paradas registradas
+      # SIN security - es público
       responses:
         '200':
           description: Lista de paradas obtenida exitosamente
@@ -150,6 +160,8 @@ paths:
       tags: ["Paradas"]
       summary: Crear una nueva parada
       description: Registra una nueva parada en el sistema
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -169,6 +181,7 @@ paths:
       tags: ["Paradas"]
       summary: Obtener parada por ID
       description: Recupera la información de una parada específica
+      # SIN security - es público
       parameters:
         - name: id
           in: path
@@ -189,6 +202,8 @@ paths:
       tags: ["Paradas"]
       summary: Actualizar parada existente
       description: Modifica la información de una parada
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -213,6 +228,8 @@ paths:
       tags: ["Paradas"]
       summary: Eliminar parada
       description: Elimina una parada del sistema
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -446,3 +463,9 @@ components:
       type: string
       enum: [DISPONIBLE, EN_USO, MANTENIMIENTO]
       example: "DISPONIBLE"
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "Ingrese el token JWT obtenido del endpoint de autenticación"

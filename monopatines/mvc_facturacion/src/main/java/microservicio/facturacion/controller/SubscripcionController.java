@@ -64,7 +64,7 @@ public class SubscripcionController {
         }
     }
 
-   @PutMapping("/editar/{id}")
+   @PutMapping("{id}")
     public ResponseEntity<?> editSubscripcion(@PathVariable Long id, @RequestBody @Validated SubscripcionRequest request){
         try {
             SubscripcionResponse response = this.subscripcionService.update(id, request);

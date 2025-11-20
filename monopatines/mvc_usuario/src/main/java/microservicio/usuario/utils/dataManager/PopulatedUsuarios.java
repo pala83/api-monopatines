@@ -11,13 +11,15 @@ import org.apache.commons.csv.CSVRecord;
 import microservicio.usuario.entity.Rol;
 import microservicio.usuario.entity.Usuario;
 import microservicio.usuario.repository.UsuarioRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class PopulatedUsuarios extends Populated<Usuario> {
     private UsuarioRepository usuarioRepository;
-    
-    public PopulatedUsuarios(Path filePath, UsuarioRepository usuarioRepository) {
+    private PasswordEncoder passwordEncoder;
+    public PopulatedUsuarios(Path filePath, UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         super(filePath);
         this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -31,7 +33,7 @@ public class PopulatedUsuarios extends Populated<Usuario> {
                 u.setApellido(record.get("apellido"));
                 u.setEmail(record.get("email"));
                 u.setTelefono(record.get("telefono"));
-                u.setPassword(record.get("password"));
+                u.setPassword(passwordEncoder.encode(record.get("password")));
                 u.setRol(Rol.valueOf(record.get("rol")));
                 usuarios.add(u);
             } catch (Exception e) {

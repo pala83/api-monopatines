@@ -6,8 +6,6 @@ info:
 servers:
   - url: http://localhost:8080
     description: Gateway local
-  - url: http://localhost:8088
-    description: Servidor local de desarrollo
 
 tags:
   - name: Tarifas
@@ -23,6 +21,8 @@ paths:
       tags: ["Tarifas"]
       summary: Listar todas las tarifas
       description: Obtiene la lista completa de tarifas registradas
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: Lista de tarifas obtenida exitosamente
@@ -32,12 +32,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TarifaResponse'
-        '500':
-          description: Error interno del servidor
     post:
       tags: ["Tarifas"]
       summary: Crear una nueva tarifa
       description: Registra una nueva tarifa en el sistema
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -51,14 +51,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TarifaResponse'
-        '502':
-          description: Error al crear la tarifa
 
   /tarifas/{id}:
     get:
       tags: ["Tarifas"]
       summary: Obtener una tarifa por ID
       description: Recupera la información de una tarifa específica
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -73,12 +73,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TarifaResponse'
-        '400':
-          description: No existe la tarifa con el ID especificado
     delete:
       tags: ["Tarifas"]
       summary: Eliminar una tarifa
       description: Elimina una tarifa del sistema
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -89,14 +89,12 @@ paths:
       responses:
         '200':
           description: Tarifa eliminada exitosamente
-        '400':
-          description: Error al eliminar la tarifa
-
-  /tarifas/editar/{id}:
     put:
       tags: ["Tarifas"]
       summary: Actualizar una tarifa existente
       description: Modifica la información de una tarifa
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -117,14 +115,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TarifaResponse'
-        '404':
-          description: No se encontró la tarifa con el ID especificado
 
   /tarifas/vigente:
     get:
       tags: ["Tarifas"]
       summary: Obtener tarifa vigente
       description: Recupera la tarifa vigente para una fecha específica o la fecha actual
+      security:
+        - bearerAuth: []
       parameters:
         - name: fecha
           in: query
@@ -140,14 +138,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TarifaResponse'
-        '404':
-          description: No se encontró una tarifa vigente
 
   /subscripciones:
     get:
       tags: ["Subscripciones"]
       summary: Listar todas las suscripciones
       description: Obtiene la lista completa de suscripciones registradas
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: Lista de suscripciones obtenida exitosamente
@@ -157,12 +155,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/SubscripcionResponse'
-        '500':
-          description: Error interno del servidor
     post:
       tags: ["Subscripciones"]
       summary: Crear una nueva suscripción
       description: Registra una nueva suscripción en el sistema
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -176,14 +174,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SubscripcionResponse'
-        '502':
-          description: Error al crear la suscripción
 
   /subscripciones/{id}:
     get:
       tags: ["Subscripciones"]
       summary: Obtener una suscripción por ID
       description: Recupera la información de una suscripción específica
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -198,12 +196,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SubscripcionResponse'
-        '400':
-          description: No existe la suscripción con el ID especificado
     delete:
       tags: ["Subscripciones"]
       summary: Eliminar una suscripción
       description: Elimina una suscripción del sistema
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -214,14 +212,12 @@ paths:
       responses:
         '200':
           description: Suscripción eliminada exitosamente
-        '400':
-          description: Error al eliminar la suscripción
-
-  /subscripciones/editar/{id}:
     put:
       tags: ["Subscripciones"]
       summary: Actualizar una suscripción existente
       description: Modifica la información de una suscripción
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -242,14 +238,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SubscripcionResponse'
-        '404':
-          description: No se encontró la suscripción con el ID especificado
 
   /cargas:
     get:
       tags: ["Cargas"]
       summary: Listar todas las cargas
       description: Obtiene la lista completa de cargas registradas
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: Lista de cargas obtenida exitosamente
@@ -259,12 +255,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CargaResponse'
-        '500':
-          description: Error interno del servidor
     post:
       tags: ["Cargas"]
       summary: Crear una nueva carga
       description: Registra una nueva carga en el sistema
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -278,14 +274,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CargaResponse'
-        '502':
-          description: Error al crear la carga
 
   /cargas/{id}:
     get:
       tags: ["Cargas"]
       summary: Obtener una carga por ID
       description: Recupera la información de una carga específica
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -300,12 +296,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CargaResponse'
-        '400':
-          description: No existe la carga con el ID especificado
     delete:
       tags: ["Cargas"]
       summary: Eliminar una carga
       description: Elimina una carga del sistema
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -316,14 +312,12 @@ paths:
       responses:
         '200':
           description: Carga eliminada exitosamente
-        '400':
-          description: Error al eliminar la carga
-
-  /cargas/editar/{id}:
     put:
       tags: ["Cargas"]
       summary: Actualizar una carga existente
       description: Modifica la información de una carga
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -344,8 +338,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CargaResponse'
-        '404':
-          description: No se encontró la carga con el ID especificado
 
 components:
   schemas:
@@ -533,3 +525,9 @@ components:
       type: string
       enum: [ACTIVA, INACTIVA, SUSPENDIDA]
       example: "ACTIVA"
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

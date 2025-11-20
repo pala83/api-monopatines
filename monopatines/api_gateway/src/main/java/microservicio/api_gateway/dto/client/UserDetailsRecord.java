@@ -1,4 +1,4 @@
-package microservicio.api_gateway.dto;
+package microservicio.api_gateway.dto.client;
 
 import java.util.List;
 
