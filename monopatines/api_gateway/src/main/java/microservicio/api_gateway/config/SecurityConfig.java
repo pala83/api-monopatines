@@ -48,30 +48,30 @@ public class SecurityConfig {
 
                         // ========== ENDPOINTS DE ADMINISTRADOR ==========
                         // Monopatines - CRUD completo (solo admin)
-                        .pathMatchers(HttpMethod.GET, "/monopatines").hasAuthority("ADMIN")
-                        .pathMatchers(HttpMethod.POST, "/monopatines").hasAuthority("ADMIN")
-                        .pathMatchers(HttpMethod.PUT, "/monopatines/{id}").hasAuthority("ADMIN")
-                        .pathMatchers(HttpMethod.DELETE, "/monopatines/{id}").hasAuthority("ADMIN")
-                        .pathMatchers(HttpMethod.PATCH, "/monopatines/{id}/estado").hasAuthority("ADMIN")
-                        .pathMatchers(HttpMethod.PATCH, "/monopatines/{id}/ubicar-en-parada").hasAuthority("ADMIN")
-                        .pathMatchers(HttpMethod.PATCH, "/monopatines/{id}/retirar-de-parada").hasAuthority("ADMIN")
+                        .pathMatchers(HttpMethod.GET, "/monopatines").hasRole("ADMIN")
+                        .pathMatchers(HttpMethod.POST, "/monopatines").hasRole("ADMIN")
+                        .pathMatchers(HttpMethod.PUT, "/monopatines/{id}").hasRole("ADMIN")
+                        .pathMatchers(HttpMethod.DELETE, "/monopatines/{id}").hasRole("ADMIN")
+                        .pathMatchers(HttpMethod.PATCH, "/monopatines/{id}/estado").hasRole("ADMIN")
+                        .pathMatchers(HttpMethod.PATCH, "/monopatines/{id}/ubicar-en-parada").hasRole("ADMIN")
+                        .pathMatchers(HttpMethod.PATCH, "/monopatines/{id}/retirar-de-parada").hasRole("ADMIN")
 
                         // Paradas - Crear/Actualizar/Eliminar (solo admin)
-                        .pathMatchers(HttpMethod.POST, "/paradas").hasAuthority("ADMIN")
-                        .pathMatchers(HttpMethod.PUT, "/paradas/{id}").hasAuthority("ADMIN")
-                        .pathMatchers(HttpMethod.DELETE, "/paradas/{id}").hasAuthority("ADMIN")
+                        .pathMatchers(HttpMethod.POST, "/paradas").hasRole("ADMIN")
+                        .pathMatchers(HttpMethod.PUT, "/paradas/{id}").hasRole("ADMIN")
+                        .pathMatchers(HttpMethod.DELETE, "/paradas/{id}").hasRole("ADMIN")
 
-                        // ========== ENDPOINTS DE USUARIO/PREMIUM ==========
-                        .pathMatchers("/cuentas/**").hasAnyAuthority("USUARIO", "MANTENIMIENTO", "ADMIN")
-                        .pathMatchers("/viajes/**").hasAnyAuthority("USUARIO", "MANTENIMIENTO", "ADMIN")
-                        .pathMatchers("/pausas/**").hasAnyAuthority("USUARIO", "MANTENIMIENTO", "ADMIN")
-                        .pathMatchers("/cargas/**").hasAnyAuthority("USUARIO", "MANTENIMIENTO", "ADMIN")
-                        .pathMatchers("/subscripciones/**").hasAnyAuthority("USUARIO", "MANTENIMIENTO", "ADMIN")
+                        // ========== ENDPOINTS DE USUARIO/ADMIN ==========
+                        .pathMatchers("/cuentas/**").hasAnyRole("USUARIO", "MANTENIMIENTO", "ADMIN")
+                        .pathMatchers("/viajes/**").hasAnyRole("USUARIO", "MANTENIMIENTO", "ADMIN")
+                        .pathMatchers("/pausas/**").hasAnyRole("USUARIO", "MANTENIMIENTO", "ADMIN")
+                        .pathMatchers("/cargas/**").hasAnyRole("USUARIO", "MANTENIMIENTO", "ADMIN")
+                        .pathMatchers("/subscripciones/**").hasAnyRole("USUARIO", "MANTENIMIENTO", "ADMIN")
+                        .pathMatchers("/tarifas/**").hasAnyRole("MANTENIMIENTO", "ADMIN")
 
                         // ========== ENDPOINTS DE MANTENIMIENTO ==========
-                        .pathMatchers("/registroMantenimientos/**").hasAnyAuthority("MANTENIMIENTO", "ADMIN")
-                        .pathMatchers("/controlMantenimientos/**").hasAnyAuthority("MANTENIMIENTO", "ADMIN")
-                        .pathMatchers("/tarifas/**").hasAnyAuthority("MANTENIMIENTO", "ADMIN")
+                        .pathMatchers("/registroMantenimientos/**").hasRole("MANTENIMIENTO")
+                        .pathMatchers("/controlMantenimientos/**").hasRole("MANTENIMIENTO")
 
                         .anyExchange().authenticated()
                 )

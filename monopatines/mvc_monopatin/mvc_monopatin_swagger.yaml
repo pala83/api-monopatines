@@ -6,7 +6,8 @@ info:
 servers:
   - url: http://localhost:8080
     description: Gateway local
-
+security:
+  - bearerAuth: []
 tags:
   - name: Monopatines
     description: Operaciones relacionadas con monopatines
@@ -59,7 +60,6 @@ paths:
       tags: ["Monopatines"]
       summary: Obtener monopatín por ID
       description: Recupera la información de un monopatín específico
-      # SIN security - es público
       parameters:
         - name: id
           in: path
@@ -130,7 +130,6 @@ paths:
       tags: ["Monopatines"]
       summary: Listar monopatines disponibles
       description: Obtiene la lista de monopatines con estado DISPONIBLE
-      # SIN security - es público
       responses:
         '200':
           description: Lista de monopatines disponibles obtenida exitosamente
@@ -146,7 +145,6 @@ paths:
       tags: ["Paradas"]
       summary: Listar todas las paradas
       description: Obtiene la lista completa de paradas registradas
-      # SIN security - es público
       responses:
         '200':
           description: Lista de paradas obtenida exitosamente
@@ -242,6 +240,12 @@ paths:
           description: Parada eliminada exitosamente
 
 components:
+  securitySchemes:
+    bearerAuth:
+      scheme: bearer
+      type: http
+      bearerFormat: JWT
+      description: "Ingrese el token JWT obtenido del endpoint de autenticación"
   schemas:
     Monopatin:
       type: object
@@ -463,9 +467,3 @@ components:
       type: string
       enum: [DISPONIBLE, EN_USO, MANTENIMIENTO]
       example: "DISPONIBLE"
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-      description: "Ingrese el token JWT obtenido del endpoint de autenticación"

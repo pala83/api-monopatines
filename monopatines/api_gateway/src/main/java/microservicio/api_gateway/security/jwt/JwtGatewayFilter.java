@@ -1,6 +1,7 @@
 package microservicio.api_gateway.security.jwt;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.core.Authentication;
@@ -37,12 +38,12 @@ public class JwtGatewayFilter implements WebFilter {
         try {
             if (tokenProvider.validateToken(token)) {
                 Authentication authentication = tokenProvider.getAuthentication(token);
-
                 // Establecer SecurityContext reactivo
                 SecurityContext securityContext = new SecurityContextImpl(authentication);
 
                 // Agregar headers para microservicios
                 ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
+                        .header("Authorization", "Bearer " + token)
                         .header("X-User-Id", authentication.getName())
                         .header("X-User-Roles", getRolesString(authentication))
                         .build();
@@ -61,9 +62,15 @@ public class JwtGatewayFilter implements WebFilter {
 
     private String resolveToken(ServerHttpRequest request) {
         String bearerToken = request.getHeaders().getFirst("Authorization");
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
+        if (bearerToken == null) {
+            bearerToken = request.getHeaders().getFirst("Authorization:");
         }
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            String token = bearerToken.substring(7);
+            System.out.println("Token extraído: " + token);
+            return token;
+        }
+        System.out.println("No se pudo resolver el token (faltante o mal formado)");
         return null;
     }
 
@@ -75,6 +82,11 @@ public class JwtGatewayFilter implements WebFilter {
 
     private Mono<Void> handleJwtError(ServerWebExchange exchange, int status, String message) {
         exchange.getResponse().setStatusCode(HttpStatus.valueOf(status));
-        return exchange.getResponse().setComplete();
+        exchange.getResponse().getHeaders().add("Content-Type", "application/json");
+
+        String errorBody = "{\"error\": \"" + message + "\", \"status\": " + status + "}";
+        DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(errorBody.getBytes());
+
+        return exchange.getResponse().writeWith(Mono.just(buffer));
     }
 }

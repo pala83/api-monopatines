@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class TokenProvider {
     private final Logger log = LoggerFactory.getLogger(TokenProvider.class);
 
-    private static final String AUTHORITIES_KEY = "authControler";
+    private static final String AUTHORITIES_KEY = "authorities";
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -65,7 +65,13 @@ public class TokenProvider {
         Collection<? extends GrantedAuthority> authorities = Arrays
                 .stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                 .filter(auth -> !auth.trim().isEmpty())
-                .map(SimpleGrantedAuthority::new)
+                .map(auth -> {
+                    String a = auth.trim();
+                    if (!a.startsWith("ROLE_")) {
+                        a = "ROLE_" + a;
+                    }
+                    return new SimpleGrantedAuthority(a);
+                })
                 .collect(Collectors.toList());
 
         User principal = new User(claims.getSubject(), "", authorities);

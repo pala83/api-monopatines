@@ -6,13 +6,13 @@ info:
 servers:
   - url: http://localhost:8080
     description: Gateway local
-  - url: http://localhost:8082
-    description: Servidor local de desarrollo
 tags:
   - name: Usuarios
     description: Operaciones relacionadas con usuarios
   - name: Cuentas
     description: Operaciones relacionadas con cuentas de usuarios
+security:
+  - bearerAuth: []
 paths:
   /usuarios:
     get:
@@ -199,6 +199,12 @@ paths:
           description: Cuenta eliminada exitosamente
 
 components:
+  securitySchemes:
+    bearerAuth:
+      scheme: bearer
+      type: http
+      bearerFormat: JWT
+      description: "Ingrese el token JWT obtenido del endpoint de autenticación"
   schemas:
     Usuario:
       type: object
