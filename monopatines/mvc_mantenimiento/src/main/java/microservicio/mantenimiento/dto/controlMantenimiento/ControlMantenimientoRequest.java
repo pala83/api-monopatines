@@ -11,4 +11,5 @@ public class ControlMantenimientoRequest {
     private Double kilometraje;
     private Long usoMinutos;
     private Boolean activo;
+    private Long idMonopatin;
 }

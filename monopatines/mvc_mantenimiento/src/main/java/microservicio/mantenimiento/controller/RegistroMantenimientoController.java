@@ -5,7 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import microservicio.mantenimiento.dto.registroMantenimiento.RegistroMantenimientoRequest;
@@ -50,9 +56,7 @@ public class RegistroMantenimientoController {
     }
 
     // Finalizar un registro de mantenimiento y marcar el monopatín como DISPONIBLE
-    @RequestMapping(value = "/{id}/finalizar", method = {RequestMethod.PATCH, RequestMethod.POST})
-    //pongo esto asi para que ande la basura del swagger u openapi no soporta el
-    // patch para editar el estado de monopatin cosa que si anda en postman, me canse de renegar asique lo dejo asi
+    @PatchMapping("{id}/finalizar")
     public ResponseEntity<RegistroMantenimientoResponse> finalizarMantenimiento(@PathVariable Long id) {
         return ResponseEntity.ok(registroMantenimientoService.finalizarMantenimiento(id));
     }
