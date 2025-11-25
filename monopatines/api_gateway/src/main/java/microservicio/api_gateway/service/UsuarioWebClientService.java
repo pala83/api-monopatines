@@ -2,6 +2,8 @@ package microservicio.api_gateway.service;
 
 import microservicio.api_gateway.dto.client.LoginRequest;
 import microservicio.api_gateway.dto.client.UserDetailsRecord;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -13,7 +15,8 @@ import reactor.core.publisher.Mono;
 @Service
 public class UsuarioWebClientService {
 
-    private final WebClient webClient;
+    @Autowired
+    private WebClient webClient;
 
     public UsuarioWebClientService(
             WebClient.Builder webClientBuilder,
