@@ -67,7 +67,7 @@ public class TarifaController {
         }
     }
 
-   @PutMapping("/editar/{id}")
+   @PutMapping("{id}")
     public ResponseEntity<?> editTarifa(@PathVariable Long id, @RequestBody @Validated TarifaRequest request){
         try {
             TarifaResponse response = this.tarifaService.update(id, request);

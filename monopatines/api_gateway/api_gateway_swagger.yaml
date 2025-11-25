@@ -1,0 +1,81 @@
+openapi: 3.0.3
+info:
+  title: API Gateway - Sistema de Monopatines
+  description: Gateway central con autenticación JWT para el sistema de monopatines
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Servidor local
+
+tags:
+  - name: Autenticación
+    description: Endpoints para autenticación y obtención de tokens JWT
+
+paths:
+  /authController/authenticate:
+    post:
+      tags: ["Autenticación"]
+      summary: Autenticar usuario
+      description: Autentica un usuario y retorna un token JWT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            examples:
+              admin:
+                summary: "Ejemplo Admin"
+                value:
+                  username: "maria.gomez@example.com"
+                  password: "hashed_password"
+              usuario:
+                summary: "Ejemplo Usuario"
+                value:
+                  username: "juan.perez@example.com"
+                  password: "hashed_password"
+              mantenimiento:
+                summary: "Ejemplo Mantenimiento"
+                value:
+                  username: "santiago.herrera@example.com"
+                  password: "hashed_password"
+      responses:
+        '200':
+          description: Autenticación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JWTToken'
+              examples:
+                success:
+                  summary: "Token generado"
+                  value:
+                    id_token: "eyJhbGciOiJIUzUxMiJ9..."
+        '400':
+          description: Credenciales inválidas
+        '401':
+          description: No autorizado
+
+components:
+  schemas:
+    LoginRequest:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          format: email
+          example: "usuario@example.com"
+        password:
+          type: string
+          format: password
+          example: "miPassword123"
+    
+    JWTToken:
+      type: object
+      properties:
+        id_token:
+          type: string
+          example: "eyJhbGciOiJIUzUxMiJ9..."

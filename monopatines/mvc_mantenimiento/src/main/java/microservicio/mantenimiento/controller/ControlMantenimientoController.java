@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -53,10 +54,10 @@ public class ControlMantenimientoController {
         return ResponseEntity.ok(controlMantenimientoService.update(id, req));
     }
 
-    @PostMapping("{id}/finalizar/{idMonopatin}")
+    @PatchMapping("{id}/finalizar")
     public ResponseEntity<ControlMantenimientoResponse> finalizarMantenimiento(
-            @PathVariable Long id,
-            @PathVariable Long idMonopatin) {
+        @PathVariable Long id,
+        @RequestBody Long idMonopatin) {
         return ResponseEntity.ok(controlMantenimientoService.finalizarMantenimiento(id, idMonopatin));
     }
 

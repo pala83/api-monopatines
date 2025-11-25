@@ -46,11 +46,12 @@ public class GatewayConfig {
                 .route("cargas", r -> r
                         .path("/cargas/**")
                         .uri("http://mvc-facturacion:8088")
-                ).route("subscripciones", r -> r
+                )
+                .route("subscripciones", r -> r
                         .path("/subscripciones/**")
                         .uri("http://mvc-facturacion:8088")
                 )
-                // Rutas para Mantenipiento
+                // Rutas para Mantenimiento
                 .route("registroMantenimientos", r -> r
                         .path("/registroMantenimientos/**")
                         .uri("http://mvc-mantenimiento:8090")

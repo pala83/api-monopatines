@@ -3,6 +3,7 @@ package microservicio.mantenimiento.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import microservicio.mantenimiento.dto.feignClient.EstadoMonopatin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,7 +47,7 @@ public class RegistroMantenimientoService implements BaseService<RegistroManteni
 	public RegistroMantenimientoResponse save(RegistroMantenimientoRequest req) {
 		try {
 			// Marcar el monopatín como en mantenimiento (no disponible)
-			monopatinClient.actualizarEstado(req.getIdMonopatin(), "MANTENIMIENTO");
+			monopatinClient.actualizarEstado(req.getIdMonopatin(), EstadoMonopatin.MANTENIMIENTO);
 		} catch (FeignException e) {
 			if (e.status() == 404) {
 				throw new EntityNotFoundException("El monopatín con ID " + req.getIdMonopatin() + " no existe");
@@ -96,7 +97,7 @@ public class RegistroMantenimientoService implements BaseService<RegistroManteni
 		RegistroMantenimiento updated = registroMantenimientoRepository.save(registro);
 
 		try {
-			monopatinClient.actualizarEstado(registro.getIdMonopatin(), "DISPONIBLE");
+			monopatinClient.actualizarEstado(registro.getIdMonopatin(), EstadoMonopatin.DISPONIBLE);
 		} catch (FeignException e) {
 			throw new RuntimeException("Error al actualizar el estado del monopatín: " + e.getMessage());
 		}

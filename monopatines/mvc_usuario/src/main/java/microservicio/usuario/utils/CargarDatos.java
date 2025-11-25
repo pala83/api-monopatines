@@ -4,6 +4,7 @@ import java.nio.file.Paths;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +22,8 @@ public class CargarDatos implements CommandLineRunner{
     private UsuarioRepository usuarioRepository;
     @Autowired
     private CuentaRepository cuentaRepository;
-    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     private void cargarUsuariosCuentas() throws Exception {
         PopulatedUsuariosCuentas populator = new PopulatedUsuariosCuentas(
             Paths.get(PATH_DATA, "usuarios_cuentas.csv"),
@@ -34,7 +36,7 @@ public class CargarDatos implements CommandLineRunner{
     private void cargarUsuarios() throws Exception {
         PopulatedUsuarios populator = new PopulatedUsuarios(
             Paths.get(PATH_DATA, "usuarios.csv"),
-            this.usuarioRepository
+            this.usuarioRepository, this.passwordEncoder
         );
         populator.poblar();
     }

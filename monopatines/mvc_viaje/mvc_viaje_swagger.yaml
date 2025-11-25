@@ -1,0 +1,348 @@
+openapi: 3.0.3
+info:
+  title: Microservicio de Viajes y Pausas
+  description: API para gestión de viajes y pausas del sistema de movilidad
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Gateway local
+
+tags:
+  - name: Viajes
+    description: Operaciones relacionadas con viajes
+  - name: Pausas
+    description: Operaciones relacionadas con pausas de viajes
+
+paths:
+  /viajes:
+    get:
+      tags: ["Viajes"]
+      summary: Listar todos los viajes
+      description: Obtiene la lista completa de viajes registrados
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Lista de viajes obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ViajeResponse'
+    post:
+      tags: ["Viajes"]
+      summary: Crear un nuevo viaje
+      description: Registra un nuevo viaje en el sistema
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ViajeRequest'
+      responses:
+        '200':
+          description: Viaje creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ViajeResponse'
+
+  /viajes/{id}:
+    get:
+      tags: ["Viajes"]
+      summary: Obtener viaje por ID
+      description: Recupera la información de un viaje específico
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Viaje encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ViajeResponse'
+    put:
+      tags: ["Viajes"]
+      summary: Actualizar viaje existente
+      description: Modifica la información de un viaje
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ViajeRequest'
+      responses:
+        '200':
+          description: Viaje actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ViajeResponse'
+    delete:
+      tags: ["Viajes"]
+      summary: Eliminar viaje
+      description: Elimina un viaje del sistema
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Viaje eliminado exitosamente
+
+  /pausas:
+    get:
+      tags: ["Pausas"]
+      summary: Listar todas las pausas
+      description: Obtiene la lista completa de pausas registradas
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Lista de pausas obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PausaResponse'
+    post:
+      tags: ["Pausas"]
+      summary: Crear una nueva pausa
+      description: Registra una nueva pausa en el sistema
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PausaRequest'
+      responses:
+        '200':
+          description: Pausa creada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PausaResponse'
+
+  /pausas/{id}:
+    get:
+      tags: ["Pausas"]
+      summary: Obtener pausa por ID
+      description: Recupera la información de una pausa específica
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Pausa encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PausaResponse'
+    put:
+      tags: ["Pausas"]
+      summary: Actualizar pausa existente
+      description: Modifica la información de una pausa
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PausaRequest'
+      responses:
+        '200':
+          description: Pausa actualizada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PausaResponse'
+    delete:
+      tags: ["Pausas"]
+      summary: Eliminar pausa
+      description: Elimina una pausa del sistema
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Pausa eliminada exitosamente
+
+components:
+  schemas:
+    ViajeRequest:
+      type: object
+      required:
+        - usuarioId
+        - cuentaId
+        - monopatinId
+        - ubicacionInicio
+      properties:
+        usuarioId:
+          type: integer
+          example: 1
+        cuentaId:
+          type: integer
+          example: 1
+        monopatinId:
+          type: integer
+          example: 1
+        inicio:
+          type: string
+          format: date-time
+          example: "2025-10-01T10:00:00"
+        fin:
+          type: string
+          format: date-time
+          example: "2025-10-01T11:30:00"
+        ubicacionInicio:
+          $ref: '#/components/schemas/Ubicacion'
+        ubicacionFin:
+          $ref: '#/components/schemas/Ubicacion'
+        distanciaRecorrida:
+          type: number
+          format: double
+          minimum: 0.0
+          example: 5.5
+        estado:
+          $ref: '#/components/schemas/EstadoViaje'
+
+    ViajeResponse:
+      type: object
+      properties:
+        usuarioId:
+          type: integer
+          example: 1
+        cuentaId:
+          type: integer
+          example: 1
+        monopatinId:
+          type: integer
+          example: 1
+        fechaInicio:
+          type: string
+          format: date-time
+          example: "2025-10-01T10:00:00"
+        fechaFin:
+          type: string
+          format: date-time
+          example: "2025-10-01T11:30:00"
+        duracionSegundos:
+          type: integer
+          example: 5400
+        distanciaRecorrida:
+          type: number
+          format: double
+          example: 5.5
+        estado:
+          $ref: '#/components/schemas/EstadoViaje'
+        ubicacionInicio:
+          $ref: '#/components/schemas/Ubicacion'
+        ubicacionFin:
+          $ref: '#/components/schemas/Ubicacion'
+
+    PausaRequest:
+      type: object
+      properties:
+        viajeId:
+          type: integer
+          example: 1
+        tiempoInicio:
+          type: string
+          format: date-time
+          example: "2025-10-01T10:30:00"
+        tiempoFin:
+          type: string
+          format: date-time
+          example: "2025-10-01T10:45:00"
+        duracionSegundos:
+          type: integer
+          minimum: 0
+          example: 900
+        extendido:
+          type: boolean
+          example: false
+
+    PausaResponse:
+      type: object
+      properties:
+        viajeId:
+          type: integer
+          example: 1
+        tiempoInicio:
+          type: string
+          format: date-time
+          example: "2025-10-01T10:30:00"
+        tiempoFin:
+          type: string
+          format: date-time
+          example: "2025-10-01T10:45:00"
+
+    Ubicacion:
+      type: object
+      properties:
+        latitud:
+          type: number
+          format: double
+          example: -34.603722
+        longitud:
+          type: number
+          format: double
+          example: -58.381592
+
+    EstadoViaje:
+      type: string
+      enum: [EN_CURSO, PAUSADO, FINALIZADO]
+      example: "EN_CURSO"
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

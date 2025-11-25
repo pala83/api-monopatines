@@ -56,7 +56,7 @@ public class RegistroMantenimientoController {
     }
 
     // Finalizar un registro de mantenimiento y marcar el monopatín como DISPONIBLE
-    @PatchMapping("/{id}/finalizar")
+    @PatchMapping("{id}/finalizar")
     public ResponseEntity<RegistroMantenimientoResponse> finalizarMantenimiento(@PathVariable Long id) {
         return ResponseEntity.ok(registroMantenimientoService.finalizarMantenimiento(id));
     }
