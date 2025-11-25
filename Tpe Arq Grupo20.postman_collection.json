@@ -3,7 +3,7 @@
 		"_postman_id": "4fa3e99e-41a5-4bee-a705-631ec8be7b6e",
 		"name": "Tpe Arq",
 		"description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "49876957",
 		"_collection_link": "https://rdinellivillalba-4379365.postman.co/workspace/Rodrigo-Alejandro-Dinelli-Villa~468f3871-7283-4128-8811-7992b9ae4b0e/collection/49876957-4fa3e99e-41a5-4bee-a705-631ec8be7b6e?action=share&source=collection_link&creator=49876957"
 	},
@@ -20,6 +20,16 @@
 								{
 									"name": "GatewayUsuario",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "POST",
 										"header": [],
 										"body": {
@@ -31,7 +41,42 @@
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/usuarios"
+										"url": {
+											"raw": "{{BASE_PATH}}/usuarios",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"usuarios"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GatewayUsuarioAuthenticate",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"email\": \"Luca.Tonto@example.com\",\r\n  \"password\": \"12343\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_PATH}}/usuarios/validar",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"usuarios",
+												"validar"
+											]
+										}
 									},
 									"response": []
 								},
@@ -78,13 +123,31 @@
 										"disableBodyPruning": true
 									},
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "GET",
 										"header": [],
 										"body": {
 											"mode": "raw",
 											"raw": ""
 										},
-										"url": "{{BASE_PATH}}/usuarios"
+										"url": {
+											"raw": "{{BASE_PATH}}/usuarios",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"usuarios"
+											]
+										}
 									},
 									"response": [
 										{
@@ -96,7 +159,16 @@
 													"mode": "raw",
 													"raw": ""
 												},
-												"url": "{{BASE_PATH}}/usuarios/1"
+												"url": {
+													"raw": "{{BASE_PATH}}/usuarios/1",
+													"host": [
+														"{{BASE_PATH}}"
+													],
+													"path": [
+														"usuarios",
+														"1"
+													]
+												}
 											},
 											"_postman_previewlanguage": null,
 											"header": null,
@@ -110,7 +182,16 @@
 									"request": {
 										"method": "DELETE",
 										"header": [],
-										"url": "{{BASE_PATH}}/usuarios/1"
+										"url": {
+											"raw": "{{BASE_PATH}}/usuarios/1",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"usuarios",
+												"1"
+											]
+										}
 									},
 									"response": []
 								},
@@ -128,7 +209,16 @@
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/usuarios/2"
+										"url": {
+											"raw": "{{BASE_PATH}}/usuarios/2",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"usuarios",
+												"2"
+											]
+										}
 									},
 									"response": []
 								}
@@ -151,7 +241,15 @@
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/cuentas"
+										"url": {
+											"raw": "{{BASE_PATH}}/cuentas",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"cuentas"
+											]
+										}
 									},
 									"response": []
 								},
@@ -198,13 +296,31 @@
 										"disableBodyPruning": true
 									},
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "GET",
 										"header": [],
 										"body": {
 											"mode": "raw",
 											"raw": ""
 										},
-										"url": "{{BASE_PATH}}/cuentas"
+										"url": {
+											"raw": "{{BASE_PATH}}/cuentas",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"cuentas"
+											]
+										}
 									},
 									"response": [
 										{
@@ -216,7 +332,16 @@
 													"mode": "raw",
 													"raw": ""
 												},
-												"url": "{{BASE_PATH}}/cuentas/1"
+												"url": {
+													"raw": "{{BASE_PATH}}/cuentas/1",
+													"host": [
+														"{{BASE_PATH}}"
+													],
+													"path": [
+														"cuentas",
+														"1"
+													]
+												}
 											},
 											"_postman_previewlanguage": null,
 											"header": null,
@@ -230,7 +355,16 @@
 									"request": {
 										"method": "DELETE",
 										"header": [],
-										"url": "{{BASE_PATH}}/cuentas/1"
+										"url": {
+											"raw": "{{BASE_PATH}}/cuentas/1",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"cuentas",
+												"1"
+											]
+										}
 									},
 									"response": []
 								},
@@ -248,7 +382,16 @@
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/cuentas/2"
+										"url": {
+											"raw": "{{BASE_PATH}}/cuentas/2",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"cuentas",
+												"2"
+											]
+										}
 									},
 									"response": []
 								}
@@ -265,9 +408,27 @@
 								{
 									"name": "GatewayMonopatin",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "GET",
 										"header": [],
-										"url": "{{BASE_PATH}}/monopatines"
+										"url": {
+											"raw": "{{BASE_PATH}}/monopatines",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"monopatines"
+											]
+										}
 									},
 									"response": [
 										{
@@ -275,7 +436,16 @@
 											"originalRequest": {
 												"method": "GET",
 												"header": [],
-												"url": "{{BASE_PATH}}/monopatines/disponibles"
+												"url": {
+													"raw": "{{BASE_PATH}}/monopatines/disponibles",
+													"host": [
+														"{{BASE_PATH}}"
+													],
+													"path": [
+														"monopatines",
+														"disponibles"
+													]
+												}
 											},
 											"_postman_previewlanguage": "",
 											"header": [],
@@ -293,7 +463,16 @@
 											"originalRequest": {
 												"method": "GET",
 												"header": [],
-												"url": "{{BASE_PATH}}/monopatines/1"
+												"url": {
+													"raw": "{{BASE_PATH}}/monopatines/1",
+													"host": [
+														"{{BASE_PATH}}"
+													],
+													"path": [
+														"monopatines",
+														"1"
+													]
+												}
 											},
 											"_postman_previewlanguage": null,
 											"header": null,
@@ -305,6 +484,16 @@
 								{
 									"name": "GatewayMonopatin",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "POST",
 										"header": [],
 										"body": {
@@ -316,7 +505,15 @@
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/monopatines"
+										"url": {
+											"raw": "{{BASE_PATH}}/monopatines",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"monopatines"
+											]
+										}
 									},
 									"response": []
 								},
@@ -325,7 +522,16 @@
 									"request": {
 										"method": "DELETE",
 										"header": [],
-										"url": "{{BASE_PATH}}/monopatines/1"
+										"url": {
+											"raw": "{{BASE_PATH}}/monopatines/1",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"monopatines",
+												"1"
+											]
+										}
 									},
 									"response": []
 								},
@@ -343,7 +549,16 @@
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/monopatines/2"
+										"url": {
+											"raw": "{{BASE_PATH}}/monopatines/2",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"monopatines",
+												"2"
+											]
+										}
 									},
 									"response": []
 								}
@@ -354,10 +569,47 @@
 							"item": [
 								{
 									"name": "GatewayParadas",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"})\r",
+													"pm.test(\"La respuesta debe ser un objeto\", function(){\r",
+													"    pm.expect(pm.response.json()).to.be.an(\"array\");\r",
+													"})\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "GET",
 										"header": [],
-										"url": "{{BASE_PATH}}/paradas"
+										"url": {
+											"raw": "{{BASE_PATH}}/paradas",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"paradas"
+											]
+										}
 									},
 									"response": [
 										{
@@ -365,18 +617,124 @@
 											"originalRequest": {
 												"method": "GET",
 												"header": [],
-												"url": "{{BASE_PATH}}/paradas/1"
+												"url": {
+													"raw": "{{BASE_PATH}}/paradas/1",
+													"host": [
+														"{{BASE_PATH}}"
+													],
+													"path": [
+														"paradas",
+														"1"
+													]
+												}
 											},
 											"_postman_previewlanguage": null,
 											"header": null,
 											"cookie": [],
 											"body": null
+										},
+										{
+											"name": "GatewayParadas",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{BASE_PATH}}/paradas",
+													"host": [
+														"{{BASE_PATH}}"
+													],
+													"path": [
+														"paradas"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": null,
+											"header": [
+												{
+													"key": "Date",
+													"value": "Wed, 19 Nov 2025 22:25:06 GMT"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Expires",
+													"value": "0"
+												},
+												{
+													"key": "X-Content-Type-Options",
+													"value": "nosniff"
+												},
+												{
+													"key": "X-Frame-Options",
+													"value": "DENY"
+												},
+												{
+													"key": "X-XSS-Protection",
+													"value": "0"
+												},
+												{
+													"key": "Referrer-Policy",
+													"value": "no-referrer"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												},
+												{
+													"key": "Transfer-Encoding",
+													"value": "chunked"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=60"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												}
+											],
+											"cookie": [],
+											"body": "[\n    {\n        \"nombre\": \"Parque Independencia\",\n        \"ubicacion\": \"-37.3212,-59.1335\",\n        \"capacidad\": 10,\n        \"monopatines\": [\n            {\n                \"id\": 2,\n                \"marca\": \"Segway\",\n                \"codigoQR\": \"Ninebot\",\n                \"kmTotales\": 500,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.182101\",\n                \"ubicacionActual\": \"37.787994,-122.407437\",\n                \"paradaActualId\": 2,\n                \"paradaActualNombre\": \"Parque Independencia\"\n            },\n            {\n                \"id\": 22,\n                \"marca\": \"Razor\",\n                \"codigoQR\": \"QR0067\",\n                \"kmTotales\": 135,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.691798\",\n                \"ubicacionActual\": \"37.787994,-122.407437\",\n                \"paradaActualId\": 2,\n                \"paradaActualNombre\": \"Parque Independencia\"\n            },\n            {\n                \"id\": 42,\n                \"marca\": \"Boosted\",\n                \"codigoQR\": \"QR0087\",\n                \"kmTotales\": 1740,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.157581\",\n                \"ubicacionActual\": \"37.787994,-122.407437\",\n                \"paradaActualId\": 2,\n                \"paradaActualNombre\": \"Parque Independencia\"\n            }\n        ]\n    },\n    {\n        \"nombre\": \"Downtown Plaza\",\n        \"ubicacion\": \"34.052235,-118.243683\",\n        \"capacidad\": 12,\n        \"monopatines\": [\n            {\n                \"id\": 3,\n                \"marca\": \"Xiaomi\",\n                \"codigoQR\": \"M365\",\n                \"kmTotales\": 1500,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.211311\",\n                \"ubicacionActual\": \"34.052235,-118.243683\",\n                \"paradaActualId\": 3,\n                \"paradaActualNombre\": \"Downtown Plaza\"\n            },\n            {\n                \"id\": 23,\n                \"marca\": \"Bird\",\n                \"codigoQR\": \"QR0068\",\n                \"kmTotales\": 3880,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.715454\",\n                \"ubicacionActual\": \"34.052235,-118.243683\",\n                \"paradaActualId\": 3,\n                \"paradaActualNombre\": \"Downtown Plaza\"\n            },\n            {\n                \"id\": 43,\n                \"marca\": \"Razor\",\n                \"codigoQR\": \"QR0088\",\n                \"kmTotales\": 60,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.178773\",\n                \"ubicacionActual\": \"34.052235,-118.243683\",\n                \"paradaActualId\": 3,\n                \"paradaActualNombre\": \"Downtown Plaza\"\n            }\n        ]\n    },\n    {\n        \"nombre\": \"City Center\",\n        \"ubicacion\": \"51.507351,-0.127758\",\n        \"capacidad\": 15,\n        \"monopatines\": [\n            {\n                \"id\": 4,\n                \"marca\": \"Boosted\",\n                \"codigoQR\": \"Rev\",\n                \"kmTotales\": 2000,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.231805\",\n                \"ubicacionActual\": \"51.507351,-0.127758\",\n                \"paradaActualId\": 4,\n                \"paradaActualNombre\": \"City Center\"\n            },\n            {\n                \"id\": 24,\n                \"marca\": \"Lime\",\n                \"codigoQR\": \"QR0069\",\n                \"kmTotales\": 560,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.746287\",\n                \"ubicacionActual\": \"51.507351,-0.127758\",\n                \"paradaActualId\": 4,\n                \"paradaActualNombre\": \"City Center\"\n            },\n            {\n                \"id\": 44,\n                \"marca\": \"Bird\",\n                \"codigoQR\": \"QR0089\",\n                \"kmTotales\": 2600,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.196192\",\n                \"ubicacionActual\": \"51.507351,-0.127758\",\n                \"paradaActualId\": 4,\n                \"paradaActualNombre\": \"City Center\"\n            }\n        ]\n    },\n    {\n        \"nombre\": \"Old Town\",\n        \"ubicacion\": \"48.856613,2.352222\",\n        \"capacidad\": 9,\n        \"monopatines\": [\n            {\n                \"id\": 5,\n                \"marca\": \"Xiaomi\",\n                \"codigoQR\": \"QR0050\",\n                \"kmTotales\": 120,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.256158\",\n                \"ubicacionActual\": \"48.856613,2.352222\",\n                \"paradaActualId\": 5,\n                \"paradaActualNombre\": \"Old Town\"\n            },\n            {\n                \"id\": 25,\n                \"marca\": \"Gotrax\",\n                \"codigoQR\": \"QR0070\",\n                \"kmTotales\": 1920,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"MANTENIMIENTO\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.767292\",\n                \"ubicacionActual\": \"48.856613,2.352222\",\n                \"paradaActualId\": 5,\n                \"paradaActualNombre\": \"Old Town\"\n            },\n            {\n                \"id\": 45,\n                \"marca\": \"Lime\",\n                \"codigoQR\": \"QR0090\",\n                \"kmTotales\": 980,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.214421\",\n                \"ubicacionActual\": \"48.856613,2.352222\",\n                \"paradaActualId\": 5,\n                \"paradaActualNombre\": \"Old Town\"\n            }\n        ]\n    },\n    {\n        \"nombre\": \"La Rambla\",\n        \"ubicacion\": \"41.380898,2.173034\",\n        \"capacidad\": 7,\n        \"monopatines\": [\n            {\n                \"id\": 6,\n                \"marca\": \"Segway\",\n                \"codigoQR\": \"QR0051\",\n                \"kmTotales\": 850,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.280451\",\n                \"ubicacionActual\": \"41.380898,2.173034\",\n                \"paradaActualId\": 6,\n                \"paradaActualNombre\": \"La Rambla\"\n            },\n            {\n                \"id\": 26,\n                \"marca\": \"Xiaomi\",\n                \"codigoQR\": \"QR0071\",\n                \"kmTotales\": 2480,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.790296\",\n                \"ubicacionActual\": \"41.380898,2.173034\",\n                \"paradaActualId\": 6,\n                \"paradaActualNombre\": \"La Rambla\"\n            },\n            {\n                \"id\": 46,\n                \"marca\": \"Gotrax\",\n                \"codigoQR\": \"QR0091\",\n                \"kmTotales\": 3410,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.233152\",\n                \"ubicacionActual\": \"41.380898,2.173034\",\n                \"paradaActualId\": 6,\n                \"paradaActualNombre\": \"La Rambla\"\n            }\n        ]\n    },\n    {\n        \"nombre\": \"Recoleta\",\n        \"ubicacion\": \"-34.588145,-58.397493\",\n        \"capacidad\": 11,\n        \"monopatines\": [\n            {\n                \"id\": 7,\n                \"marca\": \"Boosted\",\n                \"codigoQR\": \"QR0052\",\n                \"kmTotales\": 45,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"MANTENIMIENTO\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.308609\",\n                \"ubicacionActual\": \"-34.588145,-58.397493\",\n                \"paradaActualId\": 7,\n                \"paradaActualNombre\": \"Recoleta\"\n            },\n            {\n                \"id\": 27,\n                \"marca\": \"Segway\",\n                \"codigoQR\": \"QR0072\",\n                \"kmTotales\": 90,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.818129\",\n                \"ubicacionActual\": \"-34.588145,-58.397493\",\n                \"paradaActualId\": 7,\n                \"paradaActualNombre\": \"Recoleta\"\n            },\n            {\n                \"id\": 47,\n                \"marca\": \"Xiaomi\",\n                \"codigoQR\": \"QR0092\",\n                \"kmTotales\": 410,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"EN_USO\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.249587\",\n                \"ubicacionActual\": \"-34.588145,-58.397493\",\n                \"paradaActualId\": 7,\n                \"paradaActualNombre\": \"Recoleta\"\n            }\n        ]\n    },\n    {\n        \"nombre\": \"Zócalo\",\n        \"ubicacion\": \"19.432608,-99.133209\",\n        \"capacidad\": 14,\n        \"monopatines\": [\n            {\n                \"id\": 8,\n                \"marca\": \"Razor\",\n                \"codigoQR\": \"QR0053\",\n                \"kmTotales\": 2300,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.326513\",\n                \"ubicacionActual\": \"19.432608,-99.133209\",\n                \"paradaActualId\": 8,\n                \"paradaActualNombre\": \"Zócalo\"\n            },\n            {\n                \"id\": 28,\n                \"marca\": \"Boosted\",\n                \"codigoQR\": \"QR0073\",\n                \"kmTotales\": 4120,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"MANTENIMIENTO\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.840335\",\n                \"ubicacionActual\": \"19.432608,-99.133209\",\n                \"paradaActualId\": 8,\n                \"paradaActualNombre\": \"Zócalo\"\n            },\n            {\n                \"id\": 48,\n                \"marca\": \"Segway\",\n                \"codigoQR\": \"QR0093\",\n                \"kmTotales\": 2230,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.262417\",\n                \"ubicacionActual\": \"19.432608,-99.133209\",\n                \"paradaActualId\": 8,\n                \"paradaActualNombre\": \"Zócalo\"\n            }\n        ]\n    },\n    {\n        \"nombre\": \"Plaza de Armas\",\n        \"ubicacion\": \"-33.44889,-70.669265\",\n        \"capacidad\": 13,\n        \"monopatines\": [\n            {\n                \"id\": 9,\n                \"marca\": \"Bird\",\n                \"codigoQR\": \"QR0054\",\n                \"kmTotales\": 1780,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.354763\",\n                \"ubicacionActual\": \"-33.44889,-70.669265\",\n                \"paradaActualId\": 9,\n                \"paradaActualNombre\": \"Plaza de Armas\"\n            },\n            {\n                \"id\": 29,\n                \"marca\": \"Razor\",\n                \"codigoQR\": \"QR0074\",\n                \"kmTotales\": 680,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"EN_USO\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.859236\",\n                \"ubicacionActual\": \"-33.44889,-70.669265\",\n                \"paradaActualId\": 9,\n                \"paradaActualNombre\": \"Plaza de Armas\"\n            },\n            {\n                \"id\": 49,\n                \"marca\": \"Boosted\",\n                \"codigoQR\": \"QR0094\",\n                \"kmTotales\": 1595,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.28393\",\n                \"ubicacionActual\": \"-33.44889,-70.669265\",\n                \"paradaActualId\": 9,\n                \"paradaActualNombre\": \"Plaza de Armas\"\n            }\n        ]\n    },\n    {\n        \"nombre\": \"Parque de la 93\",\n        \"ubicacion\": \"4.711,-74.0721\",\n        \"capacidad\": 6,\n        \"monopatines\": [\n            {\n                \"id\": 10,\n                \"marca\": \"Lime\",\n                \"codigoQR\": \"QR0055\",\n                \"kmTotales\": 640,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"MANTENIMIENTO\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.379333\",\n                \"ubicacionActual\": \"4.711,-74.0721\",\n                \"paradaActualId\": 10,\n                \"paradaActualNombre\": \"Parque de la 93\"\n            },\n            {\n                \"id\": 30,\n                \"marca\": \"Bird\",\n                \"codigoQR\": \"QR0075\",\n                \"kmTotales\": 1440,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"MANTENIMIENTO\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.880246\",\n                \"ubicacionActual\": \"4.711,-74.0721\",\n                \"paradaActualId\": 10,\n                \"paradaActualNombre\": \"Parque de la 93\"\n            },\n            {\n                \"id\": 50,\n                \"marca\": \"Razor\",\n                \"codigoQR\": \"QR0095\",\n                \"kmTotales\": 130,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.298456\",\n                \"ubicacionActual\": \"4.711,-74.0721\",\n                \"paradaActualId\": 10,\n                \"paradaActualNombre\": \"Parque de la 93\"\n            }\n        ]\n    },\n    {\n        \"nombre\": \"Plaza Mayor\",\n        \"ubicacion\": \"-12.046374,-77.042793\",\n        \"capacidad\": 10,\n        \"monopatines\": [\n            {\n                \"id\": 11,\n                \"marca\": \"Gotrax\",\n                \"codigoQR\": \"QR0056\",\n                \"kmTotales\": 2950,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.397386\",\n                \"ubicacionActual\": \"-12.046374,-77.042793\",\n                \"paradaActualId\": 11,\n                \"paradaActualNombre\": \"Plaza Mayor\"\n            },\n            {\n                \"id\": 31,\n                \"marca\": \"Lime\",\n                \"codigoQR\": \"QR0076\",\n                \"kmTotales\": 221,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.897236\",\n                \"ubicacionActual\": \"-12.046374,-77.042793\",\n                \"paradaActualId\": 11,\n                \"paradaActualNombre\": \"Plaza Mayor\"\n            },\n            {\n                \"id\": 51,\n                \"marca\": \"Bird\",\n                \"codigoQR\": \"QR0096\",\n                \"kmTotales\": 2960,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"MANTENIMIENTO\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.314255\",\n                \"ubicacionActual\": \"-12.046374,-77.042793\",\n                \"paradaActualId\": 11,\n                \"paradaActualNombre\": \"Plaza Mayor\"\n            }\n        ]\n    },\n    {\n        \"nombre\": \"Shibuya Crossing\",\n        \"ubicacion\": \"35.689487,139.691711\",\n        \"capacidad\": 8,\n        \"monopatines\": [\n            {\n                \"id\": 12,\n                \"marca\": \"Xiaomi\",\n                \"codigoQR\": \"QR0057\",\n                \"kmTotales\": 4100,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"MANTENIMIENTO\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.41952\",\n                \"ubicacionActual\": \"35.689487,139.691711\",\n                \"paradaActualId\": 12,\n                \"paradaActualNombre\": \"Shibuya Crossing\"\n            },\n            {\n                \"id\": 32,\n                \"marca\": \"Gotrax\",\n                \"codigoQR\": \"QR0077\",\n                \"kmTotales\": 3150,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.91721\",\n                \"ubicacionActual\": \"35.689487,139.691711\",\n                \"paradaActualId\": 12,\n                \"paradaActualNombre\": \"Shibuya Crossing\"\n            },\n            {\n                \"id\": 52,\n                \"marca\": \"Lime\",\n                \"codigoQR\": \"QR0097\",\n                \"kmTotales\": 1870,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"MANTENIMIENTO\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.326912\",\n                \"ubicacionActual\": \"35.689487,139.691711\",\n                \"paradaActualId\": 12,\n                \"paradaActualNombre\": \"Shibuya Crossing\"\n            }\n        ]\n    },\n    {\n        \"nombre\": \"Sydney Opera House\",\n        \"ubicacion\": \"-33.86882,151.20929\",\n        \"capacidad\": 9,\n        \"monopatines\": [\n            {\n                \"id\": 13,\n                \"marca\": \"Segway\",\n                \"codigoQR\": \"QR0058\",\n                \"kmTotales\": 15,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.440503\",\n                \"ubicacionActual\": \"-33.86882,151.20929\",\n                \"paradaActualId\": 13,\n                \"paradaActualNombre\": \"Sydney Opera House\"\n            },\n            {\n                \"id\": 33,\n                \"marca\": \"Xiaomi\",\n                \"codigoQR\": \"QR0078\",\n                \"kmTotales\": 2740,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.941525\",\n                \"ubicacionActual\": \"-33.86882,151.20929\",\n                \"paradaActualId\": 13,\n                \"paradaActualNombre\": \"Sydney Opera House\"\n            },\n            {\n                \"id\": 53,\n                \"marca\": \"Gotrax\",\n                \"codigoQR\": \"QR0098\",\n                \"kmTotales\": 520,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.344134\",\n                \"ubicacionActual\": \"-33.86882,151.20929\",\n                \"paradaActualId\": 13,\n                \"paradaActualNombre\": \"Sydney Opera House\"\n            }\n        ]\n    },\n    {\n        \"nombre\": \"Brandenburg Gate\",\n        \"ubicacion\": \"52.520008,13.404954\",\n        \"capacidad\": 12,\n        \"monopatines\": [\n            {\n                \"id\": 14,\n                \"marca\": \"Boosted\",\n                \"codigoQR\": \"QR0059\",\n                \"kmTotales\": 990,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.481772\",\n                \"ubicacionActual\": \"52.520008,13.404954\",\n                \"paradaActualId\": 14,\n                \"paradaActualNombre\": \"Brandenburg Gate\"\n            },\n            {\n                \"id\": 34,\n                \"marca\": \"Segway\",\n                \"codigoQR\": \"QR0079\",\n                \"kmTotales\": 510,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.965015\",\n                \"ubicacionActual\": \"52.520008,13.404954\",\n                \"paradaActualId\": 14,\n                \"paradaActualNombre\": \"Brandenburg Gate\"\n            },\n            {\n                \"id\": 54,\n                \"marca\": \"Xiaomi\",\n                \"codigoQR\": \"QR0099\",\n                \"kmTotales\": 3620,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"MANTENIMIENTO\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.3612\",\n                \"ubicacionActual\": \"52.520008,13.404954\",\n                \"paradaActualId\": 14,\n                \"paradaActualNombre\": \"Brandenburg Gate\"\n            }\n        ]\n    },\n    {\n        \"nombre\": \"CN Tower\",\n        \"ubicacion\": \"43.653225,-79.383186\",\n        \"capacidad\": 7,\n        \"monopatines\": [\n            {\n                \"id\": 15,\n                \"marca\": \"Razor\",\n                \"codigoQR\": \"QR0060\",\n                \"kmTotales\": 3050,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.506501\",\n                \"ubicacionActual\": \"43.653225,-79.383186\",\n                \"paradaActualId\": 15,\n                \"paradaActualNombre\": \"CN Tower\"\n            },\n            {\n                \"id\": 35,\n                \"marca\": \"Boosted\",\n                \"codigoQR\": \"QR0080\",\n                \"kmTotales\": 402,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.987762\",\n                \"ubicacionActual\": \"43.653225,-79.383186\",\n                \"paradaActualId\": 15,\n                \"paradaActualNombre\": \"CN Tower\"\n            },\n            {\n                \"id\": 55,\n                \"marca\": \"Segway\",\n                \"codigoQR\": \"QR0100\",\n                \"kmTotales\": 245,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"MANTENIMIENTO\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.375385\",\n                \"ubicacionActual\": \"43.653225,-79.383186\",\n                \"paradaActualId\": 15,\n                \"paradaActualNombre\": \"CN Tower\"\n            }\n        ]\n    },\n    {\n        \"nombre\": \"Millennium Park\",\n        \"ubicacion\": \"41.878113,-87.629799\",\n        \"capacidad\": 10,\n        \"monopatines\": [\n            {\n                \"id\": 16,\n                \"marca\": \"Bird\",\n                \"codigoQR\": \"QR0061\",\n                \"kmTotales\": 75,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.528714\",\n                \"ubicacionActual\": \"41.878113,-87.629799\",\n                \"paradaActualId\": 16,\n                \"paradaActualNombre\": \"Millennium Park\"\n            },\n            {\n                \"id\": 36,\n                \"marca\": \"Razor\",\n                \"codigoQR\": \"QR0081\",\n                \"kmTotales\": 2660,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.011892\",\n                \"ubicacionActual\": \"41.878113,-87.629799\",\n                \"paradaActualId\": 16,\n                \"paradaActualNombre\": \"Millennium Park\"\n            },\n            {\n                \"id\": 56,\n                \"marca\": \"Boosted\",\n                \"codigoQR\": \"QR0101\",\n                \"kmTotales\": 1780,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.388163\",\n                \"ubicacionActual\": \"41.878113,-87.629799\",\n                \"paradaActualId\": 16,\n                \"paradaActualNombre\": \"Millennium Park\"\n            }\n        ]\n    },\n    {\n        \"nombre\": \"Golden Gate Park\",\n        \"ubicacion\": \"37.774929,-122.419418\",\n        \"capacidad\": 11,\n        \"monopatines\": [\n            {\n                \"id\": 17,\n                \"marca\": \"Lime\",\n                \"codigoQR\": \"QR0062\",\n                \"kmTotales\": 1520,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.553701\",\n                \"ubicacionActual\": \"37.774929,-122.419418\",\n                \"paradaActualId\": 17,\n                \"paradaActualNombre\": \"Golden Gate Park\"\n            },\n            {\n                \"id\": 37,\n                \"marca\": \"Bird\",\n                \"codigoQR\": \"QR0082\",\n                \"kmTotales\": 3390,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.03543\",\n                \"ubicacionActual\": \"37.774929,-122.419418\",\n                \"paradaActualId\": 17,\n                \"paradaActualNombre\": \"Golden Gate Park\"\n            },\n            {\n                \"id\": 57,\n                \"marca\": \"Razor\",\n                \"codigoQR\": \"QR0102\",\n                \"kmTotales\": 4100,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"MANTENIMIENTO\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.403906\",\n                \"ubicacionActual\": \"37.774929,-122.419418\",\n                \"paradaActualId\": 17,\n                \"paradaActualNombre\": \"Golden Gate Park\"\n            }\n        ]\n    },\n    {\n        \"nombre\": \"Miami Beach\",\n        \"ubicacion\": \"25.761681,-80.191788\",\n        \"capacidad\": 8,\n        \"monopatines\": [\n            {\n                \"id\": 18,\n                \"marca\": \"Gotrax\",\n                \"codigoQR\": \"QR0063\",\n                \"kmTotales\": 2210,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.586152\",\n                \"ubicacionActual\": \"25.761681,-80.191788\",\n                \"paradaActualId\": 18,\n                \"paradaActualNombre\": \"Miami Beach\"\n            },\n            {\n                \"id\": 38,\n                \"marca\": \"Lime\",\n                \"codigoQR\": \"QR0083\",\n                \"kmTotales\": 870,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.065265\",\n                \"ubicacionActual\": \"25.761681,-80.191788\",\n                \"paradaActualId\": 18,\n                \"paradaActualNombre\": \"Miami Beach\"\n            },\n            {\n                \"id\": 58,\n                \"marca\": \"Bird\",\n                \"codigoQR\": \"QR0103\",\n                \"kmTotales\": 950,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"MANTENIMIENTO\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.416083\",\n                \"ubicacionActual\": \"25.761681,-80.191788\",\n                \"paradaActualId\": 18,\n                \"paradaActualNombre\": \"Miami Beach\"\n            }\n        ]\n    },\n    {\n        \"nombre\": \"Pike Place Market\",\n        \"ubicacion\": \"47.606209,-122.332069\",\n        \"capacidad\": 9,\n        \"monopatines\": [\n            {\n                \"id\": 19,\n                \"marca\": \"Xiaomi\",\n                \"codigoQR\": \"QR0064\",\n                \"kmTotales\": 3330,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.612401\",\n                \"ubicacionActual\": \"47.606209,-122.332069\",\n                \"paradaActualId\": 19,\n                \"paradaActualNombre\": \"Pike Place Market\"\n            },\n            {\n                \"id\": 39,\n                \"marca\": \"Gotrax\",\n                \"codigoQR\": \"QR0084\",\n                \"kmTotales\": 1930,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.09285\",\n                \"ubicacionActual\": \"47.606209,-122.332069\",\n                \"paradaActualId\": 19,\n                \"paradaActualNombre\": \"Pike Place Market\"\n            },\n            {\n                \"id\": 59,\n                \"marca\": \"Lime\",\n                \"codigoQR\": \"QR0104\",\n                \"kmTotales\": 3050,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.429039\",\n                \"ubicacionActual\": \"47.606209,-122.332069\",\n                \"paradaActualId\": 19,\n                \"paradaActualNombre\": \"Pike Place Market\"\n            }\n        ]\n    },\n    {\n        \"nombre\": \"Dam Square\",\n        \"ubicacion\": \"52.367573,4.904138\",\n        \"capacidad\": 10,\n        \"monopatines\": [\n            {\n                \"id\": 20,\n                \"marca\": \"Segway\",\n                \"codigoQR\": \"QR0065\",\n                \"kmTotales\": 480,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:19.637285\",\n                \"ubicacionActual\": \"52.367573,4.904138\",\n                \"paradaActualId\": 20,\n                \"paradaActualNombre\": \"Dam Square\"\n            },\n            {\n                \"id\": 40,\n                \"marca\": \"Xiaomi\",\n                \"codigoQR\": \"QR0085\",\n                \"kmTotales\": 122,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"DISPONIBLE\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.119068\",\n                \"ubicacionActual\": \"52.367573,4.904138\",\n                \"paradaActualId\": 20,\n                \"paradaActualNombre\": \"Dam Square\"\n            },\n            {\n                \"id\": 60,\n                \"marca\": \"Gotrax\",\n                \"codigoQR\": \"QR0105\",\n                \"kmTotales\": 1250,\n                \"usoTotalMinutos\": 0,\n                \"estado\": \"EN_USO\",\n                \"fechaUltimoMantenimiento\": \"2025-11-19T20:55:20.442837\",\n                \"ubicacionActual\": \"52.367573,4.904138\",\n                \"paradaActualId\": 20,\n                \"paradaActualNombre\": \"Dam Square\"\n            }\n        ]\n    },\n    {\n        \"nombre\": \"Parque Independencia\",\n        \"ubicacion\": \"-37.3212,-59.1335\",\n        \"capacidad\": 10,\n        \"monopatines\": []\n    }\n]"
 										}
 									]
 								},
 								{
 									"name": "GatewayParadas",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"})\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "POST",
 										"header": [],
 										"body": {
@@ -388,22 +746,59 @@
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/paradas"
+										"url": {
+											"raw": "{{BASE_PATH}}/paradas",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"paradas"
+											]
+										}
 									},
 									"response": []
 								},
 								{
 									"name": "GatewayParadas",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "DELETE",
 										"header": [],
-										"url": "{{BASE_PATH}}/paradas/1"
+										"url": {
+											"raw": "{{BASE_PATH}}/paradas/1",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"paradas",
+												"1"
+											]
+										}
 									},
 									"response": []
 								},
 								{
 									"name": "GatewayParadas",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "PUT",
 										"header": [],
 										"body": {
@@ -415,7 +810,16 @@
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/paradas/2"
+										"url": {
+											"raw": "{{BASE_PATH}}/paradas/2",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"paradas",
+												"2"
+											]
+										}
 									},
 									"response": []
 								}
@@ -448,6 +852,16 @@
 										}
 									],
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "POST",
 										"header": [],
 										"body": {
@@ -459,7 +873,15 @@
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/tarifas",
+										"url": {
+											"raw": "{{BASE_PATH}}/tarifas",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"tarifas"
+											]
+										},
 										"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
 									},
 									"response": []
@@ -467,24 +889,71 @@
 								{
 									"name": "tarifa",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "GET",
 										"header": [],
-										"url": "{{BASE_PATH}}/tarifas"
+										"url": {
+											"raw": "{{BASE_PATH}}/tarifas",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"tarifas"
+											]
+										}
 									},
 									"response": []
 								},
 								{
 									"name": "tarifa",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "DELETE",
 										"header": [],
-										"url": "{{BASE_PATH}}/tarifas/2"
+										"url": {
+											"raw": "{{BASE_PATH}}/tarifas/2",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"tarifas",
+												"2"
+											]
+										}
 									},
 									"response": []
 								},
 								{
 									"name": "tarifa",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "PUT",
 										"header": [],
 										"body": {
@@ -496,7 +965,16 @@
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/tarifas/1"
+										"url": {
+											"raw": "{{BASE_PATH}}/tarifas/1",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"tarifas",
+												"1"
+											]
+										}
 									},
 									"response": []
 								}
@@ -524,6 +1002,16 @@
 										}
 									],
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "POST",
 										"header": [],
 										"body": {
@@ -535,7 +1023,15 @@
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/cargas",
+										"url": {
+											"raw": "{{BASE_PATH}}/cargas",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"cargas"
+											]
+										},
 										"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
 									},
 									"response": []
@@ -543,24 +1039,71 @@
 								{
 									"name": "cargas",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "GET",
 										"header": [],
-										"url": "{{BASE_PATH}}/cargas"
+										"url": {
+											"raw": "{{BASE_PATH}}/cargas",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"cargas"
+											]
+										}
 									},
 									"response": []
 								},
 								{
 									"name": "cargas",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "DELETE",
 										"header": [],
-										"url": "{{BASE_PATH}}/cargas/1"
+										"url": {
+											"raw": "{{BASE_PATH}}/cargas/1",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"cargas",
+												"1"
+											]
+										}
 									},
 									"response": []
 								},
 								{
 									"name": "cargas",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "PUT",
 										"header": [],
 										"body": {
@@ -572,7 +1115,17 @@
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/cargas/1"
+										"url": {
+											"raw": "{{BASE_PATH}}/cargas/editar/1",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"cargas",
+												"editar",
+												"1"
+											]
+										}
 									},
 									"response": []
 								}
@@ -611,7 +1164,15 @@
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/subscripciones",
+										"url": {
+											"raw": "{{BASE_PATH}}/subscripciones",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"subscripciones"
+											]
+										},
 										"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
 									},
 									"response": []
@@ -621,7 +1182,15 @@
 									"request": {
 										"method": "GET",
 										"header": [],
-										"url": "{{BASE_PATH}}/subscripciones"
+										"url": {
+											"raw": "{{BASE_PATH}}/subscripciones",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"subscripciones"
+											]
+										}
 									},
 									"response": []
 								},
@@ -630,7 +1199,16 @@
 									"request": {
 										"method": "DELETE",
 										"header": [],
-										"url": "{{BASE_PATH}}/subscripciones/1"
+										"url": {
+											"raw": "{{BASE_PATH}}/subscripciones/1",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"subscripciones",
+												"1"
+											]
+										}
 									},
 									"response": []
 								},
@@ -648,7 +1226,16 @@
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/subscripciones/1"
+										"url": {
+											"raw": "{{BASE_PATH}}/subscripciones/1",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"subscripciones",
+												"1"
+											]
+										}
 									},
 									"response": []
 								}
@@ -667,52 +1254,116 @@
 									"request": {
 										"method": "GET",
 										"header": [],
-										"url": "{{BASE_PATH}}/viajes"
+										"url": {
+											"raw": "{{BASE_PATH}}/viajes",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"viajes"
+											]
+										}
 									},
 									"response": []
 								},
 								{
 									"name": "GatewayViajes",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "POST",
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n  \"marca\": \"Xiaomi\",\r\n  \"codigoQR\": \"QR12345\",\r\n  \"kmTotales\": 0.0,\r\n  \"estado\": \"DISPONIBLE\",\r\n  \"ubicacionActual\": {\r\n    \"latitud\": -37.3212,\r\n    \"longitud\": -59.1335\r\n  },\r\n  \"paradaActualId\": 2 \r\n\r\n}\r\n",
+											"raw": "{\r\n  \"usuarioId\": 1,\r\n  \"cuentaId\": 1,\r\n  \"monopatinId\": 1,\r\n  \"inicio\": \"2025-10-01T10:00:00\",\r\n  \"fin\": \"2025-10-01T11:30:00\",\r\n  \"ubicacionInicio\": {\r\n    \"latitud\": -34.603722,\r\n    \"longitud\": -58.381592\r\n  },\r\n  \"ubicacionFin\": {\r\n    \"latitud\": -34.603722,\r\n    \"longitud\": -58.381592\r\n  },\r\n  \"distanciaRecorrida\": 5.5,\r\n  \"estado\": \"EN_CURSO\"\r\n}\r\n",
 											"options": {
 												"raw": {
 													"language": "json"
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/viajes"
+										"url": {
+											"raw": "{{BASE_PATH}}/viajes",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"viajes"
+											]
+										}
 									},
 									"response": []
 								},
 								{
 									"name": "GatewayViajes",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "DELETE",
 										"header": [],
-										"url": "{{BASE_PATH}}/Viajes/1"
+										"url": {
+											"raw": "{{BASE_PATH}}/Viajes/1",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"Viajes",
+												"1"
+											]
+										}
 									},
 									"response": []
 								},
 								{
 									"name": "GatewayViajes",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "PUT",
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n  \"marca\": \"Xiaomi\",\r\n  \"codigoQR\": \"QR12345\",\r\n  \"kmTotales\": 0.0,\r\n  \"estado\": \"DISPONIBLE\",\r\n  \"ubicacionActual\": {\r\n    \"latitud\": -37.3212,\r\n    \"longitud\": -59.1335\r\n  },\r\n  \"paradaActualId\": 2 \r\n\r\n}\r\n",
+											"raw": "{\r\n  \"usuarioId\": 1,\r\n  \"cuentaId\": 1,\r\n  \"monopatinId\": 1,\r\n  \"inicio\": \"2025-10-01T10:00:00\",\r\n  \"fin\": \"2025-10-01T11:30:00\",\r\n  \"ubicacionInicio\": {\r\n    \"latitud\": -34.603722,\r\n    \"longitud\": -58.381592\r\n  },\r\n  \"ubicacionFin\": {\r\n    \"latitud\": -34.603722,\r\n    \"longitud\": -58.381592\r\n  },\r\n  \"distanciaRecorrida\": 5.5,\r\n  \"estado\": \"EN_CURSO\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/Viajes/2"
+										"url": {
+											"raw": "{{BASE_PATH}}/viajes/2",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"viajes",
+												"2"
+											]
+										}
 									},
 									"response": []
 								}
@@ -726,7 +1377,15 @@
 									"request": {
 										"method": "GET",
 										"header": [],
-										"url": "{{BASE_PATH}}/pausas"
+										"url": {
+											"raw": "{{BASE_PATH}}/pausas",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"pausas"
+											]
+										}
 									},
 									"response": []
 								},
@@ -744,7 +1403,15 @@
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/pausas"
+										"url": {
+											"raw": "{{BASE_PATH}}/pausas",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"pausas"
+											]
+										}
 									},
 									"response": []
 								},
@@ -753,7 +1420,16 @@
 									"request": {
 										"method": "DELETE",
 										"header": [],
-										"url": "{{BASE_PATH}}/pausas/1"
+										"url": {
+											"raw": "{{BASE_PATH}}/pausas/1",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"pausas",
+												"1"
+											]
+										}
 									},
 									"response": []
 								},
@@ -771,7 +1447,16 @@
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/pausas/2"
+										"url": {
+											"raw": "{{BASE_PATH}}/pausas/2",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"pausas",
+												"2"
+											]
+										}
 									},
 									"response": []
 								}
@@ -788,54 +1473,227 @@
 								{
 									"name": "GatewayRegistro",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "GET",
 										"header": [],
-										"url": "{{BASE_PATH}}/registros"
+										"url": {
+											"raw": "{{BASE_PATH}}/registroMantenimientos",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"registroMantenimientos"
+											]
+										}
 									},
 									"response": []
 								},
 								{
 									"name": "GatewayRegistro",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "POST",
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n  \"marca\": \"Xiaomi\",\r\n  \"codigoQR\": \"QR12345\",\r\n  \"kmTotales\": 0.0,\r\n  \"estado\": \"DISPONIBLE\",\r\n  \"ubicacionActual\": {\r\n    \"latitud\": -37.3212,\r\n    \"longitud\": -59.1335\r\n  },\r\n  \"paradaActualId\": 2 \r\n\r\n}\r\n",
+											"raw": "{\r\n  \"idMonopatin\": 12\r\n  \r\n}\r\n",
 											"options": {
 												"raw": {
 													"language": "json"
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/registros"
+										"url": {
+											"raw": "{{BASE_PATH}}/registroMantenimientos",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"registroMantenimientos"
+											]
+										}
 									},
 									"response": []
 								},
 								{
 									"name": "GatewayRegistro",
-									"request": {
-										"method": "DELETE",
-										"header": [],
-										"url": "{{BASE_PATH}}/registros/1"
-									},
-									"response": []
-								},
-								{
-									"name": "GatewayRegistro",
-									"request": {
-										"method": "PUT",
-										"header": [],
-										"body": {
-											"mode": "raw",
-											"raw": "{\r\n  \"marca\": \"Xiaomi\",\r\n  \"codigoQR\": \"QR12345\",\r\n  \"kmTotales\": 0.0,\r\n  \"estado\": \"DISPONIBLE\",\r\n  \"ubicacionActual\": {\r\n    \"latitud\": -37.3212,\r\n    \"longitud\": -59.1335\r\n  },\r\n  \"paradaActualId\": 2 \r\n\r\n}\r\n",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Registro de mantenimiento ya esta finalizado\", function () {\r",
+													"    pm.response.to.have.status(409);\r",
+													"})\r",
+													"\r",
+													"pm.test(\"El registro fue finalizado\",function (){\r",
+													"    pm.response.to.have.status(200);\r",
+													"})    "
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
 											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
 										},
-										"url": "{{BASE_PATH}}/registros/2"
+										"method": "PATCH",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_PATH}}/registroMantenimientos/6/finalizar",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"registroMantenimientos",
+												"6",
+												"finalizar"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GatewayRegistro Copy",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PATCH",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_PATH}}/registroMantenimientos/6/finalizar",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"registroMantenimientos",
+												"6",
+												"finalizar"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Registro monopatines activos",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_PATH}}/registroMantenimientos/monopatin/1/activos",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"registroMantenimientos",
+												"monopatin",
+												"1",
+												"activos"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GatewayRegistro x id",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_PATH}}/registroMantenimientos/1",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"registroMantenimientos",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GatewayRegistro x monopatin",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_PATH}}/registroMantenimientos/monopatin/1",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"registroMantenimientos",
+												"monopatin",
+												"1"
+											]
+										}
 									},
 									"response": []
 								}
@@ -849,7 +1707,15 @@
 									"request": {
 										"method": "GET",
 										"header": [],
-										"url": "{{BASE_PATH}}/controles"
+										"url": {
+											"raw": "{{BASE_PATH}}/controlMantenimientos",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"controlMantenimientos"
+											]
+										}
 									},
 									"response": []
 								},
@@ -867,7 +1733,15 @@
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/controles"
+										"url": {
+											"raw": "{{BASE_PATH}}/controlMantenimientos",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"controlMantenimientos"
+											]
+										}
 									},
 									"response": []
 								},
@@ -876,7 +1750,16 @@
 									"request": {
 										"method": "DELETE",
 										"header": [],
-										"url": "{{BASE_PATH}}/controles/1"
+										"url": {
+											"raw": "{{BASE_PATH}}/controlMantenimientos/5",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"controlMantenimientos",
+												"5"
+											]
+										}
 									},
 									"response": []
 								},
@@ -894,505 +1777,57 @@
 												}
 											}
 										},
-										"url": "{{BASE_PATH}}/controles/2"
+										"url": {
+											"raw": "{{BASE_PATH}}/controles/2",
+											"host": [
+												"{{BASE_PATH}}"
+											],
+											"path": [
+												"controles",
+												"2"
+											]
+										}
 									},
 									"response": []
 								}
 							]
 						}
 					]
-				}
-			]
-		},
-		{
-			"name": "Servicios individuales",
-			"item": [
-				{
-					"name": "Monopatin",
-					"item": [
-						{
-							"name": "monopatin",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Successful POST request\", function () {",
-											"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-											"});",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"marca\": \"Xiaomi\",\n  \"codigoQR\": \"QR12345\",\n  \"kmTotales\": 0.0,\n  \"estado\": \"DISPONIBLE\",\n  \"ubicacionActual\": {\n    \"latitud\": -37.3212,\n    \"longitud\": -59.1335\n  },\n  \"paradaActualId\": 1\n}\n",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "http://localhost:8084/monopatines",
-								"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
-							},
-							"response": []
-						},
-						{
-							"name": "monopatin",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": "http://localhost:8084/monopatines"
-							},
-							"response": [
-								{
-									"name": "monopatin",
-									"originalRequest": {
-										"method": "GET",
-										"header": [],
-										"url": "http://localhost:8084/monopatines/1"
-									},
-									"_postman_previewlanguage": "",
-									"header": [],
-									"cookie": [
-										{
-											"expires": "Invalid Date",
-											"domain": "",
-											"path": ""
-										}
-									],
-									"body": ""
-								},
-								{
-									"name": "monopatin",
-									"originalRequest": {
-										"method": "GET",
-										"header": [],
-										"url": "http://localhost:8084/monopatines/disponibles"
-									},
-									"_postman_previewlanguage": "",
-									"header": [],
-									"cookie": [
-										{
-											"expires": "Invalid Date",
-											"domain": "",
-											"path": ""
-										}
-									],
-									"body": ""
-								}
-							]
-						},
-						{
-							"name": "monopatin",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": "http://localhost:8084/monopatines/2"
-							},
-							"response": []
-						},
-						{
-							"name": "monopatin",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n  \"codigoQR\": \"QR-003\",\r\n  \"kmTotales\": 1.0,\r\n  \"estado\": \"DISPONIBLE\",\r\n  \"paradaActualId\": null\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "http://localhost:8084/monopatines/3"
-							},
-							"response": []
-						},
-						{
-							"name": "parada",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Successful POST request\", function () {",
-											"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-											"});",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"nombre\": \"Parque Independencia\",\n  \"ubicacion\": {\n    \"latitud\": -37.3212,\n    \"longitud\": -59.1335\n  },\n  \"capacidad\":10\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "http://localhost:8084/paradas",
-								"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
-							},
-							"response": []
-						},
-						{
-							"name": "parada",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": "http://localhost:8084/paradas"
-							},
-							"response": [
-								{
-									"name": "parada X Id",
-									"originalRequest": {
-										"method": "GET",
-										"header": [],
-										"url": "http://localhost:8084/paradas/1"
-									},
-									"_postman_previewlanguage": null,
-									"header": null,
-									"cookie": [],
-									"body": null
-								}
-							]
-						},
-						{
-							"name": "parada",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": "http://localhost:8084/paradas/1"
-							},
-							"response": []
-						},
-						{
-							"name": "parada",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n  \"nombre\": \"Parque Independencia - Norte\",\r\n  \"latitud\": -37.320,\r\n  \"longitud\": -59.138\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "http://localhost:8084/paradas/2"
-							},
-							"response": []
-						}
-					]
 				},
 				{
-					"name": "Facturacion",
-					"item": [
-						{
-							"name": "tarifa",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Successful POST request\", function () {",
-											"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-											"});",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
+					"name": "AuthenticateUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"maria.gomez@example.com\",\r\n  \"password\": \"hashed_password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_PATH}}/authController/authenticate",
+							"host": [
+								"{{BASE_PATH}}"
 							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"precioPorMinuto\": 7.50,\n  \"precioPausaPorMinuto\": 1.00,\n  \"fechaInicioVigencia\": \"2025-12-01T00:00:00\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "http://localhost:8088/tarifas",
-								"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
-							},
-							"response": []
-						},
-						{
-							"name": "tarifa",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": "http://localhost:8088/tarifas"
-							},
-							"response": [
-								{
-									"name": "tarifa",
-									"originalRequest": {
-										"method": "GET",
-										"header": [],
-										"url": "http://localhost:8088/tarifas/1"
-									},
-									"_postman_previewlanguage": "",
-									"header": [],
-									"cookie": [
-										{
-											"expires": "Invalid Date",
-											"domain": "",
-											"path": ""
-										}
-									],
-									"body": ""
-								}
+							"path": [
+								"authController",
+								"authenticate"
 							]
-						},
-						{
-							"name": "tarifa",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": "http://localhost:8088/tarifas/2"
-							},
-							"response": []
-						},
-						{
-							"name": "tarifa",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n  \"precioPorMinuto\": 2.00,\r\n  \"precioPausaPorMinuto\": 3.50,\r\n  \"fechaInicioVigencia\": \"2025-12-15T00:00:00\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "http://localhost:8088/tarifas/1"
-							},
-							"response": []
-						},
-						{
-							"name": "pago",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Successful POST request\", function () {",
-											"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-											"});",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"idCuenta\": 1003,\n  \"monto\": 3200.50,\n  \"fechaPago\": \"2025-11-08T16:00:00\",\n  \"medio\": \"EFECTIVO\"\n}\n",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "http://localhost:8088/pagos",
-								"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
-							},
-							"response": []
-						},
-						{
-							"name": "pago",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": "http://localhost:8088/pagos"
-							},
-							"response": [
-								{
-									"name": "pago",
-									"originalRequest": {
-										"method": "GET",
-										"header": [],
-										"url": "http://localhost:8088/pagos/1"
-									},
-									"_postman_previewlanguage": "",
-									"header": [],
-									"cookie": [
-										{
-											"expires": "Invalid Date",
-											"domain": "",
-											"path": ""
-										}
-									],
-									"body": ""
-								}
-							]
-						},
-						{
-							"name": "pago",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": "http://localhost:8088/pagos/1"
-							},
-							"response": []
-						},
-						{
-							"name": "pago",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n  \"idCuenta\": 1003,\r\n  \"monto\": 3300.00,\r\n  \"fechaPago\": \"2025-11-08T18:00:00\",\r\n  \"medio\": \"TRANSFERENCIA\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "http://localhost:8088/pagos/1"
-							},
-							"response": []
 						}
-					]
+					},
+					"response": []
 				},
 				{
-					"name": "Usuario",
-					"item": [
-						{
-							"name": "user",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": "http://localhost:8082/api/cuentas/",
-								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
-							},
-							"response": []
-						},
-						{
-							"name": "user",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Successful POST request\", function () {",
-											"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-											"});",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"requests": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"nombre\": \"Luca\",\n  \"apellido\": \"Tonto\",\n  \"email\": \"Luca.Tonto@example.com\",\n  \"telefono\": \"+5493412345679\",\n  \"password\": \"12343\",\n  \"rol\": \"ADMIN\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "http://localhost:8082/api/usuarios/",
-								"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "GatewayViajes Copy",
+					"name": "asistente (o no)",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": "http://localhost:8086/viajes"
+						"header": []
 					},
-					"response": [
-						{
-							"name": "GatewayMonopatin",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": "{{BASE_PATH}}/monopatines/disponibles"
-							},
-							"_postman_previewlanguage": "",
-							"header": [],
-							"cookie": [
-								{
-									"expires": "Invalid Date",
-									"domain": "",
-									"path": ""
-								}
-							],
-							"body": ""
-						},
-						{
-							"name": "Monopatin x id",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": "{{BASE_PATH}}/monopatines/1"
-							},
-							"_postman_previewlanguage": null,
-							"header": null,
-							"cookie": [],
-							"body": null
-						}
-					]
+					"response": []
 				}
 			]
 		},
@@ -1413,7 +1848,15 @@
 								}
 							}
 						},
-						"url": "{{BASE_PATH}}/monopatines"
+						"url": {
+							"raw": "{{BASE_PATH}}/monopatines",
+							"host": [
+								"{{BASE_PATH}}"
+							],
+							"path": [
+								"monopatines"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1422,7 +1865,17 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{BASE_PATH}}/paradas/monopatin/1"
+						"url": {
+							"raw": "{{BASE_PATH}}/paradas/monopatin/1",
+							"host": [
+								"{{BASE_PATH}}"
+							],
+							"path": [
+								"paradas",
+								"monopatin",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1431,7 +1884,16 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "{{BASE_PATH}}/paradas/1"
+						"url": {
+							"raw": "{{BASE_PATH}}/paradas/1",
+							"host": [
+								"{{BASE_PATH}}"
+							],
+							"path": [
+								"paradas",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1440,7 +1902,16 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "{{BASE_PATH}}/monopatines/1"
+						"url": {
+							"raw": "{{BASE_PATH}}/monopatines/1",
+							"host": [
+								"{{BASE_PATH}}"
+							],
+							"path": [
+								"monopatines",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1458,7 +1929,15 @@
 								}
 							}
 						},
-						"url": "{{BASE_PATH}}/paradas"
+						"url": {
+							"raw": "{{BASE_PATH}}/paradas",
+							"host": [
+								"{{BASE_PATH}}"
+							],
+							"path": [
+								"paradas"
+							]
+						}
 					},
 					"response": []
 				},
@@ -1476,11 +1955,45 @@
 								}
 							}
 						},
-						"url": "{{BASE_PATH}}/cuentas/2/anular"
+						"url": {
+							"raw": "{{BASE_PATH}}/cuentas/2/anular",
+							"host": [
+								"{{BASE_PATH}}"
+							],
+							"path": [
+								"cuentas",
+								"2",
+								"anular"
+							]
+						}
 					},
 					"response": []
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
