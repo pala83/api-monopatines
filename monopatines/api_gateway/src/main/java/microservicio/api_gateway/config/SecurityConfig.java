@@ -13,6 +13,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
+/**
+ * Configuración de seguridad para Spring WebFlux Security.
+ * Define la política de seguridad, filtros JWT y control de acceso basado en roles.
+ */
 @Configuration
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
@@ -20,15 +24,34 @@ public class SecurityConfig {
 
     private final TokenProvider tokenProvider;
 
+    /**
+     * Constructor para inyectar el proveedor de tokens JWT.
+     * @param tokenProvider el proveedor de tokens JWT
+     */
     public SecurityConfig(TokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
     }
 
+    /**
+     * Bean para codificación de contraseñas usando BCrypt.
+     * @return PasswordEncoder implementado con BCrypt
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Configura la cadena de filtros de seguridad para Spring WebFlux.
+     * Define:
+     * - Deshabilitación de CSRF
+     * - Autorización por rutas y métodos HTTP
+     * - Filtro JWT para autenticación
+     * - Control de acceso basado en roles (ADMIN, USUARIO, MANTENIMIENTO)
+     *
+     * @param http configuración de seguridad HTTP
+     * @return SecurityWebFilterChain configurado
+     */
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         return http

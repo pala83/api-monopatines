@@ -154,6 +154,16 @@ services:
       - db_mantenimiento_data:/var/lib/mysql
     networks:
       - net_monopatines
+  
+  mvc-asistente:
+    build:
+      context: ./mvc_asistente
+      dockerfile: Dockerfile
+    container_name: mvc_asistente
+    ports:
+      - "8092:8092"
+    networks:
+      - net_monopatines
 
   # 🚪 API-GATEWAY
   api_gateway:
@@ -169,6 +179,7 @@ services:
        - mvc-viaje
        - mvc-facturacion
        - mvc-mantenimiento
+       - mvc-asistente
     networks:
       - net_monopatines
 volumes:

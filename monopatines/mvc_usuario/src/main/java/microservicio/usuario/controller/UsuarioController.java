@@ -81,7 +81,7 @@ public class UsuarioController {
     @PostMapping("/validar")
     public ResponseEntity<Long> validarCredenciales(@RequestBody LoginRequest request) {
         try {
-            return ResponseEntity.ok(usuarioService.validarCredenciales(request.username(), request.password()));
+            return ResponseEntity.ok(usuarioService.validarCredenciales(request.useremail(), request.password()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }

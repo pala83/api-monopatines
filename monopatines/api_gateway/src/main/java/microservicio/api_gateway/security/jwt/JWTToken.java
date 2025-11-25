@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class JWTToken {
-    @JsonProperty("id_token")
+    @JsonProperty("Token")
     private String idToken;
 }

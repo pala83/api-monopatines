@@ -77,7 +77,7 @@ public class UsuarioService implements BaseService<UsuarioRequest, UsuarioRespon
     }
     @Transactional
     public Long validarCredenciales(String username, String password) {
-        // Buscar usuario por email/username
+        // Buscar usuario por email/useremail
         Usuario usuario = usuarioRepository.findByEmail(username)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         // Validar contraseña

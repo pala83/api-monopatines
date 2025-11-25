@@ -4,7 +4,10 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
+/**
+ * Configuración del Gateway para enrutamiento de microservicios.
+ * Define las rutas y destinos para cada grupo de endpoints del API Gateway.
+ */
 @Configuration
 public class GatewayConfig {
 

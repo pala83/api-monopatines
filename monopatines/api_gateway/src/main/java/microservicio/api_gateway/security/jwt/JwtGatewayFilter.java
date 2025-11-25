@@ -17,7 +17,10 @@ import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 import java.util.stream.Collectors;
-
+/**
+ * Filtro de seguridad para validar JWT en el Gateway.
+ * Extrae tokens de las solicitudes, los valida y propaga información de autenticación.
+ */
 @Component
 public class JwtGatewayFilter implements WebFilter {
 
@@ -26,7 +29,12 @@ public class JwtGatewayFilter implements WebFilter {
     public JwtGatewayFilter(TokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
     }
-
+    /**
+     * Filtra las solicitudes HTTP para validar tokens JWT.
+     * @param exchange el intercambio de la solicitud web
+     * @param chain la cadena de filtros
+     * @return Mono<Void> para continuar o rechazar la solicitud
+     */
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         String token = resolveToken(exchange.getRequest());
@@ -59,7 +67,11 @@ public class JwtGatewayFilter implements WebFilter {
 
         return chain.filter(exchange);
     }
-
+    /**
+     * Extrae el token JWT del header Authorization de la solicitud.
+     * @param request la solicitud HTTP
+     * @return el token JWT o null si no se encuentra
+     */
     private String resolveToken(ServerHttpRequest request) {
         String bearerToken = request.getHeaders().getFirst("Authorization");
         if (bearerToken == null) {
@@ -73,13 +85,23 @@ public class JwtGatewayFilter implements WebFilter {
         System.out.println("No se pudo resolver el token (faltante o mal formado)");
         return null;
     }
-
+    /**
+     * Convierte las autoridades de autenticación a string de roles separados por comas.
+     * @param authentication el objeto de autenticación
+     * @return string de roles separados por comas
+     */
     private String getRolesString(Authentication authentication) {
         return authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
     }
-
+    /**
+     * Maneja errores de JWT devolviendo respuestas HTTP con código y mensaje de error.
+     * @param exchange el intercambio de la solicitud web
+     * @param status código de estado HTTP
+     * @param message mensaje de error
+     * @return Mono<Void> con la respuesta de error
+     */
     private Mono<Void> handleJwtError(ServerWebExchange exchange, int status, String message) {
         exchange.getResponse().setStatusCode(HttpStatus.valueOf(status));
         exchange.getResponse().getHeaders().add("Content-Type", "application/json");

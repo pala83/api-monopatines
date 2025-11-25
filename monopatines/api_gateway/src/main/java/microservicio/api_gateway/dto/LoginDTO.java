@@ -7,15 +7,15 @@ import lombok.Data;
 @Data
 public class LoginDTO {
 
-    @NotNull(message = "El usuario es requerido")
-    @NotEmpty(message = "El usuario es requerido")
-    private String username;
+    @NotNull(message = "El email es requerido")
+    @NotEmpty(message = "El email es requerido")
+    private String useremail;
 
     @NotNull(message = "La contraseña es requerida")
     @NotEmpty(message = "La contraseña es requerida")
     private String password;
 
     public String toString(){
-        return "Username: " + username + ", Password: [FORBIDDEN] ";
+        return "Useremail: " + useremail + ", Password: [FORBIDDEN] ";
     }
 }

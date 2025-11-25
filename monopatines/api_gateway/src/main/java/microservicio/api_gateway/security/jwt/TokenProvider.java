@@ -18,7 +18,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
-
+/**
+ * Proveedor de tokens JWT para crear y validar tokens.
+ * Maneja la generación, parsing y validación de tokens JWT.
+ */
 @Component
 public class TokenProvider {
     private final Logger log = LoggerFactory.getLogger(TokenProvider.class);
@@ -41,7 +44,11 @@ public class TokenProvider {
         this.jwtParser = Jwts.parser().verifyWith(this.key).build();
         this.tokenValidityInSeconds = tokenValidity;
     }
-
+    /**
+     * Crea un nuevo token JWT para una autenticación dada.
+     * @param authentication la autenticación del usuario
+     * @return token JWT como string
+     */
     public String createToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -58,7 +65,11 @@ public class TokenProvider {
                 .issuedAt(new Date(now))
                 .compact();
     }
-
+    /**
+     * Obtiene la autenticación a partir de un token JWT válido.
+     * @param token el token JWT
+     * @return Authentication objeto de autenticación Spring Security
+     */
     public Authentication getAuthentication(String token) {
         Claims claims = jwtParser.parseSignedClaims(token).getPayload();
 
@@ -78,6 +89,11 @@ public class TokenProvider {
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 
+    /**
+     * Valida la firma y expiración de un token JWT.
+     * @param authToken el token a validar
+     * @return true si el token es válido, false si no
+     */
     public boolean validateToken(String authToken) {
         try {
             Jws<Claims> claims = jwtParser.parseSignedClaims(authToken);
@@ -87,7 +103,11 @@ public class TokenProvider {
             return false;
         }
     }
-
+    /**
+     * Verifica si el token ha expirado comparando con la fecha actual.
+     * @param claims los claims del token JWT
+     * @return true si el token ha expirado, false si es válido
+     */
     private boolean isTokenExpired(Claims claims) {
         return claims.getExpiration().before(new Date());
     }

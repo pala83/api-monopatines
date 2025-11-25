@@ -4,6 +4,6 @@ import java.util.List;
 
 public record UserDetailsResponse(
         Long id,
-        String username,
+        String useremail,
         List<String> authorities
 ) {}

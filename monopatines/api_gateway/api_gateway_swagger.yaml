@@ -27,17 +27,17 @@ paths:
               admin:
                 summary: "Ejemplo Admin"
                 value:
-                  username: "maria.gomez@example.com"
+                  useremail: "maria.gomez@example.com"
                   password: "hashed_password"
               usuario:
                 summary: "Ejemplo Usuario"
                 value:
-                  username: "juan.perez@example.com"
+                  useremail: "juan.perez@example.com"
                   password: "hashed_password"
               mantenimiento:
                 summary: "Ejemplo Mantenimiento"
                 value:
-                  username: "santiago.herrera@example.com"
+                  useremail: "santiago.herrera@example.com"
                   password: "hashed_password"
       responses:
         '200':
@@ -61,10 +61,10 @@ components:
     LoginRequest:
       type: object
       required:
-        - username
+        - useremail
         - password
       properties:
-        username:
+        useremail:
           type: string
           format: email
           example: "usuario@example.com"
