@@ -1,7 +1,7 @@
 package microservicio.api_gateway.controller;
 
 import jakarta.validation.Valid;
-import microservicio.api_gateway.dto.LoginDTO;
+import microservicio.api_gateway.dto.client.LoginRequest;
 import microservicio.api_gateway.security.jwt.JWTToken;
 import microservicio.api_gateway.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class AuthController {
     @Autowired
     private AuthService authService;
     @PostMapping("authenticate")
-    public Mono<ResponseEntity<JWTToken>> authenticate(@Valid @RequestBody LoginDTO loginDTO) {
-        return authService.authenticate(loginDTO).map(ResponseEntity::ok);
+    public Mono<ResponseEntity<JWTToken>> authenticate(@Valid @RequestBody LoginRequest login) {
+        return authService.authenticate(login).map(ResponseEntity::ok);
     }
 }

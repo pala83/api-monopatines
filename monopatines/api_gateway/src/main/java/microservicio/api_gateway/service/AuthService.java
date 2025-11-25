@@ -1,11 +1,11 @@
 package microservicio.api_gateway.service;
 
-import microservicio.api_gateway.dto.LoginDTO;
 import microservicio.api_gateway.dto.client.LoginRequest;
 import microservicio.api_gateway.security.UserDetailsAdapter;
 import microservicio.api_gateway.security.jwt.JWTToken;
 import microservicio.api_gateway.security.jwt.TokenProvider;
 import org.springframework.security.core.Authentication;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -13,9 +13,12 @@ import reactor.core.publisher.Mono;
 @Service("authService")
 public class AuthService {
 
-    private final microservicio.api_gateway.service.UsuarioWebClientService usuarioWebClientService;
-    private final TokenProvider tokenProvider;
-    private final UserDetailsAdapter userDetailsAdapter;
+    @Autowired
+    private UsuarioWebClientService usuarioWebClientService;
+    @Autowired
+    private TokenProvider tokenProvider;
+    @Autowired
+    private UserDetailsAdapter userDetailsAdapter;
 
     public AuthService(
             UsuarioWebClientService usuarioWebClientService,
@@ -26,10 +29,8 @@ public class AuthService {
         this.userDetailsAdapter = userDetailsAdapter;
     }
 
-    public Mono<JWTToken> authenticate(LoginDTO loginDTO) {
-        LoginRequest loginRequest = new LoginRequest(loginDTO.getUsername(), loginDTO.getPassword());
-
-        return usuarioWebClientService.validarCredenciales(loginRequest)
+    public Mono<JWTToken> authenticate(LoginRequest login) {
+        return usuarioWebClientService.validarCredenciales(login)
                 .flatMap(usuarioWebClientService::getUserDetails)
                 .map(userRecord -> {
                     // Convertir a UserDetails de Spring Security

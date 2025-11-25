@@ -5,6 +5,7 @@ import java.util.List;
 import microservicio.mantenimiento.client.MonopatinClient;
 import microservicio.mantenimiento.dto.controlMantenimiento.ControlMantenimientoRequest;
 import microservicio.mantenimiento.dto.controlMantenimiento.ControlMantenimientoResponse;
+import microservicio.mantenimiento.dto.feignClient.EstadoMonopatin;
 import microservicio.mantenimiento.entity.ControlMantenimiento;
 import microservicio.mantenimiento.repository.ControlMantenimientoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,9 @@ public class ControlMantenimientoService implements BaseService<ControlMantenimi
         control.setUsoMinutos(req.getUsoMinutos());
         control.setActivo(req.getActivo());
         ControlMantenimiento saved = controlMantenimientoRepository.save(control);
+        if(req.getIdMonopatin() != null){
+            monopatinClient.actualizarEstado(req.getIdMonopatin(), EstadoMonopatin.MANTENIMIENTO);
+        }
         return toResponse(saved);
     }
 
@@ -71,12 +75,14 @@ public class ControlMantenimientoService implements BaseService<ControlMantenimi
     }
 
     @Transactional
-    public ControlMantenimientoResponse finalizarMantenimiento(Long id) {
+    public ControlMantenimientoResponse finalizarMantenimiento(Long id, Long idMonopatin) {
         ControlMantenimiento control = controlMantenimientoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Control de mantenimiento con id " + id + " no encontrado"));
         control.setActivo(false);
         ControlMantenimiento updated = controlMantenimientoRepository.save(control);
-
+        if(idMonopatin != null){
+            monopatinClient.actualizarEstado(idMonopatin, EstadoMonopatin.DISPONIBLE);
+        }
         return toResponse(updated);
     }
     @Transactional(readOnly = true)
@@ -86,6 +92,7 @@ public class ControlMantenimientoService implements BaseService<ControlMantenimi
                 .map(this::toResponse)
                 .toList();
     }
+
     private ControlMantenimientoResponse toResponse(ControlMantenimiento control) {
         ControlMantenimientoResponse resp = new ControlMantenimientoResponse();
         resp.setId(control.getId());
