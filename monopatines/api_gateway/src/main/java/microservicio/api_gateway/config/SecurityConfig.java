@@ -59,7 +59,7 @@ public class SecurityConfig {
                 .authorizeExchange(exchanges -> exchanges
                         // ========== ENDPOINTS PÚBLICOS ==========
                         .pathMatchers(HttpMethod.POST, "/authController/authenticate").permitAll()
-
+                        .pathMatchers(HttpMethod.POST, "/api/ia/prompt").permitAll()
                         // Paradas públicas (solo consultas GET)
                         .pathMatchers(HttpMethod.GET, "/paradas").permitAll()
                         .pathMatchers(HttpMethod.GET, "/paradas/**").permitAll()

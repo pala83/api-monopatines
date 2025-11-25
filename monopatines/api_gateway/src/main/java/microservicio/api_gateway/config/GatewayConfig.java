@@ -63,6 +63,10 @@ public class GatewayConfig {
                         .path("/controlMantenimientos/**")
                         .uri("http://mvc-mantenimiento:8090")
                 )
+                .route("ia", r -> r
+                        .path("/api/ia/**")
+                        .uri("http://mvc-asistente:8092")
+                )
                 .build();
     }
 }
