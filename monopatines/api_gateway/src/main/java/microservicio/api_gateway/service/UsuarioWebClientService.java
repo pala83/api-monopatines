@@ -3,20 +3,18 @@ package microservicio.api_gateway.service;
 import microservicio.api_gateway.dto.client.LoginRequest;
 import microservicio.api_gateway.dto.client.UserDetailsRecord;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+import java.util.Objects;
 /**
  * Cliente WebClient para comunicarse con el microservicio de usuarios.
  * Realiza llamadas HTTP para validar credenciales y obtener detalles de usuario.
  */
 @Service
 public class UsuarioWebClientService {
-
-    @Autowired
-    private WebClient webClient;
+    private final WebClient webClient;
 
     public UsuarioWebClientService(
             WebClient.Builder webClientBuilder,
@@ -33,6 +31,7 @@ public class UsuarioWebClientService {
      * @return Mono<Long> con el ID de usuario si las credenciales son válidas
      */
     public Mono<Long> validarCredenciales(LoginRequest request) {
+        Objects.requireNonNull(request, "LoginRequest no puede ser nulo");
         return webClient.post()
                 .uri("/usuarios/validar")
                 .bodyValue(request)
