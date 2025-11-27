@@ -30,15 +30,15 @@
         </dependencies>
     </dependencyManagement>
     <dependencies>
-        <!-- WebFlux (Gateway lo trae, pero dejarlo explícito no molesta) -->
+        <!-- Spring Cloud Gateway (WebFlux server) - reemplaza al starter deprecado -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway-server-webflux</artifactId>
+        </dependency>
+        <!-- WebFlux explícito para controladores reactivos propios -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
-        </dependency>
-        <!-- Spring Cloud Gateway -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
 
         <dependency>
@@ -69,10 +69,7 @@
             <version>0.12.3</version>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-core</artifactId>
-        </dependency>
+        <!-- El servidor embebido será Reactor Netty; no incluir Tomcat en WebFlux -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

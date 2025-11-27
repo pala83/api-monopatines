@@ -3,11 +3,14 @@ package microservicio.api_gateway.service;
 import microservicio.api_gateway.dto.client.LoginRequest;
 import microservicio.api_gateway.dto.client.UserDetailsRecord;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
 import java.util.Objects;
+import java.util.Map;
 /**
  * Cliente WebClient para comunicarse con el microservicio de usuarios.
  * Realiza llamadas HTTP para validar credenciales y obtener detalles de usuario.
@@ -32,11 +35,19 @@ public class UsuarioWebClientService {
      */
     public Mono<Long> validarCredenciales(LoginRequest request) {
         Objects.requireNonNull(request, "LoginRequest no puede ser nulo");
-        return webClient.post()
-                .uri("/usuarios/validar")
-                .bodyValue(request)
-                .retrieve()
-                .bodyToMono(Long.class);
+    // El microservicio de usuarios espera 'useremail' y 'password'.
+    Map<String, Object> body = Map.of(
+        "useremail", request.getUsername(),
+        "password", request.getPassword()
+    );
+
+    return webClient.post()
+        .uri("/usuarios/validar")
+        .bodyValue(body)
+        .retrieve()
+        .onStatus(status -> status.value() == 401,
+            resp -> Mono.error(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales inválidas")))
+        .bodyToMono(Long.class);
     }
     /**
      * Obtiene detalles completos de un usuario por su ID.
